@@ -5,7 +5,7 @@ export default defineAppConfig({
     container: {
       base: "mx-auto",
       padding: "px-5 sm:px-5 lg:px-10",
-      constrained: "max-w-[30rem] md:max-w-7xl",
+      constrained: "max-w-7xl",
     },
     button: {
       base: "focus:outline-none focus-visible:outline-0 flex-shrink-0 transition-colors",

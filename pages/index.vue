@@ -5,5 +5,7 @@
 <template>
   <main>
     <SectionHero />
+    <SectionMainAbout />
+    <SectionMainRequirements />
   </main>
 </template>

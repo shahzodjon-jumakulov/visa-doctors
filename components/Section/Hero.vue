@@ -30,7 +30,7 @@ const nav = [
 </script>
 
 <template>
-  <div class="relative pt-[5.5rem] min-h-[100svh]">
+  <div class="relative pt-[5.5rem] min-h-[100svh] overflow-hidden">
     <UContainer
       class="relative pt-[3.5rem] pb-5 lg:pb-12 flex flex-col max-lg:items-center justify-between gap-20 md:gap-10 lg:gap-[5.5rem] h-full"
     >
