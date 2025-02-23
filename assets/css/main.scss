@@ -8,3 +8,7 @@
 .section-heading {
   @apply text-black-main text-center font-bold text-[2.5rem] leading-normal;
 }
+
+.dark {
+  color-scheme: light !important;
+}

@@ -7,5 +7,7 @@
     <SectionHero />
     <SectionMainAbout />
     <SectionMainRequirements />
+    <SectionMainAwards />
+    <SectionMainUniversities />
   </main>
 </template>

@@ -4,7 +4,5 @@ export default defineNuxtConfig({
   modules: ["@nuxt/ui", "@nuxt/image"],
   compatibilityDate: "2025-02-23",
   css: ["~/assets/css/main.scss"],
-  image: {
-    dir: "assets/images",
-  },
+  colorMode: { preference: "light" },
 });
