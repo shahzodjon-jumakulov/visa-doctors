@@ -34,6 +34,8 @@ export default <Partial<Config>>{
           300: "#E2093524",
           200: "#E209351A",
           100: "#E209350F",
+          hover: "#BE082D",
+          pressed: "#AC0728",
         },
       },
       lineHeight: {
