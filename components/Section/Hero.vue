@@ -9,7 +9,7 @@ const nav = [
     title: "Biz haqimizda",
     description: "Ishonchli va samarali hamkor",
     icon: Team,
-    link: "/",
+    link: "/about",
   },
   {
     id: 2,
