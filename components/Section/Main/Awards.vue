@@ -27,7 +27,7 @@ const description =
           </UButton>
         </div>
         <div
-          class="relative grid grid-cols-2 grid-rows-2 max-w-[36rem] w-full shrink-0 z-0"
+          class="relative grid grid-cols-2 grid-rows-2 max-w-[32rem] w-full shrink-0 z-0"
         >
           <div class="single-pic z-[-2]">
             <img
@@ -73,7 +73,7 @@ const description =
     <div class="absolute top-1/2 -translate-y-1/2 right-[-10rem] max-lg:hidden">
       <img src="~/assets/icons/map-dot-light.svg" alt="map" class="w-[39rem]" />
     </div>
-    <div class="absolute left-0 top-0 max-lg:hidden">
+    <div class="absolute left-0 bottom-0 max-lg:hidden">
       <img src="~/assets/images/awards-bg.png" alt="awards" />
     </div>
   </div>

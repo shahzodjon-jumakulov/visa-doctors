@@ -9,5 +9,6 @@
     <SectionMainRequirements />
     <SectionMainAwards />
     <SectionMainUniversities />
+    <SectionSurvey />
   </main>
 </template>

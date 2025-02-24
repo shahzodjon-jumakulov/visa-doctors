@@ -54,7 +54,7 @@ const init = () => {
       { x: 0 },
       {
         x: distanceToTranslate,
-        duration: width / 50,
+        duration: width / 100,
         ease: "none",
         repeat: -1,
       }
@@ -88,7 +88,7 @@ onMounted(() => {
           <div
             v-for="(client, index) in clients"
             :key="index"
-            class="w-[12rem] md:w-[16.875rem] aspect-[2] rounded-lg border border-black-200 flex-center shrink-0"
+            class="w-[12rem] md:w-[16.875rem] aspect-[2] rounded-lg border border-black-200 flex-center shrink-0 hover:bg-black-100 transition-colors"
           >
             <img
               :src="client.icon"
