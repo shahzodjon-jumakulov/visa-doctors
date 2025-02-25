@@ -17,20 +17,22 @@ const nav = [
     description:
       "Biz bilan 90% dan oshiq mijozlar ijobiy natijaga erishishlari mumkin",
     icon: Results,
-    link: "/",
+    link: "/awards",
   },
   {
     id: 3,
     title: "Viza uchun kerakli hujjatlar",
     description: "Barcha viza yo’nalishlari bo’yicha to’liq ma’lumot oling",
     icon: Visa,
-    link: "/",
+    link: "/categories",
   },
 ];
 </script>
 
 <template>
-  <div class="relative pt-[5.5rem] min-h-[100svh] h-full overflow-hidden flex flex-col">
+  <div
+    class="relative pt-[5.5rem] min-h-[100svh] h-full overflow-hidden flex flex-col"
+  >
     <UContainer class="relative pt-[3.5rem] pb-5 lg:pb-12 grow flex flex-col">
       <div
         class="flex flex-col max-lg:items-center justify-between gap-20 md:gap-10 lg:gap-[5.5rem] grow"
@@ -44,6 +46,7 @@ const nav = [
             Koreyada ta’lim uchun so‘rovnoma to‘ldiring
           </h1>
           <UButton
+            to="/survey"
             label="So‘rovnoma to‘ldirish"
             class="w-fit md:max-lg:self-center"
           >

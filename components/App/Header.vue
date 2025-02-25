@@ -8,12 +8,12 @@ const navs = [
   {
     id: 2,
     title: "Natijalarimiz",
-    link: "/",
+    link: "/awards",
   },
   {
     id: 3,
     title: "Kerakli hujjatlar",
-    link: "/",
+    link: "/categories",
   },
 ];
 
@@ -56,7 +56,7 @@ onMounted(() => {
               class="h-full"
             />
           </NuxtLink>
-          <div class="flex gap-8 group">
+          <div class="flex gap-8 group max-lg:hidden">
             <NuxtLink
               v-for="(item, index) in navs"
               :key="item.id"
@@ -99,7 +99,7 @@ onMounted(() => {
           </div>
         </div>
         <div
-          class="overflow-hidden transition-all duration-300"
+          class="overflow-hidden transition-all duration-300 max-md:hidden"
           :class="
             !isMainPage
               ? 'ml-8'

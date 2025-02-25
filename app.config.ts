@@ -36,5 +36,21 @@ export default defineAppConfig({
         },
       },
     },
+    input: {
+      rounded: "rounded-lg",
+      placeholder: "placeholder-black-400 dark:placeholder-black-400",
+      size: {
+        sm: "text-base",
+      },
+      padding: {
+        sm: "p-4",
+      },
+      color: {
+        white: {
+          none:
+            "shadow-sm bg-black-100 hover:bg-black-200 dark:bg-black-100 text-black-main dark:text-black-main ring-0 focus:ring-2 !ring-black-main dark:ring-black-main transition-colors",
+        },
+      },
+    },
   },
 });
