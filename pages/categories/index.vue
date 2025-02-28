@@ -7,7 +7,7 @@ const content = `<ol>
 <li>Qarimdoshlikni tasdiqlovchi xujjat (guvohnoma(метрка), (nikox qog’ozi).</li>
 <li>Pasport (zagran)</li>
 <li>Id karta va zagran pasport nusxasi (chaqiruvchiniki)</li>
-<li>Ish joyi guvoxnomasi, soliq to’laganlik xaqida xujjat, daromadni tasdiqlovchi xujjatlar</li>(Chaqiruvchiniki). Chaqiruvchi talaba bólsa universitetdan xujjatlar (óqish xaqida, baxolar, kontrakt tólovi xaqida va boshqalar)</li>
+<li>Ish joyi guvoxnomasi, soliq to’laganlik xaqida xujjat, daromadni tasdiqlovchi xujjatlar Chaqiruvchiniki). Chaqiruvchi talaba bólsa universitetdan xujjatlar (óqish xaqida, baxolar, kontrakt tólovi xaqida va boshqalar)</li>
 <li>Ijara shartnomasi (uyning umumiy maydoni yashash uchun yetarli bólishi kerak)</li>
 <li>Bank shoʻt (Koreyadan chaqiruvchini nomiga)</li>
 <li>Taklifnoma va kafolat xati (Koreyadan. Aniq maqsad yoritib berilsin).</li>
@@ -56,7 +56,7 @@ watch(
           :key="cat.id"
           :to="`/categories?id=${cat.id}`"
           class="bg-black-100 hover:bg-red-main active:bg-red-pressed transition-colors rounded-xl py-4 px-6 flex items-center gap-4 group"
-          :class="{ 'bg-red-main active': selected == cat.id }"
+          :class="{ '!bg-red-main active': selected == cat.id }"
         >
           <div
             class="bg-red-100 group-hover:bg-white-200 group-active:bg-white-200 group-[.active]:bg-white-200 transition-colors rounded-full size-12 md:size-16 flex-center shrink-0"
@@ -89,13 +89,13 @@ watch(
   @apply flex flex-col gap-4;
 
   li {
-    @apply flex items-center gap-3;
+    @apply flex items-start gap-3;
 
     &:before {
       content: counter(list);
       counter-increment: list;
       line-height: inherit;
-      @apply text-red-main text-sm  font-bold bg-red-100 bg-opacity-10 rounded-full size-8 flex items-center justify-center;
+      @apply text-red-main text-sm  font-bold bg-red-100 bg-opacity-10 rounded-full size-8 flex items-center justify-center shrink-0;
     }
   }
 }

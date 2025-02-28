@@ -9,10 +9,6 @@
       berishadi
     </p>
     <UInput placeholder="Izoh yozish" variant="none" />
-    <UButton label="So’rovnomani yuborish" class="w-fit" @click="">
-      <template #trailing>
-        <img src="~/assets/icons/arrow-right.svg" alt="arrow" />
-      </template>
-    </UButton>
+    <BaseButton label="So’rovnomani yuborish" class="w-fit" @click="" />
   </div>
 </template>

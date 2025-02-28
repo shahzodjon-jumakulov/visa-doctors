@@ -40,12 +40,12 @@ const footerNav = [
       {
         id: 1,
         title: "Biz haqimizda",
-        link: "/",
+        link: "/about",
       },
       {
         id: 2,
         title: "Bizning natijalarimiz",
-        link: "/",
+        link: "/awards",
       },
     ],
   },
@@ -56,23 +56,23 @@ const footerNav = [
       {
         id: 1,
         title: "C-3-1 Mehmon viza",
-        link: "/",
+        link: "/categories?id=1",
       },
       {
         id: 2,
         title: "O‘quvchi vizasi",
-        link: "/",
+        link: "/categories?id=2",
       },
       {
         id: 3,
         title: "F-1 va F-3 Oila vizasi",
-        link: "/",
+        link: "/categories?id=3",
       },
     ],
   },
   {
     id: 3,
-    title: "Kerakli hujjatlar",
+    title: "Kontaktlar",
     links: [
       {
         id: 1,
@@ -120,6 +120,7 @@ const footerNav = [
               v-for="item in socials"
               :key="item.id"
               :to="item.link"
+              target="_blank"
               class="group hover:bg-white border border-red-main hover:border-white transition-all size-10 flex-center rounded-full"
             >
               <component :is="item.icon" />

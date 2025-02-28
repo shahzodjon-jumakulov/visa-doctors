@@ -64,11 +64,7 @@ const description =
             class="text-base leading-140 text-black-main"
             v-html="description"
           ></div>
-          <UButton label="Batafsil o‘qish" color="primary" class="w-fit">
-            <template #trailing>
-              <img src="~/assets/icons/arrow-right.svg" alt="arrow" />
-            </template>
-          </UButton>
+          <BaseButton label="Batafsil o‘qish" to="/about" />
         </div>
       </div>
     </UContainer>

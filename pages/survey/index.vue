@@ -59,6 +59,7 @@ const form = reactive({
         </div>
 
         <div
+          v-auto-animate
           class="bg-white border-t-4 border-red-main rounded-xl p-8 flex flex-col gap-5 max-w-[50rem] w-full"
         >
           <SurveyProgress

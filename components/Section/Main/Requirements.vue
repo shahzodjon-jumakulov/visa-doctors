@@ -8,19 +8,19 @@ const reqs = [
     id: 1,
     title: "C-3-1 Mehmon viza",
     icon: Guest,
-    link: "/",
+    link: "/categories?id=1",
   },
   {
     id: 2,
     title: "O‘quvchi vizasi",
     icon: Study,
-    link: "/",
+    link: "/categories?id=2",
   },
   {
     id: 3,
     title: "F-1 va F-3 Oila vizasi",
     icon: Family,
-    link: "/",
+    link: "/categories?id=3",
   },
 ];
 </script>
@@ -54,9 +54,7 @@ const reqs = [
             >
               {{ item.title }}
             </span>
-            <div
-              class="size-6 flex-center group-hover:translate-x-1 transition-transform"
-            >
+            <div class="size-6 flex-center">
               <IconArrowRightRed />
             </div>
           </NuxtLink>

@@ -4,7 +4,9 @@
 
 <template>
   <UContainer class="pb-10 md:pb-[4.5rem]">
-    <div class="relative bg-red-main rounded-2xl flex max-md:flex-col items-end z-[1]">
+    <div
+      class="relative bg-red-main rounded-2xl flex max-md:flex-col items-end z-[1]"
+    >
       <div class="p-12 flex flex-col gap-8 text-white">
         <div class="flex flex-col gap-4">
           <h2
@@ -17,11 +19,12 @@
           </p>
         </div>
 
-        <UButton label="So‘rovnoma to‘ldirish" color="secondary" class="w-fit">
-          <template #trailing>
-            <img src="~/assets/icons/arrow-right.svg" alt="arrow" />
-          </template>
-        </UButton>
+        <BaseButton
+          to="/survey"
+          label="So‘rovnoma to‘ldirish"
+          color="secondary"
+          class="w-fit"
+        />
       </div>
 
       <div class="relative shrink-0">

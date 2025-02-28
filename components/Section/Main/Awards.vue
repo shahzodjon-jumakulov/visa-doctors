@@ -20,11 +20,7 @@ const description =
             class="text-base leading-140 text-white"
             v-html="description"
           ></div>
-          <UButton label="Batafsil o‘qish" class="w-fit">
-            <template #trailing>
-              <img src="~/assets/icons/arrow-right.svg" alt="arrow" />
-            </template>
-          </UButton>
+          <BaseButton label="Batafsil o‘qish" to="/awards" />
         </div>
         <div
           class="relative grid grid-cols-2 grid-rows-2 max-w-[32rem] w-full shrink-0 z-0"

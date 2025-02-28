@@ -17,6 +17,7 @@ const navs = [
   },
 ];
 
+const isBurgerOpen = useState("burger");
 const isHeaderFixed = ref(false);
 const route = useRoute();
 const isMainPage = computed(() => route.path === "/");
@@ -75,7 +76,7 @@ onMounted(() => {
             </NuxtLink>
           </div>
         </div>
-        <button class="lg:hidden h-fit">
+        <button class="lg:hidden h-fit" @click="isBurgerOpen = true">
           <img src="~/assets/icons/menu.svg" alt="menu" class="size-6" />
         </button>
       </div>
@@ -108,11 +109,7 @@ onMounted(() => {
               : 'max-w-0 ml-0'
           "
         >
-          <UButton label="So‘rovnoma to‘ldirish" truncate>
-            <template #trailing>
-              <img src="~/assets/icons/arrow-right.svg" alt="arrow" />
-            </template>
-          </UButton>
+          <BaseButton label="So‘rovnoma to‘ldirish" truncate to="/survey" />
         </div>
       </div>
     </UContainer>

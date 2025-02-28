@@ -23,11 +23,7 @@
               o’ting
             </p>
           </div>
-          <UButton label="Bosh sahifa" to="/">
-            <template #trailing>
-              <img src="~/assets/icons/arrow-right.svg" alt="arrow" />
-            </template>
-          </UButton>
+          <BaseButton label="Bosh sahifa" to="/" />
         </div>
       </UContainer>
     </main>

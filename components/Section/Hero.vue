@@ -45,15 +45,7 @@ const nav = [
           >
             Koreyada ta’lim uchun so‘rovnoma to‘ldiring
           </h1>
-          <UButton
-            to="/survey"
-            label="So‘rovnoma to‘ldirish"
-            class="w-fit md:max-lg:self-center"
-          >
-            <template #trailing>
-              <img src="~/assets/icons/arrow-right.svg" alt="arrow" />
-            </template>
-          </UButton>
+          <BaseButton label="So‘rovnoma to‘ldirish" to="/survey" />
         </div>
         <div
           class="bg-black-400 backdrop-blur-[10px] rounded-xl overflow-hidden grid max-lg:grid-rows-3 lg:grid-cols-3 max-lg:max-w-3xl w-full"
