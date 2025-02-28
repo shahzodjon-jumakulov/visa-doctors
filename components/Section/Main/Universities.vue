@@ -5,24 +5,31 @@ import university from "@/assets/images/universities/seojeong-university.png";
 const clients = [
   {
     icon: university,
+    name: "Seojong university",
   },
   {
     icon: university,
+    name: "Seojong university",
   },
   {
     icon: university,
+    name: "Seojong university",
   },
   {
     icon: university,
+    name: "Seojong university",
   },
   {
     icon: university,
+    name: "Seojong university",
   },
   {
     icon: university,
+    name: "Seojong university",
   },
   {
     icon: university,
+    name: "Seojong university",
   },
 ];
 
@@ -73,7 +80,7 @@ onMounted(() => {
 <template>
   <section class="py-[4.5rem] overflow-hidden">
     <div class="flex flex-col gap-10">
-      <div class="flex flex-col gap-3 text-center px-5">
+      <div class="flex flex-col gap-3 text-center px-5" data-aos="fade-up">
         <h2 class="section-heading">
           Quyidagi universitetlarda
           <span class="text-red-main">talaba bo‘ling</span>

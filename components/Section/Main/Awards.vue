@@ -25,32 +25,48 @@ const description =
         <div
           class="relative grid grid-cols-2 grid-rows-2 max-w-[32rem] w-full shrink-0 z-0"
         >
-          <div class="single-pic z-[-2]">
+          <div
+            class="single-pic z-[-2]"
+            data-aos="fade-up-left"
+            data-aos-anchor-placement="top-center"
+          >
             <img
               src="~/assets/images/man-with-passport.png"
               alt="Visa approved"
               class="size-full object-cover"
             />
           </div>
-          <div class="single-pic relative z-0">
+          <div
+            class="single-pic relative z-0"
+            data-aos="fade-up-right"
+            data-aos-anchor-placement="top-center"
+          >
             <img
               src="~/assets/images/man-with-passport.png"
               alt="Visa approved"
               class="w-[63%] absolute top-[10%] right-[20%]"
             />
           </div>
-          <div class="single-pic relative z-0">
+          <div
+            class="single-pic relative z-0"
+            data-aos="fade-down-left"
+            data-aos-anchor-placement="bottom-bottom"
+          >
             <img
               src="~/assets/images/man-with-passport.png"
               alt="Visa approved"
               class="w-[63%] absolute left-[20%] top-[10%]"
             />
           </div>
-          <div class="single-pic relative z-[-2]\">
+          <div
+            class="single-pic relative z-[-2]"
+            data-aos="fade-down-right"
+            data-aos-anchor-placement="bottom-bottom"
+          >
             <img
               src="~/assets/images/man-with-passport.png"
               alt="Visa approved"
-              class="w-[60%] absolute right-[15%] top-[10%]"
+              class="w-[60%] absolute right-[10%] top-[15%]"
             />
           </div>
           <div

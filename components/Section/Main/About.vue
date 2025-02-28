@@ -18,7 +18,11 @@ const description =
   <section class="relative">
     <UContainer class="py-10 md:py-[4.5rem]">
       <div class="flex max-lg:flex-col gap-10 md:max-lg:items-center">
-        <div class="relative shrink-0 w-fit ml-10">
+        <div
+          class="relative shrink-0 w-fit ml-10"
+          data-aos="fade-right"
+          data-aos-anchor-placement="center-bottom"
+        >
           <div>
             <img
               src="~/assets/images/main-about.png"
@@ -48,6 +52,7 @@ const description =
           </div>
           <div class="flex flex-wrap gap-10">
             <div
+            data-aos="fade-right"
               class="flex items-center gap-4"
               v-for="item in features"
               :key="item.id"

@@ -55,7 +55,7 @@ const ui = {
   overlay: {
     background: "bg-black-500 dark:bg-black-500 backdrop-blur-md",
   },
-  width: "w-full max-w-[80%] sm:max-w-[35rem]",
+  width: "w-full max-w-[min(80%,35rem)]",
 };
 </script>
 

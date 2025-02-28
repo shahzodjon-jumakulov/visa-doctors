@@ -38,6 +38,7 @@ const nav = [
         class="flex flex-col max-lg:items-center justify-between gap-20 md:gap-10 lg:gap-[5.5rem] grow"
       >
         <div
+          data-aos="fade-up"
           class="flex flex-col gap-5 lg:gap-10 max-lg:max-w-3xl w-full lg:max-w-[45rem]"
         >
           <h1
@@ -81,28 +82,46 @@ const nav = [
         class="absolute right-0 top-1/2 -translate-y-1/2 z-[-1] max-lg:hidden"
       >
         <div class="bg-red-main rounded-full size-[35rem] relative">
-          <img
-            src="~/assets/images/hero-flag.png"
-            alt="Korean flag"
-            class="absolute h-[31rem] rotate-[-28deg] -top-16 -left-8"
-          />
-          <img
-            src="~/assets/images/hero-woman.png"
+          <div data-aos="fade-up" class="absolute h-[31rem] -top-16 -left-8">
+            <NuxtImg
+              src="/hero-flag.png"
+              alt="Korean flag"
+              format="webp"
+              preload
+              class="rotate-[-28deg] h-full"
+            />
+          </div>
+          <NuxtImg
+            data-aos="fade-right"
+            data-aos-delay="300"
+            src="/hero-woman.png"
             alt="Student girl"
+            format="webp"
+            width="321"
+            height="543"
+            preload
             class="absolute top-[11rem] left-0"
           />
-          <img
-            src="~/assets/images/hero-man.png"
+          <NuxtImg
+            data-aos="fade-left"
+            data-aos-delay="300"
+            src="/hero-man.png"
             alt="Student boy"
+            format="webp"
+            width="445"
+            height="663"
+            preload
             class="absolute top-20 right-0"
           />
         </div>
       </div>
     </UContainer>
     <div class="pointer-events-none absolute inset-0 z-[-2]">
-      <img
-        src="~/assets/images/hero-bg.png"
+      <NuxtImg
+        src="/hero-bg.png"
         alt="hero"
+        format="webp"
+        placeholder
         class="size-full object-cover"
       />
       <div

@@ -9,6 +9,6 @@
     <SectionMainRequirements />
     <SectionMainAwards />
     <SectionMainUniversities />
-    <SectionSurvey />
+    <SectionSurvey data-aos="fade-up" />
   </main>
 </template>

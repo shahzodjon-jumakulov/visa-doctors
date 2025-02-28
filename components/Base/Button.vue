@@ -3,7 +3,7 @@
 </script>
 
 <template>
-  <UButton v-bind="$props" class="group/button w-fit">
+  <UButton v-bind="$props" class="group/button w-fit" truncate>
     <template #trailing>
       <span
         class="size-6 flex-center group-disabled/button:!translate-x-0 group-hover/button:translate-x-1 transition-all"

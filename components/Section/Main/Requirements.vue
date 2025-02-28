@@ -38,26 +38,31 @@ const reqs = [
           </p>
         </div>
         <div class="grid max-lg:grid-rows-3 lg:grid-cols-3 gap-3">
-          <NuxtLink
-            v-for="item in reqs"
+          <div
+            data-aos="fade-left"
+            :data-aos-delay="index * 300"
+            v-for="(item, index) in reqs"
             :key="item.id"
-            :to="item.link"
-            class="bg-white hover:bg-red-main active:bg-red-pressed transition-colors rounded-xl p-4 flex items-center gap-3 group"
           >
-            <div
-              class="bg-red-100 group-hover:bg-white-200 group-active:bg-white-200 transition-colors rounded-full size-12 md:size-16 flex-center shrink-0"
+            <NuxtLink
+              :to="item.link"
+              class="bg-white hover:bg-red-main active:bg-red-pressed transition-colors rounded-xl p-4 flex items-center gap-3 group"
             >
-              <component :is="item.icon" class="size-9 md:size-12" />
-            </div>
-            <span
-              class="text-base leading-140 font-bold uppercase text-black-main grow group-hover:text-white group-active:text-white transition-colors"
-            >
-              {{ item.title }}
-            </span>
-            <div class="size-6 flex-center">
-              <IconArrowRightRed />
-            </div>
-          </NuxtLink>
+              <div
+                class="bg-red-100 group-hover:bg-white-200 group-active:bg-white-200 transition-colors rounded-full size-12 md:size-16 flex-center shrink-0"
+              >
+                <component :is="item.icon" class="size-9 md:size-12" />
+              </div>
+              <span
+                class="text-base leading-140 font-bold uppercase text-black-main grow group-hover:text-white group-active:text-white transition-colors"
+              >
+                {{ item.title }}
+              </span>
+              <div class="size-6 flex-center">
+                <IconArrowRightRed />
+              </div>
+            </NuxtLink>
+          </div>
         </div>
       </div>
     </UContainer>

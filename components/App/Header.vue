@@ -81,24 +81,21 @@ onMounted(() => {
         </button>
       </div>
       <div class="max-md:hidden flex items-center">
-        <div class="flex items-center gap-3">
+        <NuxtLink class="flex items-center gap-3" to="tel:+998336666633">
           <img
             src="~/assets/icons/call-calling.svg"
             alt="call"
             class="size-8"
           />
-          <div class="flex flex-col">
+          <div class="flex flex-col max-lg:hidden">
             <p class="text-sm leading-normal text-white-400">
               Viza bo‘yicha savollar
             </p>
-            <NuxtLink
-              to="tel:+998336666633"
-              class="text-base leading-normal text-white font-bold"
-            >
+            <p class="text-base leading-normal text-white font-bold">
               +998 33 66666 33
-            </NuxtLink>
+            </p>
           </div>
-        </div>
+        </NuxtLink>
         <div
           class="overflow-hidden transition-all duration-300 max-md:hidden"
           :class="
