@@ -82,9 +82,13 @@ const nav = [
         class="absolute right-0 top-1/2 -translate-y-1/2 z-[-1] max-lg:hidden"
       >
         <div class="bg-red-main rounded-full size-[35rem] relative">
-          <div data-aos="fade-up" class="absolute h-[31rem] -top-16 -left-8">
+          <div
+            data-aos="fade-up"
+            data-aos-anchor-placement="top-bottom"
+            class="absolute h-[31rem] -top-16 -left-8"
+          >
             <NuxtImg
-              src="/hero-flag.png"
+              src="/images/hero-flag.png"
               alt="Korean flag"
               format="webp"
               preload
@@ -94,7 +98,8 @@ const nav = [
           <NuxtImg
             data-aos="fade-right"
             data-aos-delay="300"
-            src="/hero-woman.png"
+            data-aos-anchor-placement="top-bottom"
+            src="/images/hero-woman.png"
             alt="Student girl"
             format="webp"
             width="321"
@@ -105,7 +110,8 @@ const nav = [
           <NuxtImg
             data-aos="fade-left"
             data-aos-delay="300"
-            src="/hero-man.png"
+            data-aos-anchor-placement="top-bottom"
+            src="/images/hero-man.png"
             alt="Student boy"
             format="webp"
             width="445"
@@ -118,7 +124,7 @@ const nav = [
     </UContainer>
     <div class="pointer-events-none absolute inset-0 z-[-2]">
       <NuxtImg
-        src="/hero-bg.png"
+        src="/images/hero-bg.png"
         alt="hero"
         format="webp"
         placeholder

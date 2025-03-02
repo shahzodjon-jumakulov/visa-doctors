@@ -5,7 +5,7 @@ export default defineNuxtConfig({
   compatibilityDate: "2025-02-23",
   css: ["~/assets/css/main.scss"],
   colorMode: { preference: "light" },
-  image: {
-    dir: 'assets/images',
+  build: {
+    transpile: ["ohash"]
   },
 });
