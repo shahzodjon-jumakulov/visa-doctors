@@ -47,10 +47,17 @@ export default defineAppConfig({
       },
       color: {
         white: {
-          none:
-            "shadow-sm bg-black-100 hover:bg-black-200 dark:bg-black-100 text-black-main dark:text-black-main ring-0 focus:ring-2 !ring-black-main dark:ring-black-main transition-colors",
+          none: "shadow-sm bg-black-100 hover:bg-black-200 dark:bg-black-100 text-black-main dark:text-black-main ring-0 focus:ring-2 !ring-black-main dark:ring-black-main transition-colors",
         },
       },
+    },
+    modal: {
+      container: "items-center",
+      overlay: {
+        base: "backdrop-blur",
+        background: "bg-black-500 dark:bg-black-500",
+      },
+      width: "w-full sm:max-w-[23rem]",
     },
   },
 });

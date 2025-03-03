@@ -1,11 +1,10 @@
 <script setup>
+const isModalOpen = ref(false);
+
 const { data } = await useMyFetch("/questions/");
 console.log(data.value);
 
 const body = ref([]);
-// watch(body, () => {
-//   console.log(body.value);
-// }, { deep: true });
 if (data.value) {
   data.value.forEach((item) => {
     const res = { question: item.id };
@@ -57,7 +56,7 @@ const stepTo = (step) => {
 
         <div
           v-auto-animate
-          class="bg-white border-t-4 border-red-main rounded-xl p-8 flex flex-col gap-5 max-w-[50rem] w-full"
+          class="bg-white border-t-4 border-red-main rounded-xl px-4 py-5 md:p-8 flex flex-col gap-5 max-w-[50rem] w-full"
         >
           <SurveyProgress
             :max="steps"
@@ -101,5 +100,27 @@ const stepTo = (step) => {
         </div>
       </div>
     </UContainer>
+
+    <UModal v-model="isModalOpen">
+      <div class="py-5 px-6 rounded-3xl flex flex-col gap-5 items-center">
+        <div class="">
+          <img src="~/assets/icons/check-circle.svg" alt="done" />
+        </div>
+        <div class="flex flex-col gap-2 text-center">
+          <h2 class="text-black-main text-lg font-bold leading-normal">
+            So’rovnomangiz yuborildi
+          </h2>
+          <p class="text-sm text-black-500">Siz bilan tez orada bog’lanamiz</p>
+        </div>
+        <BaseButton label="Tushunarli" block class="w-full" to="/" />
+
+        <button
+          class="size-6 flex-center absolute top-5 right-5"
+          @click="isModalOpen = false"
+        >
+          <img src="~/assets/icons/remove_black.svg" alt="close" />
+        </button>
+      </div>
+    </UModal>
   </div>
 </template>

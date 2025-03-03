@@ -16,16 +16,21 @@ const toggleIdFrom = (id, arr) => {
 const toggleCheck = (id, isSelectable, parentId) => {
   if (parentId) {
     const prev = optionWithChildren[parentId];
+    let newModel = [...model.value];
     if (prev) {
-      model.value = toggleIdFrom(prev, model.value);
+      newModel = newModel.filter((item) => item !== prev);
     }
     optionWithChildren[parentId] = id;
-    model.value = toggleIdFrom(id, model.value);
+    model.value = [...newModel, id];
   } else {
     if (isSelectable) {
       model.value = toggleIdFrom(id, model.value);
     } else {
       checked.value = toggleIdFrom(id, checked.value);
+      if (optionWithChildren[id]) {
+        model.value = toggleIdFrom(optionWithChildren[id], model.value);
+        delete optionWithChildren[id];
+      }
     }
   }
 };
@@ -53,10 +58,7 @@ const toggleCheck = (id, isSelectable, parentId) => {
         <div class="flex items-center gap-3">
           <div class="size-6 flex-center" v-auto-animate="{ duration: 150 }">
             <img
-              v-if="
-                !checked.includes(item.id) &&
-                !model.includes(item.id)
-              "
+              v-if="!checked.includes(item.id) && !model.includes(item.id)"
               src="~/assets/icons/tick-square.svg"
               alt="checkbox"
             />
