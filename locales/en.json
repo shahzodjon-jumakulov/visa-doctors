@@ -9,6 +9,18 @@
   "hero": {
     "title": "Fill out the survey for education in Korea"
   },
+  "docs_requirements": ["Required documents", "for visa"],
+  "docs_requirements_desc": "Below is the list of required documents for obtaining a visa",
+  "universities_section": {
+    "title": "<span>Become a student</span> at the following universities",
+    "desc": "List of the best universities in Korea"
+  },
+  "types_of_visas": "Types of visas",
+  "experience_years": "Years of Experience",
   "fill_survey": "Fill out the survey",
+  "read_more": "Read more",
+  "information": "Information",
+  "contacts": "Contacts",
+  "rights_reserved": "All rights reserved",
   "questions_regarding_visa": "Visa questions"
 }

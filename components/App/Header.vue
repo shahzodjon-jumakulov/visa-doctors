@@ -2,6 +2,7 @@
 const { t } = useI18n();
 const localePath = useLocalePath();
 
+const contacts = useContacts();
 const navs = computed(() => [
   {
     id: 1,
@@ -56,15 +57,15 @@ onMounted(() => {
           <img src="~/assets/icons/menu.svg" alt="menu" class="size-6" />
         </button>
         <div class="flex items-stretch gap-10">
-          <NuxtLink to="/" class="h-10 lg:h-12">
+          <NuxtLinkLocale to="/" class="h-10 lg:h-12">
             <img
               src="~/assets/icons/logo.svg"
               alt="Visa Doctors"
               class="h-full"
             />
-          </NuxtLink>
+          </NuxtLinkLocale>
           <div class="flex gap-8 group max-lg:hidden">
-            <NuxtLink
+            <NuxtLinkLocale
               v-for="(item, index) in navs"
               :key="item.id"
               :to="item.link"
@@ -79,14 +80,17 @@ onMounted(() => {
               class="text-base font-medium text-white group-hover:text-white-500 hover:!text-white transition-all duration-300 content-center"
             >
               {{ item.title }}
-            </NuxtLink>
+            </NuxtLinkLocale>
           </div>
         </div>
         <AppLang class="md:!hidden" />
       </div>
       <div class="max-md:hidden flex items-center">
         <AppLang />
-        <NuxtLink class="flex items-center gap-3 ml-8" to="tel:+998336666633">
+        <NuxtLink
+          class="flex items-center gap-3 ml-8"
+          :to="`tel:${contacts.phone}`"
+        >
           <img
             src="~/assets/icons/call-calling.svg"
             alt="call"
@@ -97,7 +101,7 @@ onMounted(() => {
               {{ $t("questions_regarding_visa") }}
             </p>
             <p class="text-base leading-normal text-white font-bold">
-              +998 33 66666 33
+              {{ contacts.phone }}
             </p>
           </div>
         </NuxtLink>

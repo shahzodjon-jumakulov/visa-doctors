@@ -9,92 +9,95 @@ import Call from "@/assets/icons/call-calling.svg";
 import Mail from "@/assets/icons/mail.svg";
 import Location from "@/assets/icons/location.svg";
 
+const { t } = useI18n();
+const contacts = useContacts();
+
 const socials = [
   {
     id: 1,
     icon: IconSocialTelegram,
-    link: "https://t.me/visadoctors",
+    link: contacts.value?.telegram,
   },
   {
     id: 2,
     icon: IconSocialInstagram,
-    link: "https://www.instagram.com/visadoctors/",
+    link: contacts.value?.instagram,
   },
   {
     id: 3,
     icon: IconSocialFacebook,
-    link: "https://www.facebook.com/visadoctorsuz",
+    link: contacts.value?.facebook,
   },
   {
     id: 4,
     icon: IconSocialYoutube,
-    link: "https://www.youtube.com/",
+    link: contacts.value?.youtube,
   },
 ];
 
-const footerNav = [
+const footerNav = computed(() => [
   {
     id: 1,
-    title: "Ma’lumot",
+    title: t("information"),
     links: [
       {
         id: 1,
-        title: "Biz haqimizda",
+        title: t("about_us"),
         link: "/about",
       },
       {
         id: 2,
-        title: "Bizning natijalarimiz",
+        title: t("awards"),
         link: "/awards",
       },
     ],
   },
-  {
-    id: 2,
-    title: "Kerakli hujjatlar",
-    links: [
-      {
-        id: 1,
-        title: "C-3-1 Mehmon viza",
-        link: "/categories?id=1",
-      },
-      {
-        id: 2,
-        title: "O‘quvchi vizasi",
-        link: "/categories?id=2",
-      },
-      {
-        id: 3,
-        title: "F-1 va F-3 Oila vizasi",
-        link: "/categories?id=3",
-      },
-    ],
-  },
+  // {
+  //   id: 2,
+  //   title: t("required_docs"),
+  //   links: [
+  //     {
+  //       id: 1,
+  //       title: "C-3-1 Mehmon viza",
+  //       link: "/categories?id=1",
+  //     },
+  //     {
+  //       id: 2,
+  //       title: "O‘quvchi vizasi",
+  //       link: "/categories?id=2",
+  //     },
+  //     {
+  //       id: 3,
+  //       title: "F-1 va F-3 Oila vizasi",
+  //       link: "/categories?id=3",
+  //     },
+  //   ],
+  // },
   {
     id: 3,
-    title: "Kontaktlar",
+    title: t("contacts"),
     links: [
       {
         id: 1,
-        title: "+998 33 66666 33",
-        link: "tel:+998336666633",
+        title: contacts.value.phone,
+        link: `tel:${contacts.value.phone}`,
         icon: Call,
       },
       {
         id: 2,
-        title: "needhelp@company.com",
-        link: "mailto:needhelp@company.com",
+        title: contacts.value.email,
+        link: "mailto:contacts.value.email",
         icon: Mail,
       },
       {
         id: 3,
-        title: "needhelp@company.com",
-        link: "mailto:needhelp@company.com",
+        title: contacts.value.address,
+        link: "mailto:contacts.value.address",
         icon: Location,
       },
     ],
   },
-];
+]);
 </script>
 
 <template>
@@ -103,19 +106,19 @@ const footerNav = [
       <div class="flex max-md:flex-col gap-10 md:justify-between">
         <div class="flex flex-col gap-8">
           <div class="flex flex-col gap-5">
-            <NuxtLink to="/">
+            <NuxtLinkLocale to="/">
               <img
                 src="~/assets/icons/logo.svg"
                 alt="Visa Doctors"
                 class="h-10 lg:h-12"
               />
-            </NuxtLink>
+            </NuxtLinkLocale>
             <p class="text-sm leading-140 text-white-400 lg:max-w-[20rem]">
               Aliqua id fugiat nostrud irure ex duis ea quis id quis ad et. Sunt
               qui esse pariatur duis deserunt.
             </p>
           </div>
-          <div class="flex gap-3">
+          <div class="flex gap-3" v-if="contacts">
             <NuxtLink
               v-for="item in socials"
               :key="item.id"
@@ -136,8 +139,8 @@ const footerNav = [
             <h3 class="text-lg leading-8 text-white font-semibold">
               {{ item.title }}
             </h3>
-            <div class="flex flex-col gap-4">
-              <NuxtLink
+            <div class="flex flex-col gap-4" v-if="contacts">
+              <NuxtLinkLocale
                 v-for="link in item.links"
                 :key="link.id"
                 :to="link.link"
@@ -146,8 +149,10 @@ const footerNav = [
                 <div v-if="link.icon" class="size-5 flex-center">
                   <img :src="link.icon" :alt="link.title" />
                 </div>
-                {{ link.title }}
-              </NuxtLink>
+                <span class="line-clamp-1 max-w-[10rem]">
+                  {{ link.title }}
+                </span>
+              </NuxtLinkLocale>
             </div>
           </div>
         </div>
@@ -155,9 +160,9 @@ const footerNav = [
     </UContainer>
     <div class="bg-[#121315] py-5">
       <p class="text-sm text-white-400 text-center">
-        © {{ new Date().getFullYear() }} “Visa Doctors”.
+        © {{ new Date().getFullYear() }} “Visa Doctors”. 
         <br class="md:hidden" />
-        Barcha huquqlar himoyalangnan
+        {{ $t("rights_reserved") }}
       </p>
     </div>
   </footer>

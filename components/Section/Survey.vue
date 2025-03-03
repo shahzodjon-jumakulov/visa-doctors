@@ -12,16 +12,16 @@
           <h2
             class="text-[2rem] lg:text-[2.5rem] leading-normal font-bold md:max-w-[28rem]"
           >
-            Koreyada ta’lim uchun so‘rovnoma to‘ldiring
+            {{ $t("hero.title") }}
           </h2>
           <p class="text-sm lg:text-lg font-medium">
-            Quyida viza olish uchun kerakli hujjatlar ro’yhati berilgan.
+            {{ $t("docs_requirements_desc") }}
           </p>
         </div>
 
         <BaseButton
-          to="/survey"
-          label="So‘rovnoma to‘ldirish"
+          :to="$localePath('/survey')"
+          :label="$t('fill_survey')"
           color="secondary"
           class="w-fit"
         />

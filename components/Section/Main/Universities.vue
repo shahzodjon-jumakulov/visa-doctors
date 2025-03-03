@@ -2,6 +2,8 @@
 import { gsap } from "gsap";
 import university from "@/assets/images/universities/seojeong-university.png";
 
+const { data: universities } = await useMyFetch("/universities/logos/");
+
 const clients = [
   {
     icon: university,
@@ -81,24 +83,24 @@ onMounted(() => {
   <section class="py-[4.5rem] overflow-hidden">
     <div class="flex flex-col gap-10">
       <div class="flex flex-col gap-3 text-center px-5" data-aos="fade-up">
-        <h2 class="section-heading">
-          Quyidagi universitetlarda
-          <span class="text-red-main">talaba bo‘ling</span>
-        </h2>
+        <div
+          class="section-heading"
+          v-html="$t('universities_section.title')"
+        ></div>
         <p class="text-sm md:text-lg font-medium text-black-500">
-          Quyida viza olish uchun kerakli hujjatlar ro‘yxati berilgan.
+          {{ $t("universities_section.desc") }}
         </p>
       </div>
 
       <div class="flex gap-4 md:gap-8 select-none" ref="marquee">
         <div class="flex gap-4 md:gap-8">
           <div
-            v-for="(client, index) in clients"
+            v-for="(client, index) in universities"
             :key="index"
             class="w-[12rem] md:w-[16.875rem] aspect-[2] rounded-lg border border-black-200 flex-center shrink-0 hover:bg-black-100 transition-colors"
           >
             <img
-              :src="client.icon"
+              :src="client.logo"
               :alt="client.name"
               class="max-md:scale-[0.75] max-h-[80%]"
             />

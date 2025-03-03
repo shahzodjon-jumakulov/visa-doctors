@@ -7,6 +7,10 @@
 
 .section-heading {
   @apply text-black-main text-center font-bold text-[2.5rem] leading-normal;
+
+  span {
+    @apply text-red-main;
+  }
 }
 
 .dark {

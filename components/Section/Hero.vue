@@ -52,7 +52,7 @@ const nav = computed(() => [
         <div
           class="bg-black-400 backdrop-blur-[10px] rounded-xl overflow-hidden grid max-lg:grid-rows-3 lg:grid-cols-3 max-lg:max-w-3xl w-full"
         >
-          <NuxtLink
+          <NuxtLinkLocale
             v-for="(item, index) in nav"
             :key="item.id"
             :to="item.link"
@@ -75,7 +75,7 @@ const nav = computed(() => [
             >
               <img src="~/assets/icons/arrow-down.svg" alt="arrow-down" />
             </div>
-          </NuxtLink>
+          </NuxtLinkLocale>
         </div>
       </div>
 

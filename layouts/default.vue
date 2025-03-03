@@ -1,5 +1,8 @@
 <script setup>
-//
+const { data } = await useMyFetch("/contacts/");
+
+const contacts = useContacts();
+contacts.value = data.value;
 </script>
 
 <template>

@@ -1,4 +1,6 @@
 <script setup>
+const { data: about } = await useMyFetch("/about/preview/");
+
 const features = [
   {
     id: 1,
@@ -9,13 +11,10 @@ const features = [
     title: "Ready to Help \n You in Immigration",
   },
 ];
-
-const description =
-  "Quyida viza olish uchun kerakli hujjatlar ro’yhati berilgan. Quyida viza olish uchun kerakli hujjatlar ro’yhati berilgan. Quyida viza olish uchun kerakli hujjatlar ro’yhati berilgan.Quyida viza olish uchun kerakli hujjatlar ro’yhati berilgan.Quyida viza olish uchun kerakli hujjatlar ro’yhati berilgan.Quyida viza olish uchun kerakli hujjatlar ro’yhati berilgan.Quyida viza olish uchun kerakli hujjatlar ro’yhati berilgan.Quyida viza olish uchun kerakli hujjatlar ro’yhati berilgan.Quyida viza olish uchun kerakli hujjatlar ro’yhati berilgan.Quyida viza olish uchun kerakli hujjatlar ro’yhati berilgan.";
 </script>
 
 <template>
-  <section class="relative">
+  <section class="relative" v-if="about">
     <UContainer class="py-10 md:py-[4.5rem]">
       <div class="flex max-lg:flex-col gap-10 md:max-lg:items-center">
         <div
@@ -35,24 +34,27 @@ const description =
           </div>
           <div class="absolute bottom-20 -left-10 exp">
             <p class="text-[2.5rem] leading-normal font-semibold text-red-main">
-              28
+              {{ about.experience_years || 1 }}
             </p>
-            <p class="text-sm text-black-500">Years of Experience</p>
+            <p class="text-sm text-black-500">{{ $t("experience_years") }}</p>
           </div>
         </div>
 
         <div class="flex flex-col gap-10">
           <div class="flex flex-col gap-2">
             <h2 class="section-heading !text-left">
-              <span class="text-red-main">Biz</span> haqimizda
+              <span class="text-red-main">
+                {{ about.title.split(" ")[0] }}
+              </span>
+              {{ about.title.split(" ").slice(1).join(" ") }}
             </h2>
             <p class="text-lg text-black-500 font-medium">
-              Quyida viza olish uchun kerakli hujjatlar ro’yhati berilgan.
+              {{ about.subtitle }}
             </p>
           </div>
           <div class="flex flex-wrap gap-10">
             <div
-            data-aos="fade-right"
+              data-aos="fade-right"
               class="flex items-center gap-4"
               v-for="item in features"
               :key="item.id"
@@ -67,9 +69,9 @@ const description =
           </div>
           <div
             class="text-base leading-140 text-black-main"
-            v-html="description"
+            v-html="about.preview_description"
           ></div>
-          <BaseButton label="Batafsil o‘qish" to="/about" />
+          <BaseButton :label="$t('read_more')" :to="$localePath('/about')" />
         </div>
       </div>
     </UContainer>

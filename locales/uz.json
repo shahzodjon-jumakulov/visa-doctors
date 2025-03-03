@@ -9,6 +9,18 @@
   "hero": {
     "title": "Koreyada ta’lim uchun so‘rovnoma to‘ldiring"
   },
+  "docs_requirements": ["Viza uchun", "kerakli hujjatlar"],
+  "docs_requirements_desc": "Quyida viza olish uchun kerakli hujjatlar ro‘yxati berilgan",
+  "universities_section": {
+    "title": "Quyidagi universitetlarda <span>talaba bo‘ling</span>",
+    "desc": "Koreyadagi eng yaxshi universitetlar ro‘yxati"
+  },
+  "types_of_visas": "Viza turlari",
+  "experience_years": "Yillik Tajriba",
   "fill_survey": "So‘rovnoma to‘ldirish",
+  "read_more": "Batafsil o‘qish",
+  "information": "Ma’lumot",
+  "contacts": "Aloqa",
+  "rights_reserved": "Barcha huquqlar himoyalangan",
   "questions_regarding_visa": "Viza bo‘yicha savollar"
 }

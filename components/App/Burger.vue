@@ -3,6 +3,8 @@ import Call from "@/assets/icons/call-calling.svg";
 import Mail from "@/assets/icons/mail.svg";
 import Location from "@/assets/icons/location.svg";
 
+const { t } = useI18n();
+const contactsState = useContacts();
 const route = useRoute();
 const isOpen = useState("burger", () => false);
 watch(
@@ -12,41 +14,41 @@ watch(
   }
 );
 
-const links = [
+const links = computed(() => [
   {
     id: 1,
-    title: "Biz haqimizda",
+    title: t("about_us"),
     link: "/about",
   },
   {
     id: 2,
-    title: "Bizning natijalarimiz",
+    title: t("awards"),
     link: "/awards",
   },
   {
     id: 3,
-    title: "Kerakli hujjatlar",
+    title: t("required_docs"),
     link: "/categories",
   },
-];
+]);
 
 const contacts = [
   {
     id: 1,
-    title: "+998 33 66666 33",
-    link: "tel:+998336666633",
+    title: contactsState.value?.phone,
+    link: `tel:${contactsState.value?.phone}`,
     icon: Call,
   },
   {
     id: 2,
-    title: "needhelp@company.com",
-    link: "mailto:needhelp@company.com",
+    title: contactsState.value?.email,
+    link: `mailto:${contactsState.value?.email}`,
     icon: Mail,
   },
   {
     id: 3,
-    title: "needhelp@company.com",
-    link: "mailto:needhelp@company.com",
+    title: contactsState.value?.address,
+    link: `mailto:${contactsState.value?.address}`,
     icon: Location,
   },
 ];
@@ -63,15 +65,15 @@ const ui = {
   <USlideover v-model="isOpen" side="left" :ui="ui">
     <div class="bg-white p-5 flex flex-col justify-between h-full">
       <div class="flex flex-col gap-5">
-        <NuxtLink to="/" class="h-10">
+        <NuxtLinkLocale to="/" class="h-10">
           <img
             src="~/assets/icons/logo-dark.svg"
             alt="Visa Doctors"
             class="h-full w-fit"
           />
-        </NuxtLink>
+        </NuxtLinkLocale>
         <div>
-          <NuxtLink
+          <NuxtLinkLocale
             v-for="item in links"
             :key="item.id"
             :to="item.link"
@@ -79,7 +81,7 @@ const ui = {
           >
             <span class="text-2xl font-semibold">{{ item.title }}</span>
             <img src="~/assets/icons/arrow-right-red.svg" alt="arrow" />
-          </NuxtLink>
+          </NuxtLinkLocale>
         </div>
       </div>
       <div class="flex flex-col gap-8">
@@ -93,14 +95,14 @@ const ui = {
               target="_blank"
               class="text-base text-black-main font-medium flex items-center gap-2"
             >
-              <div v-if="link.icon" class="size-5 flex-center">
+              <div v-if="link.icon" class="size-5 flex-center shrink-0">
                 <img :src="link.icon" :alt="link.title" />
               </div>
-              {{ link.title }}
+              <span class="line-clamp-1">{{ link.title }}</span>
             </NuxtLink>
           </div>
         </div>
-        <BaseButton label="So‘rovnoma to‘ldirish" to="/survey" />
+        <BaseButton :label="$t('fill_survey')" :to="$localePath('/survey')" />
       </div>
     </div>
   </USlideover>

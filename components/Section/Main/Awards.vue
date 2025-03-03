@@ -1,26 +1,34 @@
 <script setup>
-const description =
-  "Quyida viza olish uchun kerakli hujjatlar ro’yhati berilgan. Quyida viza olish uchun kerakli hujjatlar ro’yhati berilgan. Quyida viza olish uchun kerakli hujjatlar ro’yhati berilgan.Quyida viza olish uchun kerakli hujjatlar ro’yhati berilgan.Quyida viza olish uchun kerakli hujjatlar ro’yhati berilgan.Quyida viza olish uchun kerakli hujjatlar ro’yhati berilgan.Quyida viza olish uchun kerakli hujjatlar ro’yhati berilgan.Quyida viza olish uchun kerakli hujjatlar ro’yhati berilgan.Quyida viza olish uchun kerakli hujjatlar ro’yhati berilgan.Quyida viza olish uchun kerakli hujjatlar ro’yhati berilgan.";
+const { baseURL } = useRuntimeConfig().public;
+
+const { data } = await useMyFetch("/results/preview/");
+const images = ref([]);
+data.value?.preview_results?.forEach((item) => {
+  images.value.push(baseURL + item.image);
+});
 </script>
 
 <template>
-  <div class="bg-black-main relative overflow-hidden">
+  <div class="bg-black-main relative overflow-hidden" v-if="data">
     <UContainer class="py-10 md:py-[4.5rem] relative z-[1]">
       <div class="flex max-lg:flex-col md:items-center gap-10">
         <div class="flex flex-col gap-10">
           <div class="flex flex-col gap-2">
             <h2 class="section-heading !text-white !text-left">
-              Bizning <span class="text-red-main">natijalarimiz</span>
+              {{ data.title.split(" ")[0] }}
+              <span class="text-red-main">{{
+                data.title.split(" ").slice(1).join(" ")
+              }}</span>
             </h2>
             <p class="text-sm md:text-lg font-medium text-white-500">
-              Quyida viza olish uchun kerakli hujjatlar ro’yhati berilgan.
+              {{ data.subtitle }}
             </p>
           </div>
           <div
             class="text-base leading-140 text-white"
-            v-html="description"
+            v-html="data.description"
           ></div>
-          <BaseButton label="Batafsil o‘qish" to="/awards" />
+          <BaseButton :label="$t('read_more')" :to="$localePath('/awards')" />
         </div>
         <div
           class="relative grid grid-cols-2 grid-rows-2 max-w-[32rem] w-full shrink-0 z-0"
@@ -31,7 +39,7 @@ const description =
             data-aos-anchor-placement="top-center"
           >
             <img
-              src="~/assets/images/man-with-passport.png"
+              :src="images[0]"
               alt="Visa approved"
               class="size-full object-cover"
             />
@@ -42,7 +50,7 @@ const description =
             data-aos-anchor-placement="top-center"
           >
             <img
-              src="~/assets/images/man-with-passport.png"
+              :src="images[1]"
               alt="Visa approved"
               class="w-[63%] absolute top-[10%] right-[20%]"
             />
@@ -53,7 +61,7 @@ const description =
             data-aos-anchor-placement="bottom-bottom"
           >
             <img
-              src="~/assets/images/man-with-passport.png"
+              :src="images[2]"
               alt="Visa approved"
               class="w-[63%] absolute left-[20%] top-[10%]"
             />
@@ -64,7 +72,7 @@ const description =
             data-aos-anchor-placement="bottom-bottom"
           >
             <img
-              src="~/assets/images/man-with-passport.png"
+              :src="images[3]"
               alt="Visa approved"
               class="w-[60%] absolute right-[10%] top-[15%]"
             />
@@ -73,7 +81,7 @@ const description =
             class="rounded-2xl border-4 md:border-8 border-black-main overflow-hidden absolute-center z-[-1]"
           >
             <img
-              src="~/assets/images/man-with-passport.png"
+              :src="images[4]"
               alt="Visa approved"
               class="size-full object-cover"
             />
