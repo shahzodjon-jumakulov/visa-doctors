@@ -16,6 +16,9 @@ export default defineNuxtConfig({
     },
   },
   colorMode: { preference: "light" },
+  build: {
+    transpile: ["ohash"],
+  },
   i18n: {
     vueI18n: "./i18n.config.ts",
     strategy: "prefix_and_default",

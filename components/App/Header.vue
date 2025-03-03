@@ -50,8 +50,11 @@ onMounted(() => {
   >
     <UContainer class="py-5 md:py-6 lg:py-5 flex justify-between">
       <div
-        class="flex items-center max-md:justify-between max-md:grow md:max-lg:flex-row-reverse md:gap-8"
+        class="flex items-center max-md:justify-between max-md:grow md:gap-8"
       >
+        <button class="lg:hidden h-fit" @click="isBurgerOpen = true">
+          <img src="~/assets/icons/menu.svg" alt="menu" class="size-6" />
+        </button>
         <div class="flex items-stretch gap-10">
           <NuxtLink to="/" class="h-10 lg:h-12">
             <img
@@ -79,9 +82,7 @@ onMounted(() => {
             </NuxtLink>
           </div>
         </div>
-        <button class="lg:hidden h-fit" @click="isBurgerOpen = true">
-          <img src="~/assets/icons/menu.svg" alt="menu" class="size-6" />
-        </button>
+        <AppLang class="md:!hidden" />
       </div>
       <div class="max-md:hidden flex items-center">
         <AppLang />
