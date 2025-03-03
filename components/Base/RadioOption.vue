@@ -7,12 +7,13 @@ const props = defineProps({
 
 <template>
   <button
+    type="button"
     :class="
       selected === option.id
         ? '!bg-black-main'
         : 'bg-black-100 hover:bg-black-200'
     "
-    class="transition-colors rounded-lg p-4 flex items-center gap-3"
+    class="transition-colors rounded-lg p-4 flex items-center gap-3 w-full"
   >
     <div
       :class="selected === option.id ? 'ring-white' : 'ring-black-400'"
@@ -25,9 +26,9 @@ const props = defineProps({
     </div>
     <p
       :class="selected === option.id ? 'text-white' : 'text-black-main'"
-      class="text-base transition-colors"
+      class="text-base transition-colors text-left"
     >
-      {{ option.name }}
+      {{ option.text }}
     </p>
   </button>
 </template>

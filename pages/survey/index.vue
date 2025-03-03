@@ -1,48 +1,45 @@
 <script setup>
-import {
-  SurveyStep1,
-  SurveyStep2,
-  SurveyStep3,
-  SurveyStep4,
-  SurveyStep5,
-  SurveyStep6,
-  SurveyStep7,
-  SurveyStep8,
-} from "#components";
+const { data } = await useMyFetch("/questions/");
+console.log(data.value);
 
-const steps = [
-  SurveyStep1,
-  SurveyStep2,
-  SurveyStep3,
-  SurveyStep4,
-  SurveyStep5,
-  SurveyStep6,
-  SurveyStep7,
-  SurveyStep8,
-];
-const currentStep = ref(0);
+const body = ref([]);
+// watch(body, () => {
+//   console.log(body.value);
+// }, { deep: true });
+if (data.value) {
+  data.value.forEach((item) => {
+    const res = { question: item.id };
+    if (item.input_type === "text") res.text_answer = "";
+    else res.selected_options = [];
+    body.value.push(res);
+  });
+}
 
-const next = () => {
-  if (currentStep.value < steps.length) {
-    currentStep.value++;
+const questions = ref(data.value || []);
+const steps = ref(questions.value.length);
+
+const currIndex = ref(0);
+const currProgress = ref(0);
+const currentQuestion = computed(() => questions.value[currIndex.value]);
+
+const next = async () => {
+  if (currIndex.value < steps.value - 1) {
+    currIndex.value++;
+    if (currIndex.value > currProgress.value)
+      currProgress.value = currIndex.value;
+  } else {
+    const { data } = await useMyFetch("/submit/", {
+      method: "POST",
+      body: { responses: body.value },
+    });
+    console.log(data.value);
   }
 };
 
 const stepTo = (step) => {
-  if (step > steps.length) return;
-  currentStep.value = step;
+  if (step > steps.value) return;
+  currIndex.value = step;
 };
-
-const form = reactive({
-  name: "",
-  phone: "",
-  certificates: [],
-  age: "",
-  graduated: "",
-  degree: "",
-  isFirstTime: "",
-  comments: "",
-});
 </script>
 
 <template>
@@ -63,11 +60,44 @@ const form = reactive({
           class="bg-white border-t-4 border-red-main rounded-xl p-8 flex flex-col gap-5 max-w-[50rem] w-full"
         >
           <SurveyProgress
-            :max="steps.length"
-            :current="currentStep"
+            :max="steps"
+            :current="currIndex"
+            :progress="currProgress"
             @step-to="stepTo"
           />
-          <component :is="steps[currentStep]" @next="next" />
+          <form
+            @submit.prevent
+            v-if="currentQuestion"
+            :key="currentQuestion.id"
+            class="flex flex-col gap-5"
+          >
+            <h2 class="text-lg font-bold text-black-main">
+              {{ currentQuestion.title }}
+            </h2>
+            <SurveyStepCheckbox
+              v-if="currentQuestion.input_type === 'multiple_choice'"
+              :options="currentQuestion.options"
+              v-model="body[currIndex].selected_options"
+            />
+            <SurveyStepRadio
+              v-else-if="currentQuestion.input_type === 'single_choice'"
+              :options="currentQuestion.options"
+              v-model="body[currIndex]"
+            />
+            <UInput
+              v-else
+              :placeholder="currentQuestion.title"
+              variant="none"
+              v-model="body[currIndex].text_answer"
+              autofocus
+            />
+            <BaseButton
+              label="Keyingisi"
+              @click="next"
+              class="w-fit"
+              type="submit"
+            />
+          </form>
         </div>
       </div>
     </UContainer>
