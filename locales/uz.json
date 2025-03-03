@@ -1,0 +1,14 @@
+{
+  "hello": "Salom, Dunyo!",
+  "about_us": "Biz haqimizda",
+  "about_us_desc": "Ishonchli va samarali hamkor",
+  "awards": "Natijalarimiz",
+  "awards_desc": "Biz bilan 90% dan oshiq mijozlar ijobiy natijaga erishishlari mumkin",
+  "required_docs": "Kerakli hujjatlar",
+  "required_docs_desc": "Barcha viza yo‘nalishlari bo‘yicha to‘liq ma’lumot oling",
+  "hero": {
+    "title": "Koreyada ta’lim uchun so‘rovnoma to‘ldiring"
+  },
+  "fill_survey": "So‘rovnoma to‘ldirish",
+  "questions_regarding_visa": "Viza bo‘yicha savollar"
+}

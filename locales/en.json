@@ -1,0 +1,14 @@
+{
+  "hello": "Hello, World!",
+  "about_us": "About us",
+  "about_us_desc": "Reliable and effective partner",
+  "awards": "Awards",
+  "awards_desc": "With us, more than 90% of clients achieve positive results",
+  "required_docs": "Documents",
+  "required_docs_desc": "Get complete information on all visa categories",
+  "hero": {
+    "title": "Fill out the survey for education in Korea"
+  },
+  "fill_survey": "Fill out the survey",
+  "questions_regarding_visa": "Visa questions"
+}

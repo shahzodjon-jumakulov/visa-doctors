@@ -3,30 +3,31 @@ import Team from "@/assets/icons/team.svg";
 import Results from "@/assets/icons/results.svg";
 import Visa from "@/assets/icons/visa.svg";
 
-const nav = [
+const { t } = useI18n();
+
+const nav = computed(() => [
   {
     id: 1,
-    title: "Biz haqimizda",
-    description: "Ishonchli va samarali hamkor",
+    title: t("about_us"),
+    description: t("about_us_desc"),
     icon: Team,
     link: "/about",
   },
   {
     id: 2,
-    title: "Bizning natijalarimiz",
-    description:
-      "Biz bilan 90% dan oshiq mijozlar ijobiy natijaga erishishlari mumkin",
+    title: t("awards"),
+    description: t("awards_desc"),
     icon: Results,
     link: "/awards",
   },
   {
     id: 3,
-    title: "Viza uchun kerakli hujjatlar",
-    description: "Barcha viza yo’nalishlari bo’yicha to’liq ma’lumot oling",
+    title: t("required_docs"),
+    description: t("required_docs_desc"),
     icon: Visa,
     link: "/categories",
   },
-];
+]);
 </script>
 
 <template>
@@ -44,9 +45,9 @@ const nav = [
           <h1
             class="text-4xl md:text-[4rem] lg:text-[5rem] leading-normal font-semibold tracking-[-0.0625rem] text-white md:max-lg:text-center"
           >
-            Koreyada ta’lim uchun so‘rovnoma to‘ldiring
+            {{ $t("hero.title") }}
           </h1>
-          <BaseButton label="So‘rovnoma to‘ldirish" to="/survey" />
+          <BaseButton :label="$t('fill_survey')" :to="$localePath('/survey')" />
         </div>
         <div
           class="bg-black-400 backdrop-blur-[10px] rounded-xl overflow-hidden grid max-lg:grid-rows-3 lg:grid-cols-3 max-lg:max-w-3xl w-full"

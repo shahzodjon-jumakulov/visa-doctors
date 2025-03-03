@@ -1,26 +1,29 @@
 <script setup>
-const navs = [
+const { t } = useI18n();
+const localePath = useLocalePath();
+
+const navs = computed(() => [
   {
     id: 1,
-    title: "Biz haqimizda",
+    title: t("about_us"),
     link: "/about",
   },
   {
     id: 2,
-    title: "Natijalarimiz",
+    title: t("awards"),
     link: "/awards",
   },
   {
     id: 3,
-    title: "Kerakli hujjatlar",
+    title: t("required_docs"),
     link: "/categories",
   },
-];
+]);
 
 const isBurgerOpen = useState("burger");
 const isHeaderFixed = ref(false);
 const route = useRoute();
-const isMainPage = computed(() => route.path === "/");
+const isMainPage = computed(() => route.path === localePath("/"));
 
 onMounted(() => {
   window.addEventListener("scroll", () => {
@@ -81,7 +84,8 @@ onMounted(() => {
         </button>
       </div>
       <div class="max-md:hidden flex items-center">
-        <NuxtLink class="flex items-center gap-3" to="tel:+998336666633">
+        <AppLang />
+        <NuxtLink class="flex items-center gap-3 ml-8" to="tel:+998336666633">
           <img
             src="~/assets/icons/call-calling.svg"
             alt="call"
@@ -89,7 +93,7 @@ onMounted(() => {
           />
           <div class="flex flex-col max-lg:hidden">
             <p class="text-sm leading-normal text-white-400">
-              Viza bo‘yicha savollar
+              {{ $t("questions_regarding_visa") }}
             </p>
             <p class="text-base leading-normal text-white font-bold">
               +998 33 66666 33
@@ -106,7 +110,11 @@ onMounted(() => {
               : 'max-w-0 ml-0'
           "
         >
-          <BaseButton label="So‘rovnoma to‘ldirish" truncate to="/survey" />
+          <BaseButton
+            :label="$t('fill_survey')"
+            :to="$localePath('/survey')"
+            truncate
+          />
         </div>
       </div>
     </UContainer>

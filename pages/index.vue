@@ -1,5 +1,7 @@
 <script setup>
 //
+const { data } = await useMyFetch("/about/preview/");
+console.log(data.value);
 </script>
 
 <template>
