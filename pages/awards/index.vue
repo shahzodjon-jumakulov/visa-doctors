@@ -1,6 +1,5 @@
 <script setup>
 const { data } = await useMyFetch("/results/detail/");
-console.log(data.value);
 </script>
 
 <template>

@@ -1,21 +1,5 @@
 <script setup>
-import Family from "~/components/Icon/Family.vue";
-import Guest from "~/components/Icon/Guest.vue";
-import Study from "~/components/Icon/Study.vue";
-
 const { data } = await useMyFetch("/visas/");
-console.log(data.value);
-
-const content = `<ol>
-<li>Qarimdoshlikni tasdiqlovchi xujjat (guvohnoma(метрка), (nikox qog’ozi).</li>
-<li>Pasport (zagran)</li>
-<li>Id karta va zagran pasport nusxasi (chaqiruvchiniki)</li>
-<li>Ish joyi guvoxnomasi, soliq to’laganlik xaqida xujjat, daromadni tasdiqlovchi xujjatlar Chaqiruvchiniki). Chaqiruvchi talaba bólsa universitetdan xujjatlar (óqish xaqida, baxolar, kontrakt tólovi xaqida va boshqalar)</li>
-<li>Ijara shartnomasi (uyning umumiy maydoni yashash uchun yetarli bólishi kerak)</li>
-<li>Bank shoʻt (Koreyadan chaqiruvchini nomiga)</li>
-<li>Taklifnoma va kafolat xati (Koreyadan. Aniq maqsad yoritib berilsin).</li>
-<li>Oʻzbekistondan 1 kunlik bank malumotnomasi, yoki elektron daromad malumotnomasi my.gov saytidan.</li>
-<li>3,5x4,5 rasm</li></ol>`;
 
 const getDetail = async (slug) => {
   const { data } = await useMyFetch(`/visas/${slug}/`);
@@ -26,7 +10,6 @@ const route = useRoute();
 const selected = ref(route.query.slug || data.value[0].slug);
 const detail = ref(null);
 detail.value = await getDetail(selected.value);
-console.log(detail.value);
 watch(
   () => route.fullPath,
   async () => {
@@ -35,10 +18,6 @@ watch(
   },
   { deep: true }
 );
-
-watch(detail, (value) => {
-  console.log(value);
-});
 </script>
 
 <template>

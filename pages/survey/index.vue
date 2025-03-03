@@ -2,7 +2,6 @@
 const isModalOpen = ref(false);
 
 const { data } = await useMyFetch("/questions/");
-console.log(data.value);
 
 const body = ref([]);
 if (data.value) {
@@ -21,17 +20,20 @@ const currIndex = ref(0);
 const currProgress = ref(0);
 const currentQuestion = computed(() => questions.value[currIndex.value]);
 
+const loading = ref(false);
 const next = async () => {
   if (currIndex.value < steps.value - 1) {
     currIndex.value++;
     if (currIndex.value > currProgress.value)
       currProgress.value = currIndex.value;
   } else {
+    loading.value = true;
     const { data } = await useMyFetch("/submit/", {
       method: "POST",
       body: { responses: body.value },
     });
-    console.log(data.value);
+    if (data.value) isModalOpen.value = true;
+    loading.value = false;
   }
 };
 
@@ -39,6 +41,14 @@ const stepTo = (step) => {
   if (step > steps.value) return;
   currIndex.value = step;
 };
+
+const isDisabled = computed(() => {
+  if (currentQuestion.value.input_type === "text") {
+    return !body.value[currIndex.value]?.text_answer?.trim();
+  } else {
+    return !body.value[currIndex.value].selected_options.length;
+  }
+});
 </script>
 
 <template>
@@ -46,11 +56,12 @@ const stepTo = (step) => {
     <UContainer class="py-10 md:pb-[4.5rem]">
       <div class="flex flex-col items-center gap-10">
         <div class="flex flex-col gap-3 text-center">
-          <h1 class="section-heading">
-            <span class="text-red-main">Koreyada ta’lim</span> uchun so‘rovnoma
-          </h1>
+          <div
+            class="section-heading"
+            v-html="$t('survey_for_study_in_korea')"
+          ></div>
           <p class="text-lg font-medium text-black-500">
-            Quyida viza olish uchun kerakli hujjatlar ro’yhati berilgan.
+            {{ $t("docs_requirements_desc") }}
           </p>
         </div>
 
@@ -91,7 +102,9 @@ const stepTo = (step) => {
               autofocus
             />
             <BaseButton
-              label="Keyingisi"
+              :loading="loading"
+              :disabled="isDisabled"
+              :label="$t('next')"
               @click="next"
               class="w-fit"
               type="submit"
@@ -108,11 +121,16 @@ const stepTo = (step) => {
         </div>
         <div class="flex flex-col gap-2 text-center">
           <h2 class="text-black-main text-lg font-bold leading-normal">
-            So’rovnomangiz yuborildi
+            {{ $t("survey_sent") }}
           </h2>
-          <p class="text-sm text-black-500">Siz bilan tez orada bog’lanamiz</p>
+          <p class="text-sm text-black-500">{{ $t("contact_back_soon") }}</p>
         </div>
-        <BaseButton label="Tushunarli" block class="w-full" to="/" />
+        <BaseButton
+          :label="$t('got_it')"
+          block
+          class="w-full"
+          :to="$localePath('/')"
+        />
 
         <button
           class="size-6 flex-center absolute top-5 right-5"

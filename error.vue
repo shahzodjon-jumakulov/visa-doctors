@@ -16,14 +16,13 @@
           </div>
           <div class="flex flex-col gap-3 text-center">
             <h1 class="text-[2.5rem] leading-normal font-bold text-black-main">
-              Xatolik yuz berdi
+              {{ $t("error_occured") }}
             </h1>
             <p class="text-lg font-medium text-black-500">
-              Ushbu sahifa topilmadi. Sahifani yangilang yoki bosh sahifaga
-              o’ting
+              {{ $t("error_message") }}
             </p>
           </div>
-          <BaseButton label="Bosh sahifa" to="/" />
+          <BaseButton :label="$t('main_page')" :to="$localePath('/')" />
         </div>
       </UContainer>
     </main>

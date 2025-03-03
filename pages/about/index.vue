@@ -1,6 +1,5 @@
 <script setup>
 const { data } = await useMyFetch("/about/detail/");
-console.log(data.value);
 
 const modifyContent = (content) => {
   return setImageSrc(content);
