@@ -36,7 +36,6 @@ data.value?.preview_results?.forEach((item) => {
           <div
             class="single-pic z-[-2]"
             data-aos="fade-up-left"
-            data-aos-anchor-placement="top-center"
           >
             <img
               :src="images[0]"
@@ -47,7 +46,6 @@ data.value?.preview_results?.forEach((item) => {
           <div
             class="single-pic relative z-0"
             data-aos="fade-up-right"
-            data-aos-anchor-placement="top-center"
           >
             <img
               :src="images[1]"
@@ -58,7 +56,6 @@ data.value?.preview_results?.forEach((item) => {
           <div
             class="single-pic relative z-0"
             data-aos="fade-down-left"
-            data-aos-anchor-placement="bottom-bottom"
           >
             <img
               :src="images[2]"
@@ -69,7 +66,6 @@ data.value?.preview_results?.forEach((item) => {
           <div
             class="single-pic relative z-[-2]"
             data-aos="fade-down-right"
-            data-aos-anchor-placement="bottom-bottom"
           >
             <img
               :src="images[3]"

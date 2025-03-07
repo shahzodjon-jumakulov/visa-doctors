@@ -1,4 +1,6 @@
 <script setup>
+import { useReCaptcha } from "vue-recaptcha-v3";
+
 const isModalOpen = ref(false);
 
 const { data } = await useMyFetch("/questions/");
@@ -16,26 +18,10 @@ if (data.value) {
 const questions = ref(data.value || []);
 const steps = ref(questions.value.length);
 
+const loading = ref(false);
 const currIndex = ref(0);
 const currProgress = ref(0);
 const currentQuestion = computed(() => questions.value[currIndex.value]);
-
-const loading = ref(false);
-const next = async () => {
-  if (currIndex.value < steps.value - 1) {
-    currIndex.value++;
-    if (currIndex.value > currProgress.value)
-      currProgress.value = currIndex.value;
-  } else {
-    loading.value = true;
-    const { data } = await useMyFetch("/submit/", {
-      method: "POST",
-      body: { responses: body.value },
-    });
-    if (data.value) isModalOpen.value = true;
-    loading.value = false;
-  }
-};
 
 const stepTo = (step) => {
   if (step > steps.value) return;
@@ -49,6 +35,61 @@ const isDisabled = computed(() => {
     return !body.value[currIndex.value].selected_options.length;
   }
 });
+
+const captchaToken = ref("");
+const isReady = ref(false);
+const executeRecaptcha = ref(null);
+
+if (import.meta.client) {
+  const recaptcha = useReCaptcha();
+
+  if (recaptcha) {
+    executeRecaptcha.value = recaptcha.executeRecaptcha;
+    isReady.value = true;
+  }
+}
+
+const getToken = async () => {
+  if (!isReady.value || !executeRecaptcha.value) return;
+  return await executeRecaptcha();
+};
+
+const errorMsg = ref("");
+const next = async () => {
+  if (isDisabled.value) return;
+
+  if (
+    currentQuestion.value.input_type === "text" &&
+    currentQuestion.value.field_type
+  ) {
+    const regex = new RegExp(currentQuestion.value.field_type.regex_pattern);
+    if (!regex.test(body.value[currIndex.value].text_answer)) {
+      errorMsg.value = currentQuestion.value.field_type.error_message;
+      return;
+    } else errorMsg.value = "";
+  }
+
+  if (currIndex.value < steps.value - 1) {
+    currIndex.value++;
+    if (currIndex.value > currProgress.value)
+      currProgress.value = currIndex.value;
+
+    if (currIndex.value === steps.value - 2) {
+      captchaToken.value = await getToken();
+    }
+  } else {
+    loading.value = true;
+    if (!captchaToken.value) captchaToken.value = await getToken();
+    const { data } = await useMyFetch("/submit/", {
+      method: "POST",
+      body: { responses: body.value },
+      headers: { "X-Recaptcha-Token": captchaToken.value },
+    });
+    if (data.value) isModalOpen.value = true;
+    captchaToken.value = "";
+    loading.value = false;
+  }
+};
 </script>
 
 <template>
@@ -94,13 +135,17 @@ const isDisabled = computed(() => {
               :options="currentQuestion.options"
               v-model="body[currIndex]"
             />
-            <UInput
-              v-else
-              :placeholder="currentQuestion.title"
-              variant="none"
-              v-model="body[currIndex].text_answer"
-              autofocus
-            />
+            <div v-else class="flex flex-col gap-2">
+              <UInput
+                :placeholder="currentQuestion.title"
+                variant="none"
+                v-model="body[currIndex].text_answer"
+                autofocus
+              />
+              <div v-if="errorMsg" class="text-red-500 text-sm">
+                {{ currentQuestion.field_type.error_message }}
+              </div>
+            </div>
             <BaseButton
               :loading="loading"
               :disabled="isDisabled"

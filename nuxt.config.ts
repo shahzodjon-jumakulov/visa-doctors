@@ -25,4 +25,8 @@ export default defineNuxtConfig({
     locales: ["uz", "en"],
     defaultLocale: "uz",
   },
+  aos: {
+    anchorPlacement: "top-bottom",
+    once: true,
+  },
 });

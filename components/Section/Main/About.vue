@@ -20,7 +20,6 @@ const features = [
         <div
           class="relative shrink-0 w-fit ml-10"
           data-aos="fade-right"
-          data-aos-anchor-placement="center-bottom"
         >
           <div>
             <img

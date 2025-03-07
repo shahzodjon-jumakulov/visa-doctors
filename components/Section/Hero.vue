@@ -85,7 +85,6 @@ const nav = computed(() => [
         <div class="bg-red-main rounded-full size-[35rem] relative">
           <div
             data-aos="fade-up"
-            data-aos-anchor-placement="top-bottom"
             class="absolute h-[31rem] -top-16 -left-8"
           >
             <NuxtImg
@@ -99,7 +98,6 @@ const nav = computed(() => [
           <NuxtImg
             data-aos="fade-right"
             data-aos-delay="300"
-            data-aos-anchor-placement="top-bottom"
             src="/images/hero-woman.png"
             alt="Student girl"
             format="webp"
@@ -111,7 +109,6 @@ const nav = computed(() => [
           <NuxtImg
             data-aos="fade-left"
             data-aos-delay="300"
-            data-aos-anchor-placement="top-bottom"
             src="/images/hero-man.png"
             alt="Student boy"
             format="webp"

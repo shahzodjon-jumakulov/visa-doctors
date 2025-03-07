@@ -3,7 +3,7 @@
 </script>
 
 <template>
-  <main>
+  <main class="z-0">
     <SectionHero />
     <SectionMainAbout />
     <SectionMainRequirements />
