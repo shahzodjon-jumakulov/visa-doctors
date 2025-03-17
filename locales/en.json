@@ -30,5 +30,9 @@
   "contact_back_soon": "We will contact you soon",
   "survey_for_study_in_korea": "Survey for <span>studying in Korea</span>",
   "rights_reserved": "All rights reserved",
-  "questions_regarding_visa": "Visa questions"
+  "questions_regarding_visa": "Visa questions",
+  "error_recaptcha": "Recaptcha error occurred. Please refresh the page",
+  "error_on_question": "Error in question {id}. Please check the answer.",
+  "og_title": "Study in Korea – Easy and Reliable Way",
+  "og_description": "Do you want to study in Korea? We will help you with university admission, scholarships, visas, and other important processes. Achieve your dreams with us!"
 }

@@ -12,7 +12,7 @@ export default defineNuxtConfig({
   css: ["~/assets/css/main.scss"],
   runtimeConfig: {
     public: {
-      baseURL: process.env.BASE_URL || "http://localhost:3000",
+      baseURL: process.env.BASE_URL || "https://api.visadoctors.uz",
     },
   },
   colorMode: { preference: "light" },

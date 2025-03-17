@@ -1,7 +1,9 @@
 <script setup>
 import { useReCaptcha } from "vue-recaptcha-v3";
 
+const { t } = useI18n();
 const isModalOpen = ref(false);
+const toast = useToast();
 
 const { data } = await useMyFetch("/questions/");
 
@@ -29,6 +31,8 @@ const stepTo = (step) => {
 };
 
 const isDisabled = computed(() => {
+  if (!currentQuestion.value.is_required) return false;
+
   if (currentQuestion.value.input_type === "text") {
     return !body.value[currIndex.value]?.text_answer?.trim();
   } else {
@@ -50,9 +54,24 @@ if (import.meta.client) {
 }
 
 const getToken = async () => {
-  if (!isReady.value || !executeRecaptcha.value) return;
-  return await executeRecaptcha();
+  if (!isReady.value || !executeRecaptcha.value) {
+    toast.add({
+      title: t("error_recaptcha"),
+      timeout: 5000,
+    });
+    return "";
+  }
+  return await executeRecaptcha.value();
 };
+
+function isEmpty(obj) {
+  for (const prop in obj) {
+    if (Object.hasOwn(obj, prop)) {
+      return false;
+    }
+  }
+  return true;
+}
 
 const errorMsg = ref("");
 const next = async () => {
@@ -80,10 +99,22 @@ const next = async () => {
   } else {
     loading.value = true;
     if (!captchaToken.value) captchaToken.value = await getToken();
-    const { data } = await useMyFetch("/submit/", {
+    const { data, error } = await useMyFetch("/submit/", {
       method: "POST",
       body: { responses: body.value },
       headers: { "X-Recaptcha-Token": captchaToken.value },
+      onResponseError({ request, response, options }) {
+        const res = response._data?.responses || [];
+        res.forEach((el, index) => {
+          if (isEmpty(el)) return;
+          toast.add({
+            title: t("error_on_question", { id: index + 1 }),
+            timeout: 5000,
+          });
+          errorMsg.value = res[index].error;
+          currIndex.value = index;
+        });
+      },
     });
     if (data.value) isModalOpen.value = true;
     captchaToken.value = "";

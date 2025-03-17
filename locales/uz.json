@@ -30,5 +30,9 @@
   "contact_back_soon": "Tez orada siz bilan bog‘lanamiz",
   "survey_for_study_in_korea": "<span>Koreyada ta’lim</span> uchun so‘rovnoma",
   "rights_reserved": "Barcha huquqlar himoyalangan",
-  "questions_regarding_visa": "Viza bo‘yicha savollar"
+  "questions_regarding_visa": "Viza bo‘yicha savollar",
+  "error_recaptcha": "Recaptcha xatolik yuz berdi. Iltimos, sahifani yangilang",
+  "error_on_question": "{id}-savolda xatolik. Iltimos, javobni tekshiring.",
+  "og_title": "Koreyada Ta’lim – Oson va Ishonchli Yo‘l",
+  "og_description": "Koreyada o‘qishni xohlaysizmi? Universitetga kirish, stipendiyalar, viza va boshqa muhim jarayonlarda sizga yordam beramiz. Orzuyingizni biz bilan ro‘yobga chiqaring!"
 }

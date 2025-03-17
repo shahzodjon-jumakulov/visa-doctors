@@ -1,4 +1,5 @@
 <script setup>
+const { t } = useI18n();
 const colorMode = useColorMode();
 
 onMounted(() => {
@@ -8,24 +9,22 @@ onMounted(() => {
 useHead({
   link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" }],
   htmlAttrs: { lang: "uz" },
+  meta: [{ name: "darkreader-lock" }],
 });
 
-const title = "Koreyada Ta’lim – Oson va Ishonchli Yo‘l";
-const description =
-  "Koreyada o‘qishni xohlaysizmi? Universitetga kirish, stipendiyalar, viza va boshqa muhim jarayonlarda sizga yordam beramiz. Orzuyingizni biz bilan ro‘yobga chiqaring!";
 useSeoMeta({
-  title: title,
-  description: description,
-  ogTitle: title,
-  ogDescription: description,
-  twitterTitle: title,
-  twitterDescription: description,
+  title: t("og_title"),
+  description: t("og_description"),
+  ogTitle: t("og_title"),
+  ogDescription: t("og_description"),
+  twitterTitle: t("og_title"),
+  twitterDescription: t("og_description"),
   twitterCard: "summary",
   ogImage: "/og-image.png",
   twitterImage: "/og-image.png",
   ogImageWidth: "250",
   ogImageHeight: "250",
-  // ogUrl: "",
+  ogUrl: "https://visadoctors.uz",
 });
 </script>
 
@@ -34,5 +33,7 @@ useSeoMeta({
     <NuxtLayout>
       <NuxtPage />
     </NuxtLayout>
+
+    <UNotifications />
   </div>
 </template>

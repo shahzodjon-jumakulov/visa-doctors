@@ -31,7 +31,7 @@ const { data } = await useMyFetch("/visas/");
               class="bg-white hover:bg-red-main active:bg-red-pressed transition-colors rounded-xl p-4 flex items-center gap-3 group"
             >
               <div
-                class="bg-red-100 group-hover:bg-white-200 group-active:bg-white-200 transition-colors rounded-full size-12 md:size-16 flex-center shrink-0"
+                class="bg-red-100 group-hover:bg-white-200 group-active:bg-white-200 rounded-full size-12 md:size-16 flex-center shrink-0 group-hover:filter group-hover:brightness-0 group-hover:invert transition-all"
               >
                 <img
                   :src="item.icon"

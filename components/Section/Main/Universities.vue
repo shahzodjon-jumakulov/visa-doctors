@@ -1,39 +1,7 @@
 <script setup>
 import { gsap } from "gsap";
-import university from "@/assets/images/universities/seojeong-university.png";
 
 const { data: universities } = await useMyFetch("/universities/logos/");
-
-const clients = [
-  {
-    icon: university,
-    name: "Seojong university",
-  },
-  {
-    icon: university,
-    name: "Seojong university",
-  },
-  {
-    icon: university,
-    name: "Seojong university",
-  },
-  {
-    icon: university,
-    name: "Seojong university",
-  },
-  {
-    icon: university,
-    name: "Seojong university",
-  },
-  {
-    icon: university,
-    name: "Seojong university",
-  },
-  {
-    icon: university,
-    name: "Seojong university",
-  },
-];
 
 const marquee = ref(null);
 const init = () => {
@@ -94,17 +62,19 @@ onMounted(() => {
 
       <div class="flex gap-4 md:gap-8 select-none" ref="marquee">
         <div class="flex gap-4 md:gap-8">
-          <div
-            v-for="(client, index) in universities"
+          <NuxtLink
+            v-for="(item, index) in universities"
             :key="index"
-            class="w-[12rem] md:w-[16.875rem] aspect-[2] rounded-lg border border-black-200 flex-center shrink-0 hover:bg-black-100 transition-colors"
+            :to="item.url.trim()"
+            target="_blank"
+            class="w-[12rem] md:w-[16.875rem] aspect-[2] rounded-lg border border-black-200 flex-center shrink-0 hover:bg-black-100 transition-colors bg-white"
           >
             <img
-              :src="client.logo"
-              :alt="client.name"
-              class="max-md:scale-[0.75] max-h-[80%]"
+              :src="item.logo"
+              :alt="item.name"
+              class="max-md:scale-[0.75] max-h-[80%] max-w-[80%] mix-blend-multiply"
             />
-          </div>
+          </NuxtLink>
         </div>
       </div>
     </div>
