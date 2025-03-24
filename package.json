@@ -21,8 +21,8 @@
     "vue": "latest"
   },
   "dependencies": {
-    "gsap": "^3.12.7",
     "sharp": "^0.33.5",
+    "swiper": "^11.2.6",
     "vue-recaptcha-v3": "^2.0.1"
   }
 }

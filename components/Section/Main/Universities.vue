@@ -1,50 +1,11 @@
 <script setup>
-import { gsap } from "gsap";
+import { Swiper, SwiperSlide } from "swiper/vue";
+import "swiper/css";
+import "swiper/css/free-mode";
+import "swiper/css/autoplay";
+import { FreeMode, Autoplay } from "swiper/modules";
 
 const { data: universities } = await useMyFetch("/universities/logos/");
-
-const marquee = ref(null);
-const init = () => {
-  if (!marquee.value) return;
-  const marqueeContent = marquee.value.firstElementChild;
-  if (!marqueeContent) return;
-  const marqueeContentClone = marqueeContent.cloneNode(true);
-  marquee.value.append(marqueeContentClone);
-
-  let tween;
-
-  const playMarquee = () => {
-    let progress = tween ? tween.progress() : 0;
-    if (tween) tween.progress(0).kill();
-    const width = parseInt(
-      getComputedStyle(marqueeContent).getPropertyValue("width"),
-      10
-    );
-    const gap = parseInt(
-      getComputedStyle(marqueeContent).getPropertyValue("gap"),
-      10
-    );
-    const distanceToTranslate = -1 * (width + gap);
-
-    tween = gsap.fromTo(
-      marquee.value.children,
-      { x: 0 },
-      {
-        x: distanceToTranslate,
-        duration: width / 100,
-        ease: "none",
-        repeat: -1,
-      }
-    );
-    tween.progress(progress);
-  };
-  playMarquee();
-
-  window.addEventListener("resize", playMarquee);
-};
-onMounted(() => {
-  init();
-});
 </script>
 
 <template>
@@ -60,23 +21,31 @@ onMounted(() => {
         </p>
       </div>
 
-      <div class="flex gap-4 md:gap-8 select-none" ref="marquee">
-        <div class="flex gap-4 md:gap-8">
-          <NuxtLink
-            v-for="(item, index) in universities"
-            :key="index"
-            :to="item.url.trim()"
-            target="_blank"
-            class="w-[12rem] md:w-[16.875rem] aspect-[2] rounded-lg border border-black-200 flex-center shrink-0 hover:bg-black-100 transition-colors bg-white"
-          >
+      <!-- Swiper Carousel -->
+      <Swiper
+        :slides-per-view="'auto'"
+        :space-between="20"
+        :free-mode="true"
+        :loop="true"
+        :autoplay="{ delay: 0, disableOnInteraction: false }"
+        :speed="4000"
+        :modules="[FreeMode, Autoplay]"
+        class="w-full"
+      >
+        <SwiperSlide
+          v-for="(item, index) in universities"
+          :key="index"
+          class="!w-[12rem] md:!w-[16.875rem] aspect-[2] rounded-lg border border-black-200 shrink-0 hover:bg-black-100 transition-colors bg-white"
+        >
+          <NuxtLink :to="item.url.trim()" target="_blank" class="flex-center size-full">
             <img
               :src="item.logo"
               :alt="item.name"
               class="max-md:scale-[0.75] max-h-[80%] max-w-[80%] mix-blend-multiply"
             />
           </NuxtLink>
-        </div>
-      </div>
+        </SwiperSlide>
+      </Swiper>
     </div>
   </section>
 </template>

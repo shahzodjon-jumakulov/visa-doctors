@@ -1,26 +1,14 @@
 <script setup>
 const { data: about } = await useMyFetch("/about/preview/");
 
-const features = [
-  {
-    id: 1,
-    title: "Ready to Help \n You in Immigration",
-  },
-  {
-    id: 2,
-    title: "Ready to Help \n You in Immigration",
-  },
-];
+const features = about.value.highlights || [];
 </script>
 
 <template>
   <section class="relative" v-if="about">
     <UContainer class="py-10 md:py-[4.5rem]">
       <div class="flex max-lg:flex-col gap-10 md:max-lg:items-center">
-        <div
-          class="relative shrink-0 w-fit ml-10"
-          data-aos="fade-right"
-        >
+        <div class="relative shrink-0 w-fit ml-10" data-aos="fade-right">
           <div>
             <img
               src="~/assets/images/main-about.png"
@@ -33,9 +21,11 @@ const features = [
           </div>
           <div class="absolute bottom-20 -left-10 exp">
             <p class="text-[2.5rem] leading-normal font-semibold text-red-main">
-              {{ about.experience_years || 1 }}
+              {{ about.experience_years?.years || 1 }}
             </p>
-            <p class="text-sm text-black-500">{{ $t("experience_years") }}</p>
+            <p class="text-sm text-black-500">
+              {{ about.experience_years.title }}
+            </p>
           </div>
         </div>
 
@@ -51,7 +41,7 @@ const features = [
               {{ about.subtitle }}
             </p>
           </div>
-          <div class="flex flex-wrap gap-10">
+          <div class="flex flex-wrap gap-10" v-if="features.length">
             <div
               data-aos="fade-right"
               class="flex items-center gap-4"

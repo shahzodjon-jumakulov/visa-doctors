@@ -4,6 +4,14 @@ import { useReCaptcha } from "vue-recaptcha-v3";
 const { t } = useI18n();
 const isModalOpen = ref(false);
 const toast = useToast();
+const localePath = useLocalePath();
+
+definePageMeta({ layout: "survey" });
+
+watch(isModalOpen, (val) => {
+  if (val) return;
+  navigateTo(localePath("/"));
+});
 
 const { data } = await useMyFetch("/questions/");
 
@@ -205,7 +213,7 @@ const next = async () => {
           :label="$t('got_it')"
           block
           class="w-full"
-          :to="$localePath('/')"
+          @click="isModalOpen = false"
         />
 
         <button
