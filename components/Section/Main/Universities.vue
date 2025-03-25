@@ -11,7 +11,7 @@ onMounted(() => {
   if (!slider.value) return;
 
   const count = universities.value?.length || 0;
-  const animation = { duration: count * 2000, easing: (t) => t }
+  const animation = { duration: count * 4000, easing: (t) => t }
 
   keenSlider = new KeenSlider(slider.value, {
     loop: true,
@@ -31,6 +31,32 @@ onMounted(() => {
     animationEnded(s) {
       s.moveToIdx(s.track.details.abs + count, true, animation);
     },
+  });
+
+  const sliderElement = slider.value;
+  
+  const pauseSlider = () => {
+    if (keenSlider) {
+      keenSlider.animator.stop();
+    }
+  };
+
+  const resumeSlider = () => {
+    if (keenSlider) {
+      const currentPosition = keenSlider.track.details.abs;
+      keenSlider.moveToIdx(currentPosition + count, true, animation);
+    }
+  };
+
+  sliderElement.addEventListener("mouseenter", pauseSlider);
+  sliderElement.addEventListener("mouseleave", resumeSlider);
+
+  onBeforeUnmount(() => {
+    sliderElement.removeEventListener("mouseenter", pauseSlider);
+    sliderElement.removeEventListener("mouseleave", resumeSlider);
+    if (keenSlider) {
+      keenSlider.destroy();
+    }
   });
 });
 
