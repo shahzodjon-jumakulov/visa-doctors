@@ -44,13 +44,13 @@ onBeforeUnmount(() => {
 <template>
   <section class="py-[4.5rem] overflow-hidden">
     <div class="flex flex-col gap-10">
-      <div class="flex flex-col gap-3 text-center px-5" data-aos="fade-up">
-        <div
-          class="section-heading"
-          v-html="$t('universities_section.title')"
-        ></div>
-        <p class="text-sm md:text-lg font-medium text-black-500">
-          {{ $t("universities_section.desc") }}
+      <div class="flex flex-col gap-3">
+        <h2 class="section-heading">
+          <span class="text-red-main">{{ $t('become_student') }}</span>
+          {{ $t('at_universities') }}
+        </h2>
+        <p class="text-sm font-medium text-black-500 text-center">
+          {{ $t("docs_requirements_desc") }}
         </p>
       </div>
 

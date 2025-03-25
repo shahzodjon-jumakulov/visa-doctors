@@ -49,8 +49,8 @@ onBeforeUnmount(() => {
 <template>
   <header
     :class="[
-      isHeaderFixed ? 'backdrop-blur-lg bg-black-400/90' : '',
-      isMainPage ? 'z-10 fixed top-0 left-0' : 'bg-black-main',
+      isHeaderFixed ? 'backdrop-blur-md bg-black-main/70' : '',
+      isMainPage ? 'z-10 fixed top-0 left-0' : 'bg-black-main/90 backdrop-blur-sm',
     ]"
     class="w-full border-b border-white-100 transition-all duration-500"
   >

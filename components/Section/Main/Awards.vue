@@ -12,8 +12,8 @@ data.value?.preview_results?.forEach((item) => {
   <div class="bg-black-main relative overflow-hidden" v-if="data">
     <UContainer class="py-10 md:py-[4.5rem] relative z-[1]">
       <div class="flex max-lg:flex-col md:items-center gap-10">
-        <div class="flex flex-col gap-10">
-          <div class="flex flex-col gap-2">
+        <div class="flex flex-col">
+          <div class="flex flex-col gap-2 mb-4">
             <h2 class="section-heading !text-white !text-left">
               {{ data.title.split(" ")[0] }}
               <span class="text-red-main">{{
@@ -25,10 +25,10 @@ data.value?.preview_results?.forEach((item) => {
             </p>
           </div>
           <div
-            class="text-base leading-140 text-white"
+            class="text-base leading-140 text-white mb-4"
             v-html="data.description"
           ></div>
-          <BaseButton :label="$t('read_more')" :to="$localePath('/awards')" />
+          <BaseButton :label="$t('read_more')" :to="$localePath('/awards')" class="w-fit" />
         </div>
         <div
           class="relative grid grid-cols-2 grid-rows-2 max-w-[32rem] w-full shrink-0 z-0"

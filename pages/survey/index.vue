@@ -175,10 +175,10 @@ watch(isModalOpen, (val) => {
     <UContainer class="py-10 md:pb-[4.5rem]">
       <div class="flex flex-col items-center gap-10">
         <div class="flex flex-col gap-3 text-center">
-          <div
-            class="section-heading"
-            v-html="$t('survey_for_study_in_korea')"
-          ></div>
+          <h2 class="section-heading">
+            {{ $t('survey_for') }}
+            <span class="text-red-main">{{ $t('studying_in_korea') }}</span>
+          </h2>
           <p class="text-lg font-medium text-black-500">
             {{ $t("docs_requirements_desc") }}
           </p>

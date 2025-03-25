@@ -29,7 +29,7 @@ const features = about.value.highlights || [];
           </div>
         </div>
 
-        <div class="flex flex-col gap-10">
+        <div class="flex flex-col gap-10 lg:justify-center">
           <div class="flex flex-col gap-2">
             <h2 class="section-heading !text-left">
               <span class="text-red-main">
@@ -60,7 +60,7 @@ const features = about.value.highlights || [];
             class="text-base leading-140 text-black-main"
             v-html="about.preview_description"
           ></div>
-          <BaseButton :label="$t('read_more')" :to="$localePath('/about')" />
+          <BaseButton :label="$t('read_more')" :to="$localePath('/about')" class="w-fit" />
         </div>
       </div>
     </UContainer>
