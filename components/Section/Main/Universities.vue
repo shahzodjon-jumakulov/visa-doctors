@@ -3,7 +3,7 @@ import { Swiper, SwiperSlide } from "swiper/vue";
 import "swiper/css";
 import "swiper/css/free-mode";
 import "swiper/css/autoplay";
-import { FreeMode, Autoplay } from "swiper/modules";
+import { Autoplay } from "swiper/modules";
 
 const { data: universities } = await useMyFetch("/universities/logos/");
 </script>
@@ -25,11 +25,10 @@ const { data: universities } = await useMyFetch("/universities/logos/");
       <Swiper
         :slides-per-view="'auto'"
         :space-between="20"
-        :free-mode="true"
         :loop="true"
         :autoplay="{ delay: 0, disableOnInteraction: false }"
         :speed="4000"
-        :modules="[FreeMode, Autoplay]"
+        :modules="[Autoplay]"
         class="w-full"
       >
         <SwiperSlide
@@ -37,7 +36,11 @@ const { data: universities } = await useMyFetch("/universities/logos/");
           :key="index"
           class="!w-[12rem] md:!w-[16.875rem] aspect-[2] rounded-lg border border-black-200 shrink-0 hover:bg-black-100 transition-colors bg-white"
         >
-          <NuxtLink :to="item.url.trim()" target="_blank" class="flex-center size-full">
+          <NuxtLink
+            :to="item.url.trim()"
+            target="_blank"
+            class="flex-center size-full"
+          >
             <img
               :src="item.logo"
               :alt="item.name"
