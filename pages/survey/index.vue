@@ -190,12 +190,9 @@ watch(isModalOpen, (val) => {
     <UContainer class="py-10 md:pb-[4.5rem]">
       <div class="flex flex-col items-center gap-10">
         <div class="flex flex-col gap-3 text-center">
-          <h2 class="section-heading">
-            {{ $t('survey_for') }}
-            <span class="text-red-main">{{ $t('studying_in_korea') }}</span>
-          </h2>
+          <h1 class="section-heading" v-html="$t('survey_for_study_in_korea')"></h1>
           <p class="text-lg font-medium text-black-500">
-            {{ $t("docs_requirements_desc") }}
+            {{ $t("survey_description") }}
           </p>
         </div>
 
@@ -303,7 +300,18 @@ watch(isModalOpen, (val) => {
 </template>
 
 <style scoped>
+.section-heading {
+  font-size: 2.5rem;
+  font-weight: 700;
+  line-height: 1.2;
+  color: #1A1A1A;
+}
+
+.section-heading :deep(span) {
+  color: #E20935;
+}
+
 .text-red-main::placeholder {
-  color: rgb(226, 9, 53, 0.5); /* red-main с прозрачностью */
+  color: rgb(226, 9, 53, 0.5);
 }
 </style>

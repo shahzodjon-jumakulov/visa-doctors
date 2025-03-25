@@ -34,5 +34,6 @@
   "error_recaptcha": "Recaptcha error occurred. Please refresh the page",
   "error_on_question": "Error in question {id}. Please check the answer.",
   "og_title": "Study in Korea – Easy and Reliable Way",
-  "og_description": "Do you want to study in Korea? We will help you with university admission, scholarships, visas, and other important processes. Achieve your dreams with us!"
+  "og_description": "Do you want to study in Korea? We will help you with university admission, scholarships, visas, and other important processes. Achieve your dreams with us!",
+  "survey_description": "Please answer the following questions!"
 }
