@@ -10,91 +10,28 @@ let keenSlider = null;
 onMounted(() => {
   if (!slider.value) return;
 
-  keenSlider = new KeenSlider(
-    slider.value,
-    {
-      loop: true,
-      mode: "free",
-      slides: {
-        perView: "auto",
-        spacing: 20,
-      },
-      drag: true,
-      dragSpeed: 0.7,
+  const count = universities.value?.length || 0;
+  const animation = { duration: count * 2000, easing: (t) => t }
+
+  keenSlider = new KeenSlider(slider.value, {
+    loop: true,
+    mode: "free",
+    slides: {
+      perView: "auto",
+      spacing: 20,
     },
-    [
-      (sliderInstance) => {
-        let ticker = null;
-        let lastTime = performance.now();
-        let isPaused = false;
-        let currentVelocity = 1;
-        const targetVelocity = 1;
-        const acceleration = 0.02;
-
-        const frame = () => {
-          const time = performance.now();
-          const delta = time - lastTime;
-          lastTime = time;
-
-          // Smooth velocity change
-          if (isPaused && currentVelocity > 0) {
-            currentVelocity = Math.max(0, currentVelocity - acceleration);
-          } else if (!isPaused && currentVelocity < targetVelocity) {
-            currentVelocity = Math.min(targetVelocity, currentVelocity + acceleration);
-          }
-
-          // Movement with current velocity
-          if (currentVelocity > 0) {
-            const newIdx = sliderInstance.track.details.abs + (delta * currentVelocity) / 2000;
-            sliderInstance.moveToIdx(newIdx, false);
-          }
-
-          ticker = requestAnimationFrame(frame);
-        };
-
-        const startAnimation = () => {
-          if (!ticker) {
-            lastTime = performance.now();
-            frame();
-          }
-        };
-
-        const stopAnimation = () => {
-          if (ticker) {
-            cancelAnimationFrame(ticker);
-            ticker = null;
-          }
-        };
-
-        // Start animation immediately after slider creation
-        sliderInstance.on("created", () => {
-          startAnimation();
-        });
-
-        // Smooth stop on hover
-        sliderInstance.container.addEventListener("mouseenter", () => {
-          isPaused = true;
-        });
-
-        sliderInstance.container.addEventListener("mouseleave", () => {
-          isPaused = false;
-        });
-
-        // Handle dragging
-        sliderInstance.on("dragStarted", () => {
-          stopAnimation();
-        });
-
-        sliderInstance.on("dragEnded", () => {
-          startAnimation();
-        });
-
-        sliderInstance.on("destroyed", () => {
-          stopAnimation();
-        });
-      },
-    ]
-  );
+    drag: true,
+    dragSpeed: 0.7,
+    created(s) {
+      s.moveToIdx(count, true, animation);
+    },
+    updated(s) {
+      s.moveToIdx(s.track.details.abs + count, true, animation);
+    },
+    animationEnded(s) {
+      s.moveToIdx(s.track.details.abs + count, true, animation);
+    },
+  });
 });
 
 onBeforeUnmount(() => {
