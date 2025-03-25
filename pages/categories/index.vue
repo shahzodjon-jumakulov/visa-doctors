@@ -35,7 +35,7 @@ watch(
           :class="{ '!bg-red-main active': selected == cat.slug }"
         >
           <div
-            class="bg-red-100 group-hover:bg-white-200 group-active:bg-white-200 group-[.active]:bg-white-200 transition-colors rounded-full size-12 md:size-16 flex-center shrink-0"
+            class="bg-red-100 group-hover:bg-white-200 group-active:bg-white-200 group-[.active]:bg-white-200 rounded-full size-12 md:size-16 flex-center shrink-0 group-hover:filter group-hover:brightness-0 group-hover:invert  group-[.active]:filter group-[.active]:brightness-0 group-[.active]:invert transition-all"
           >
             <img :src="cat.icon" :alt="cat.title" class="size-9 md:size-12" />
           </div>
@@ -84,7 +84,7 @@ watch(
     &:before {
       content: counter(list);
       counter-increment: list;
-      line-height: inherit;
+      line-height: inherit; 
       @apply text-red-main text-sm  font-bold bg-red-100 bg-opacity-10 rounded-full size-8 flex items-center justify-center shrink-0;
     }
   }
