@@ -11,6 +11,7 @@ export default defineI18nConfig(() => ({
       studying_in_korea: "обучения в Корее",
       become_student: "Стать студентом",
       at_universities: "в следующих университетах",
+      invalid_phone: "Пожалуйста, введите полный номер телефона"
     },
     en: {
       ...en,
@@ -18,6 +19,7 @@ export default defineI18nConfig(() => ({
       studying_in_korea: "studying in Korea",
       become_student: "Become a student",
       at_universities: "at the following universities",
+      invalid_phone: "Please enter a complete phone number"
     }
   },
 }));

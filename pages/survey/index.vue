@@ -93,6 +93,20 @@ const validateInput = () => {
       return false;
     }
 
+    if (currentQuestion.value.field_type.field_key.toLowerCase() === 'phone number') {
+      const digitsOnly = value.replace(/\D/g, '');
+      if (digitsOnly.length < 12) {
+        errorMsg.value = t('invalid_phone');
+        isShaking.value = true;
+        setTimeout(() => {
+          isShaking.value = false;
+        }, 500);
+        return false;
+      }
+      errorMsg.value = "";
+      return true;
+    }
+
     const regex = new RegExp(currentQuestion.value.field_type.regex_pattern);
     if (!regex.test(value)) {
       errorMsg.value = currentQuestion.value.field_type.error_message;
@@ -214,7 +228,14 @@ watch(isModalOpen, (val) => {
               v-model="body[currIndex]"
             />
             <div v-else class="flex flex-col gap-2">
+              <BasePhoneInput
+                v-if="currentQuestion.field_type?.field_key?.toLowerCase() === 'phone number'"
+                v-model="body[currIndex].text_answer"
+                :error="errorMsg"
+                @keydown="handleKeydown"
+              />
               <UInput
+                v-else
                 :placeholder="currentQuestion.title"
                 variant="none"
                 v-model="body[currIndex].text_answer"
