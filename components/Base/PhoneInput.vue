@@ -19,7 +19,7 @@ const handleInput = (e) => {
   // Сначала убираем всё форматирование из значения инпута
   const rawValue = e.target.value.replace(/[\s\(\)\-]/g, '');
   // Затем убираем все нецифровые символы и ограничиваем длину
-  const numbers = rawValue.replace(/\D/g, '').slice(0, 9);
+  const numbers = rawValue.replace(/\D/g, '');
   emit('update:modelValue', numbers);
 };
 

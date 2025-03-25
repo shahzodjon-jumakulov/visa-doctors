@@ -94,8 +94,9 @@ const validateInput = () => {
     }
 
     if (currentQuestion.value.field_type.field_key.toLowerCase() === 'phone number') {
-      const digitsOnly = value.replace(/\D/g, '');
-      if (digitsOnly.length < 12) {
+      const digitsOnly = value.replace(/\D/g, '').slice(0,9);
+      body.value[currIndex.value].text_answer = digitsOnly;
+      if (digitsOnly.length !== 9) {
         errorMsg.value = t('invalid_phone');
         isShaking.value = true;
         setTimeout(() => {
