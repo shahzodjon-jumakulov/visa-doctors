@@ -1,11 +1,107 @@
 <script setup>
-import { Swiper, SwiperSlide } from "swiper/vue";
-import "swiper/css";
-import "swiper/css/free-mode";
-import "swiper/css/autoplay";
-import { Autoplay } from "swiper/modules";
+import { ref, onMounted, onBeforeUnmount } from "vue";
+import KeenSlider from "keen-slider";
+import "keen-slider/keen-slider.min.css";
 
 const { data: universities } = await useMyFetch("/universities/logos/");
+const slider = ref(null);
+let keenSlider = null;
+
+onMounted(() => {
+  if (!slider.value) return;
+
+  keenSlider = new KeenSlider(
+    slider.value,
+    {
+      loop: true,
+      mode: "free",
+      slides: {
+        perView: "auto",
+        spacing: 20,
+      },
+      drag: true,
+      dragSpeed: 0.7,
+    },
+    [
+      (sliderInstance) => {
+        let ticker = null;
+        let lastTime = performance.now();
+        let isPaused = false;
+        let currentVelocity = 1;
+        const targetVelocity = 1;
+        const acceleration = 0.02;
+
+        const frame = () => {
+          const time = performance.now();
+          const delta = time - lastTime;
+          lastTime = time;
+
+          // Плавное изменение скорости
+          if (isPaused && currentVelocity > 0) {
+            currentVelocity = Math.max(0, currentVelocity - acceleration);
+          } else if (!isPaused && currentVelocity < targetVelocity) {
+            currentVelocity = Math.min(targetVelocity, currentVelocity + acceleration);
+          }
+
+          // Движение с текущей скоростью
+          if (currentVelocity > 0) {
+            const newIdx = sliderInstance.track.details.abs + (delta * currentVelocity) / 2000;
+            sliderInstance.moveToIdx(newIdx, false);
+          }
+
+          ticker = requestAnimationFrame(frame);
+        };
+
+        const startAnimation = () => {
+          if (!ticker) {
+            lastTime = performance.now();
+            frame();
+          }
+        };
+
+        const stopAnimation = () => {
+          if (ticker) {
+            cancelAnimationFrame(ticker);
+            ticker = null;
+          }
+        };
+
+        // Запускаем анимацию сразу после создания слайдера
+        sliderInstance.on("created", () => {
+          startAnimation();
+        });
+
+        // Плавная остановка при наведении
+        sliderInstance.container.addEventListener("mouseenter", () => {
+          isPaused = true;
+        });
+
+        sliderInstance.container.addEventListener("mouseleave", () => {
+          isPaused = false;
+        });
+
+        // Обработка перетаскивания
+        sliderInstance.on("dragStarted", () => {
+          stopAnimation();
+        });
+
+        sliderInstance.on("dragEnded", () => {
+          startAnimation();
+        });
+
+        sliderInstance.on("destroyed", () => {
+          stopAnimation();
+        });
+      },
+    ]
+  );
+});
+
+onBeforeUnmount(() => {
+  if (keenSlider) {
+    keenSlider.destroy();
+  }
+});
 </script>
 
 <template>
@@ -21,20 +117,12 @@ const { data: universities } = await useMyFetch("/universities/logos/");
         </p>
       </div>
 
-      <!-- Swiper Carousel -->
-      <Swiper
-        :slides-per-view="'auto'"
-        :space-between="20"
-        :loop="true"
-        :autoplay="{ delay: 0, disableOnInteraction: false }"
-        :speed="4000"
-        :modules="[Autoplay]"
-        class="w-full"
-      >
-        <SwiperSlide
+      <!-- Keen Slider -->
+      <div ref="slider" class="keen-slider">
+        <div
           v-for="(item, index) in universities"
           :key="index"
-          class="!w-[12rem] md:!w-[16.875rem] aspect-[2] rounded-lg border border-black-200 shrink-0 hover:bg-black-100 transition-colors bg-white"
+          class="keen-slider__slide !min-w-[12rem] md:!min-w-[16.875rem] aspect-[2] rounded-lg border border-black-200 hover:bg-black-100 transition-colors bg-white"
         >
           <NuxtLink
             :to="item.url.trim()"
@@ -47,8 +135,23 @@ const { data: universities } = await useMyFetch("/universities/logos/");
               class="max-md:scale-[0.75] max-h-[80%] max-w-[80%] mix-blend-multiply"
             />
           </NuxtLink>
-        </SwiperSlide>
-      </Swiper>
+        </div>
+      </div>
     </div>
   </section>
 </template>
+
+<style scoped>
+.keen-slider {
+  cursor: grab;
+}
+
+.keen-slider:active {
+  cursor: grabbing;
+}
+
+.keen-slider__slide {
+  user-select: none;
+  touch-action: pan-y;
+}
+</style>
