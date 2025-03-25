@@ -72,7 +72,7 @@ const toggleCheck = (id, isSelectable, parentId) => {
         </div>
         <span
           v-if="item.children?.length"
-          class="group-[.checked]:rotate-180 transition-transform duration-300"
+          class="rotate-180 group-[.checked]:rotate-0 transition-transform duration-300"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
