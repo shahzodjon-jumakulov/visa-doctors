@@ -6,11 +6,8 @@ const isModalOpen = ref(false);
 const toast = useToast();
 const localePath = useLocalePath();
 
-definePageMeta({ layout: "survey" });
-
-watch(isModalOpen, (val) => {
-  if (val) return;
-  navigateTo(localePath("/"));
+definePageMeta({
+  layout: "survey"
 });
 
 const { data } = await useMyFetch("/questions/");
@@ -82,18 +79,55 @@ function isEmpty(obj) {
 }
 
 const errorMsg = ref("");
-const next = async () => {
-  if (isDisabled.value) return;
+const isShaking = ref(false);
 
+const validateInput = () => {
   if (
     currentQuestion.value.input_type === "text" &&
     currentQuestion.value.field_type
   ) {
+    const value = body.value[currIndex.value].text_answer.trim();
+    
+    if (!value) {
+      errorMsg.value = "";
+      return false;
+    }
+
     const regex = new RegExp(currentQuestion.value.field_type.regex_pattern);
-    if (!regex.test(body.value[currIndex.value].text_answer)) {
+    if (!regex.test(value)) {
       errorMsg.value = currentQuestion.value.field_type.error_message;
-      return;
-    } else errorMsg.value = "";
+      isShaking.value = true;
+      setTimeout(() => {
+        isShaking.value = false;
+      }, 500);
+      return false;
+    }
+    errorMsg.value = "";
+    return true;
+  }
+  return true;
+};
+
+const handleKeydown = (e) => {
+  if (e.key === 'Enter') {
+    e.preventDefault();
+    if (validateInput()) {
+      next();
+    }
+  }
+};
+
+watch(() => body.value[currIndex.value]?.text_answer, () => {
+  if (errorMsg.value) {
+    validateInput();
+  }
+});
+
+const next = async () => {
+  if (isDisabled.value) return;
+
+  if (!validateInput()) {
+    return;
   }
 
   if (currIndex.value < steps.value - 1) {
@@ -129,6 +163,11 @@ const next = async () => {
     loading.value = false;
   }
 };
+
+watch(isModalOpen, (val) => {
+  if (val) return;
+  navigateTo(localePath("/"));
+});
 </script>
 
 <template>
@@ -179,9 +218,23 @@ const next = async () => {
                 :placeholder="currentQuestion.title"
                 variant="none"
                 v-model="body[currIndex].text_answer"
+                :class="{
+                  '!ring-2 !ring-red-main': errorMsg,
+                  '!bg-red-50': errorMsg,
+                  'text-red-main': errorMsg
+                }"
+                @keydown="handleKeydown"
+                @input="validateInput"
                 autofocus
               />
-              <div v-if="errorMsg" class="text-red-500 text-sm">
+              <div
+                v-if="errorMsg"
+                :class="{'animate-shake': isShaking}"
+                class="flex items-center gap-2 text-red-main text-sm"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                  <path d="M10 6V10M10 14H10.01M19 10C19 14.9706 14.9706 19 10 19C5.02944 19 1 14.9706 1 10C1 5.02944 5.02944 1 10 1C14.9706 1 19 5.02944 19 10Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
                 {{ currentQuestion.field_type.error_message }}
               </div>
             </div>
@@ -226,3 +279,9 @@ const next = async () => {
     </UModal>
   </div>
 </template>
+
+<style scoped>
+.text-red-main::placeholder {
+  color: rgb(226, 9, 53, 0.5); /* red-main с прозрачностью */
+}
+</style>

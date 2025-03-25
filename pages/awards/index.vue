@@ -18,14 +18,17 @@ const { data } = await useMyFetch("/results/detail/");
         <div
           class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 md:gap-5 lg:gap-10"
         >
-          <NuxtImg
-            v-for="(item, index) in data.results"
-            :key="index"
-            :src="item.image"
-            alt="results"
-            format="webp"
-            class="rounded-xl aspect-[0.8] object-cover size-full"
-          />
+          <div
+            class="relative aspect-square"
+            v-for="(image, idx) in data.results"
+            :key="idx"
+          >
+            <img
+              :src="image.image"
+              :alt="`Award ${idx + 1}`"
+              class="size-full object-cover rounded-2xl"
+            />
+          </div>
         </div>
       </div>
     </UContainer>

@@ -87,45 +87,33 @@ const nav = computed(() => [
             data-aos="fade-up"
             class="absolute h-[31rem] -top-16 -left-8"
           >
-            <NuxtImg
+            <img
               src="/images/hero-flag.png"
               alt="Korean flag"
-              format="webp"
-              preload
               class="rotate-[-28deg] h-full"
             />
           </div>
-          <NuxtImg
+          <img
             data-aos="fade-right"
             data-aos-delay="300"
             src="/images/hero-woman.png"
             alt="Student girl"
-            format="webp"
-            width="321"
-            height="543"
-            preload
             class="absolute top-[11rem] left-0"
           />
-          <NuxtImg
+          <img
             data-aos="fade-left"
             data-aos-delay="300"
             src="/images/hero-man.png"
             alt="Student boy"
-            format="webp"
-            width="445"
-            height="663"
-            preload
             class="absolute top-20 right-0"
           />
         </div>
       </div>
     </UContainer>
     <div class="pointer-events-none absolute inset-0 z-[-2]">
-      <NuxtImg
+      <img
         src="/images/hero-bg.png"
         alt="hero"
-        format="webp"
-        placeholder
         class="size-full object-cover"
       />
       <div

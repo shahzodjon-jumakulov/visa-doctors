@@ -29,4 +29,35 @@ export default defineNuxtConfig({
     anchorPlacement: "top-bottom",
     once: true,
   },
+  // Performance optimizations
+  experimental: {
+    payloadExtraction: true,
+    inlineSSRStyles: false,
+    viewTransition: true,
+    componentIslands: true,
+  },
+  nitro: {
+    compressPublicAssets: true,
+    minify: true,
+  },
+  image: {
+    format: ['webp'],
+    quality: 80,
+    screens: {
+      'sm': 640,
+      'md': 768,
+      'lg': 1024,
+      'xl': 1280,
+    },
+  },
+  app: {
+    head: {
+      htmlAttrs: {
+        lang: 'uz'
+      },
+      link: [
+        { rel: 'preconnect', href: process.env.BASE_URL || "https://api.visadoctors.uz" }
+      ]
+    }
+  }
 });

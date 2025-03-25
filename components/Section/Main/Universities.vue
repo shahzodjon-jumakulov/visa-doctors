@@ -36,14 +36,14 @@ onMounted(() => {
           const delta = time - lastTime;
           lastTime = time;
 
-          // Плавное изменение скорости
+          // Smooth velocity change
           if (isPaused && currentVelocity > 0) {
             currentVelocity = Math.max(0, currentVelocity - acceleration);
           } else if (!isPaused && currentVelocity < targetVelocity) {
             currentVelocity = Math.min(targetVelocity, currentVelocity + acceleration);
           }
 
-          // Движение с текущей скоростью
+          // Movement with current velocity
           if (currentVelocity > 0) {
             const newIdx = sliderInstance.track.details.abs + (delta * currentVelocity) / 2000;
             sliderInstance.moveToIdx(newIdx, false);
@@ -66,12 +66,12 @@ onMounted(() => {
           }
         };
 
-        // Запускаем анимацию сразу после создания слайдера
+        // Start animation immediately after slider creation
         sliderInstance.on("created", () => {
           startAnimation();
         });
 
-        // Плавная остановка при наведении
+        // Smooth stop on hover
         sliderInstance.container.addEventListener("mouseenter", () => {
           isPaused = true;
         });
@@ -80,7 +80,7 @@ onMounted(() => {
           isPaused = false;
         });
 
-        // Обработка перетаскивания
+        // Handle dragging
         sliderInstance.on("dragStarted", () => {
           stopAnimation();
         });

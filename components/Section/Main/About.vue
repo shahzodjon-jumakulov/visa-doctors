@@ -24,7 +24,7 @@ const features = about.value.highlights || [];
               {{ about.experience_years?.years || 1 }}
             </p>
             <p class="text-sm text-black-500">
-              {{ about.experience_years.title }}
+              {{ $t("experience_years") }}
             </p>
           </div>
         </div>
@@ -77,5 +77,9 @@ const features = about.value.highlights || [];
   background: var(--white-main, #fff);
   box-shadow: 14.982px 29.403px 87px 0px rgba(0, 0, 0, 0.07);
   padding: 1.25rem 1.25rem 2rem 2.5rem;
+}
+
+.section-heading {
+  @apply text-[2rem] lg:text-[2.5rem] leading-normal font-bold;
 }
 </style>

@@ -26,28 +26,33 @@ const isHeaderFixed = ref(false);
 const route = useRoute();
 const isMainPage = computed(() => route.path === localePath("/"));
 
+const checkScroll = () => {
+  if (!isMainPage.value) {
+    isHeaderFixed.value = false;
+    return;
+  }
+  isHeaderFixed.value = window.scrollY > 99;
+};
+
 onMounted(() => {
-  window.addEventListener("scroll", () => {
-    if (!isMainPage.value) {
-      isHeaderFixed.value = false;
-      return;
-    }
-    if (window.scrollY > 99) {
-      isHeaderFixed.value = true;
-    } else {
-      isHeaderFixed.value = false;
-    }
-  });
+  // Check initial scroll position
+  checkScroll();
+  // Add scroll listener
+  window.addEventListener("scroll", checkScroll);
+});
+
+onBeforeUnmount(() => {
+  window.removeEventListener("scroll", checkScroll);
 });
 </script>
 
 <template>
   <header
     :class="[
-      isHeaderFixed ? 'backdrop-blur-lg bg-black-400' : '',
+      isHeaderFixed ? 'backdrop-blur-lg bg-black-400/90' : '',
       isMainPage ? 'z-10 fixed top-0 left-0' : 'bg-black-main',
     ]"
-    class="w-full border-b border-white-100 transition-all duration-300"
+    class="w-full border-b border-white-100 transition-all duration-500"
   >
     <UContainer class="py-5 md:py-6 lg:py-5 flex justify-between">
       <div
@@ -125,3 +130,9 @@ onMounted(() => {
     </UContainer>
   </header>
 </template>
+
+<style scoped>
+.header-transition {
+  transition: background-color 0.5s ease-in-out, backdrop-filter 0.5s ease-in-out;
+}
+</style>
