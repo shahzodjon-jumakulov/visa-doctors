@@ -192,7 +192,10 @@ watch(isModalOpen, (val) => {
   <div class="bg-black-100 grow">
     <UContainer class="py-10 md:pb-[4.5rem]">
       <div class="flex flex-col items-center gap-10">
-        <div class="flex flex-col gap-3 text-center">
+        <div 
+          class="flex flex-col gap-3 text-center"
+          v-show="currIndex === 0"
+        >
           <h1 class="section-heading" v-html="$t('survey_for_study_in_korea')"></h1>
           <p class="text-lg font-medium text-black-500">
             {{ $t("survey_description") }}
