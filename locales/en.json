@@ -48,5 +48,8 @@
     "error_not_found": "No records found",
     "error_invalid": "Invalid information provided",
     "error_required": "Please fill in all fields"
+  },
+  "footer": {
+    "slogan": "Pay for results, not for the process"
   }
 }

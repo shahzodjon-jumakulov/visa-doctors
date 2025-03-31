@@ -48,5 +48,8 @@
     "error_not_found": "Bunday ma'lumotlar topilmadi",
     "error_invalid": "Noto'g'ri ma'lumotlar kiritildi",
     "error_required": "Barcha maydonlarni to'ldiring"
+  },
+  "footer": {
+    "slogan": "Jarayon uchun emas natija uchun to'lang"
   }
 }

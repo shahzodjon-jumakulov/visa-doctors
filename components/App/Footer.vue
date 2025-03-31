@@ -114,8 +114,7 @@ const footerNav = computed(() => [
               />
             </NuxtLinkLocale>
             <p class="text-sm leading-140 text-white-400 lg:max-w-[20rem]">
-              Aliqua id fugiat nostrud irure ex duis ea quis id quis ad et. Sunt
-              qui esse pariatur duis deserunt.
+              {{ $t("footer.slogan") }}
             </p>
           </div>
           <div class="flex gap-3" v-if="contacts">
