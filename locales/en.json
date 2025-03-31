@@ -47,9 +47,11 @@
     "status_approved": "Your visa was approved on {date}",
     "error_not_found": "No records found",
     "error_invalid": "Invalid information provided",
-    "error_required": "Please fill in all fields"
+    "error_required": "Please fill in all fields",
+    "download_error": "Error downloading visa"
   },
   "footer": {
     "slogan": "Pay for results, not for the process"
-  }
+  },
+  "download_visa": "Download Visa"
 }

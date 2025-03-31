@@ -47,9 +47,11 @@
     "status_approved": "Sizga {date}da viza berildi",
     "error_not_found": "Bunday ma'lumotlar topilmadi",
     "error_invalid": "Noto'g'ri ma'lumotlar kiritildi",
-    "error_required": "Barcha maydonlarni to'ldiring"
+    "error_required": "Barcha maydonlarni to'ldiring",
+    "download_error": "Vizani yuklab olishda xatolik yuz berdi"
   },
   "footer": {
     "slogan": "Jarayon uchun emas natija uchun to'lang"
-  }
+  },
+  "download_visa": "Vizani yuklab olish"
 }

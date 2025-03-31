@@ -109,6 +109,8 @@ const checkStatus = async () => {
     error.value = t("visa_status.error_invalid");
   } finally {
     loading.value = false;
+    // Обновляем токен после каждого запроса, независимо от результата
+    captchaToken.value = await getToken();
   }
 };
 </script>
@@ -179,13 +181,20 @@ const checkStatus = async () => {
                 </svg>
                 <span class="text-base font-medium">
                   {{ result.visa_data.progress_status === "허가" 
-                    ? $t("visa_status.status_approved", { date: result.visa_data.review_date })
+                    ? $t("visa_status.status_approved", { date: result.visa_data.review_date + "'da" })
                     : $t("visa_status.status_received") }}
                 </span>
               </div>
               <div class="text-sm text-green-600">
-                {{ result.visa_data.status_en }}
+                {{ result.visa_data.progress_status }}
               </div>
+            </div>
+
+            <div v-if="result && result.visa_data.status_en === 'Approved'" class="mt-6">
+              <BaseDownloadVisaButton
+                :pdf-url="result.visa_data.pdf_url"
+                :pdf-params="result.visa_data.pdf_params"
+              />
             </div>
 
             <BaseButton
