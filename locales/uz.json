@@ -35,5 +35,18 @@
   "error_on_question": "{id}-savolda xatolik. Iltimos, javobni tekshiring.",
   "og_title": "Koreyada Ta’lim – Oson va Ishonchli Yo‘l",
   "og_description": "Koreyada o‘qishni xohlaysizmi? Universitetga kirish, stipendiyalar, viza va boshqa muhim jarayonlarda sizga yordam beramiz. Orzuyingizni biz bilan ro‘yobga chiqaring!",
-  "survey_description": "Iltimos quyidagi savollarga javob bering!"
+  "survey_description": "Iltimos quyidagi savollarga javob bering!",
+  "visa_status": {
+    "title": "Viza holatini tekshirish",
+    "description": "Viza arizangizning holatini tekshiring",
+    "passport_number": "Pasport raqami",
+    "english_name": "Ism-familiya (ingliz tilida)",
+    "birth_date": "Tug'ilgan sana",
+    "check_button": "Tekshirish",
+    "status_received": "Arizangiz qabul qilingan!",
+    "status_approved": "Sizga {date}da viza berildi",
+    "error_not_found": "Bunday ma'lumotlar topilmadi",
+    "error_invalid": "Noto'g'ri ma'lumotlar kiritildi",
+    "error_required": "Barcha maydonlarni to'ldiring"
+  }
 }

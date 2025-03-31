@@ -35,5 +35,18 @@
   "error_on_question": "Error in question {id}. Please check the answer.",
   "og_title": "Study in Korea – Easy and Reliable Way",
   "og_description": "Do you want to study in Korea? We will help you with university admission, scholarships, visas, and other important processes. Achieve your dreams with us!",
-  "survey_description": "Please answer the following questions!"
+  "survey_description": "Please answer the following questions!",
+  "visa_status": {
+    "title": "Check Visa Status",
+    "description": "Check the status of your visa application",
+    "passport_number": "Passport Number",
+    "english_name": "Full Name (in English)",
+    "birth_date": "Date of Birth",
+    "check_button": "Check Status",
+    "status_received": "Your application has been received!",
+    "status_approved": "Your visa was approved on {date}",
+    "error_not_found": "No records found",
+    "error_invalid": "Invalid information provided",
+    "error_required": "Please fill in all fields"
+  }
 }
