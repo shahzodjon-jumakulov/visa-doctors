@@ -44,7 +44,7 @@
     "birth_date": "Tug'ilgan sana",
     "check_button": "Tekshirish",
     "status_received": "Arizangiz qabul qilingan!",
-    "status_approved": "Sizga {date}da viza berildi",
+    "status_approved": "Sizga {date}'da viza berildi",
     "error_not_found": "Bunday ma'lumotlar topilmadi",
     "error_invalid": "Noto'g'ri ma'lumotlar kiritildi",
     "error_required": "Barcha maydonlarni to'ldiring",

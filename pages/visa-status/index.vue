@@ -181,7 +181,7 @@ const checkStatus = async () => {
                 </svg>
                 <span class="text-base font-medium">
                   {{ result.visa_data.progress_status === "허가" 
-                    ? $t("visa_status.status_approved", { date: result.visa_data.review_date + "'da" })
+                    ? $t("visa_status.status_approved", { date: result.visa_data.review_date })
                     : $t("visa_status.status_received") }}
                 </span>
               </div>
