@@ -53,5 +53,44 @@
   "footer": {
     "slogan": "Pay for results, not for the process"
   },
-  "download_visa": "Download Visa"
+  "download_visa": "Download Visa",
+  "terms": {
+    "title": "User Agreement",
+    "menu_title": "Terms",
+    "last_updated": "Last updated: March 15, 2024",
+    "sections": {
+      "1": {
+        "title": "1. General Provisions",
+        "content": "This agreement regulates the legal relationship between the Visa Doctors service (hereinafter referred to as the \"Service\") and users (hereinafter referred to as the \"User\"). Use of the service indicates your agreement to these terms."
+      },
+      "2": {
+        "title": "2. Service Description",
+        "content": "\"Visa Doctors\" is a platform that provides consultation and information services for obtaining visas for studying in the Republic of Korea. We do not have the right to issue or deny visas - this process falls under the authority of the Government of the Republic of Korea only."
+      },
+      "3": {
+        "title": "3. User Obligations",
+        "content": "- The user must use the service only for legal purposes.\n- All information provided by the user must be accurate and complete.\n- Use of the service for illegal, false, or harmful actions is prohibited."
+      },
+      "4": {
+        "title": "4. Personal Data Processing",
+        "content": "- We collect and process users' personal data only for use in the visa application process.\n- Data will not be disclosed to third parties without the user's consent.\n- The user may request to update or delete their personal data at any time."
+      },
+      "5": {
+        "title": "5. Limitation of Liability",
+        "content": "- \"Visa Doctors\" does not guarantee visa results.\n- We only provide information and consultation services to users.\n- We are not liable for any damages arising from the use of the service."
+      },
+      "6": {
+        "title": "6. Legal Matters and Dispute Resolution",
+        "content": "- This agreement is governed by and interpreted in accordance with the laws of the Republic of Uzbekistan.\n- All disputes shall be resolved through negotiations, and if no agreement is reached, they shall be considered in the courts of the Republic of Uzbekistan."
+      },
+      "7": {
+        "title": "7. Changes and Updates",
+        "content": "- \"Visa Doctors\" reserves the right to make changes to this agreement at any time.\n- Changes take effect from the date of their announcement on the site.\n- The user accepts the new terms by continuing to use the service."
+      }
+    },
+    "copyright": "© \"Visa Doctors\". All rights reserved."
+  },
+  "form": {
+    "terms_agreement": "By using the site, you agree to our"
+  }
 }

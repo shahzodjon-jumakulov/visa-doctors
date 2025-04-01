@@ -5,22 +5,29 @@ definePageMeta({
 </script>
 
 <template>
-  <div class="bg-gray-50">
-    <UContainer class="py-10">
-      <div class="max-w-3xl mx-auto bg-white p-8 rounded-lg shadow">
-        <h1 class="section-heading mb-8 text-center">{{ $t('terms.title') }}</h1>
-        <p class="text-gray-600 mb-8 text-center">{{ $t('terms.last_updated') }}</p>
+  <div class="bg-black-100 grow">
+    <UContainer class="py-10 md:pb-[4.5rem]">
+      <div class="flex flex-col gap-8 max-w-[50rem] mx-auto">
+        <h1 class="section-heading">{{ $t("terms.title") }}</h1>
 
-        <div class="space-y-8">
-          <template v-for="i in 7" :key="i">
-            <div class="prose max-w-none">
-              <h2 class="text-xl font-semibold mb-4">{{ $t(`terms.sections.${i}.title`) }}</h2>
-              <div class="whitespace-pre-line text-gray-700 leading-relaxed">{{ $t(`terms.sections.${i}.content`) }}</div>
-            </div>
-          </template>
+        <div class="bg-white rounded-xl px-4 py-5 md:p-8 flex flex-col gap-6">
+          <div class="prose prose-sm max-w-none">
+            <p class="text-black-500">{{ $t("terms.last_updated") }}</p>
+
+            <template v-for="i in 7" :key="i">
+              <h2 class="text-xl font-bold text-black-main mt-8">
+                {{ $t(`terms.sections.${i}.title`) }}
+              </h2>
+              <div class="whitespace-pre-line">
+                {{ $t(`terms.sections.${i}.content`) }}
+              </div>
+            </template>
+
+            <p class="mt-8 pt-8 text-gray-600 border-t text-center">
+              © {{ new Date().getFullYear() }} {{ $t('terms.copyright') }}
+            </p>
+          </div>
         </div>
-
-        <p class="mt-8 pt-8 text-gray-600 border-t text-center">© {{ new Date().getFullYear() }} {{ $t('terms.copyright') }}</p>
       </div>
     </UContainer>
   </div>
