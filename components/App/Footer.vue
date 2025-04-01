@@ -50,6 +50,11 @@ const footerNav = computed(() => [
         title: t("awards"),
         link: "/awards",
       },
+      {
+        id: 3,
+        title: t("terms.menu_title"),
+        link: "/terms",
+      },
     ],
   },
   // {
@@ -159,7 +164,7 @@ const footerNav = computed(() => [
     </UContainer>
     <div class="bg-[#121315] py-5">
       <p class="text-sm text-white-400 text-center">
-        © {{ new Date().getFullYear() }} “Visa Doctors”. 
+        © {{ new Date().getFullYear() }} "Visa Doctors". 
         <br class="md:hidden" />
         {{ $t("rights_reserved") }}
       </p>
