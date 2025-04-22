@@ -2,37 +2,95 @@
   "hello": "Salom, Dunyo!",
   "main_page": "Bosh sahifa",
   "error_occured": "Xatolik yuz berdi",
-  "error_message": "Ushbu sahifa topilmadi. Sahifani yangilang yoki bosh sahifaga o‘ting",
+  "error_message": "Ushbu sahifa topilmadi. Sahifani yangilang yoki bosh sahifaga o'ting",
   "about_us": "Biz haqimizda",
   "about_us_desc": "Ishonchli va samarali hamkor",
   "awards": "Natijalarimiz",
   "awards_desc": "Biz bilan 90% dan oshiq mijozlar ijobiy natijaga erishishlari mumkin",
   "required_docs": "Kerakli hujjatlar",
-  "required_docs_desc": "Barcha viza yo‘nalishlari bo‘yicha to‘liq ma’lumot oling",
+  "required_docs_desc": "Barcha viza yo'nalishlari bo'yicha to'liq ma'lumot oling",
   "hero": {
-    "title": "Koreyada ta’lim uchun so‘rovnoma to‘ldiring"
+    "title": "Koreyada ta'lim uchun so'rovnoma to'ldiring"
   },
   "docs_requirements": ["Viza uchun", "kerakli hujjatlar"],
-  "docs_requirements_desc": "Quyida viza olish uchun kerakli hujjatlar ro‘yxati berilgan",
+  "docs_requirements_desc": "Quyida viza olish uchun kerakli hujjatlar ro'yxati berilgan",
   "universities_section": {
-    "title": "Quyidagi universitetlarda <span>talaba bo‘ling</span>",
-    "desc": "Koreyadagi eng yaxshi universitetlar ro‘yxati"
+    "title": "Quyidagi universitetlarda <span>talaba bo'ling</span>",
+    "desc": "Koreyadagi eng yaxshi universitetlar ro'yxati"
   },
   "types_of_visas": "Viza turlari",
   "experience_years": "Yillik Tajriba",
-  "fill_survey": "So‘rovnoma to‘ldirish",
-  "read_more": "Batafsil o‘qish",
-  "information": "Ma’lumot",
+  "fill_survey": "So'rovnoma to'ldirish",
+  "read_more": "Batafsil o'qish",
+  "information": "Ma'lumot",
   "contacts": "Aloqa",
   "next": "Keyingisi",
   "got_it": "Tushunarli",
-  "survey_sent": "So‘rovnomangiz yuborildi",
-  "contact_back_soon": "Tez orada siz bilan bog‘lanamiz",
-  "survey_for_study_in_korea": "<span>Koreyada ta’lim</span> uchun so‘rovnoma",
+  "survey_sent": "So'rovnomangiz yuborildi",
+  "contact_back_soon": "Tez orada siz bilan bog'lanamiz",
+  "survey_for_study_in_korea": "<span>Koreyada ta'lim olish</span> uchun so'rovnoma",
   "rights_reserved": "Barcha huquqlar himoyalangan",
-  "questions_regarding_visa": "Viza bo‘yicha savollar",
+  "questions_regarding_visa": "Viza bo'yicha savollar",
   "error_recaptcha": "Recaptcha xatolik yuz berdi. Iltimos, sahifani yangilang",
   "error_on_question": "{id}-savolda xatolik. Iltimos, javobni tekshiring.",
-  "og_title": "Koreyada Ta’lim – Oson va Ishonchli Yo‘l",
-  "og_description": "Koreyada o‘qishni xohlaysizmi? Universitetga kirish, stipendiyalar, viza va boshqa muhim jarayonlarda sizga yordam beramiz. Orzuyingizni biz bilan ro‘yobga chiqaring!"
+  "og_title": "Koreyada Ta'lim – Oson va Ishonchli Yo'l",
+  "og_description": "Koreyada o'qishni xohlaysizmi? Universitetga kirish, stipendiyalar, viza va boshqa muhim jarayonlarda sizga yordam beramiz. Orzuyingizni biz bilan ro'yobga chiqaring!",
+  "survey_description": "Iltimos quyidagi savollarga javob bering!",
+  "visa_status": {
+    "title": "Viza holatini tekshirish",
+    "description": "Viza arizangizning holatini tekshiring",
+    "passport_number": "Pasport raqami",
+    "english_name": "Ism-familiya (ingliz tilida)",
+    "birth_date": "Tug'ilgan sana",
+    "check_button": "Tekshirish",
+    "status_received": "Arizangiz qabul qilingan!",
+    "status_approved": "Sizga {date}'da viza berildi",
+    "error_not_found": "Bunday ma'lumotlar topilmadi",
+    "error_invalid": "Noto'g'ri ma'lumotlar kiritildi",
+    "error_required": "Barcha maydonlarni to'ldiring",
+    "download_error": "Vizani yuklab olishda xatolik yuz berdi"
+  },
+  "footer": {
+    "slogan": "Jarayon uchun emas natija uchun to'lang"
+  },
+  "download_visa": "Vizani yuklab olish",
+  "terms": {
+    "title": "Foydalanuvchi Shartnomasi",
+    "menu_title": "Shartlar",
+    "last_updated": "So'nggi yangilanish: 2024 yil 15 mart",
+    "sections": {
+      "1": {
+        "title": "1. Umumiy qoidalar",
+        "content": "Ushbu shartnoma \"Visa Doctors\" xizmati (keyingi o'rinlarda \"Xizmat\") va foydalanuvchilar (keyingi o'rinlarda \"Foydalanuvchi\") o'rtasidagi huquqiy munosabatlarni tartibga soladi. Xizmatdan foydalanish ushbu shartnoma shartlariga rozi ekanligingizni bildiradi."
+      },
+      "2": {
+        "title": "2. Xizmat tavsifi",
+        "content": "\"Visa Doctors\" – bu Koreya Respublikasida ta'lim olish, ishlash yoki mehmon sifatida tashrif buyurish uchun viza olish jarayonida maslahat va ma'lumot berish xizmatini ko'rsatadigan platformadir. Biz viza berish yoki rad etish huquqiga ega emasmiz – bu jarayon faqat Koreya Respublikasi hukumatining vakolatiga kiradi."
+      },
+      "3": {
+        "title": "3. Foydalanuvchi majburiyatlari",
+        "content": "- Foydalanuvchi xizmatdan faqat qonuniy maqsadlarda foydalanishi lozim.\n- Foydalanuvchi taqdim etadigan barcha ma'lumotlar to'g'ri va to'liq bo'lishi kerak.\n- Xizmatdan noqonuniy, yolg'on yoki zarar yetkazuvchi harakatlar uchun foydalanish taqiqlanadi."
+      },
+      "4": {
+        "title": "4. Shaxsiy ma'lumotlarni qayta ishlash",
+        "content": "- Biz foydalanuvchilarning shaxsiy ma'lumotlarini faqat viza olish jarayonida foydalanish uchun yig'amiz va qayta ishlaymiz.\n- Ma'lumotlar uchinchi shaxslarga foydalanuvchining roziligisiz oshkor qilinmaydi.\n- Foydalanuvchi istalgan vaqtda o'z shaxsiy ma'lumotlarini yangilash yoki o'chirish talabini yuborishi mumkin."
+      },
+      "5": {
+        "title": "5. Javobgarlikni cheklash",
+        "content": "- \"Visa Doctors\" viza natijasiga kafolat bermaydi.\n- Biz foydalanuvchilarga faqat ma'lumot berish va maslahat xizmatlarini taqdim etamiz.\n- Xizmatdan foydalanish natijasida yuzaga keladigan har qanday zarar uchun biz javobgar emasmiz."
+      },
+      "6": {
+        "title": "6. Huquqiy masalalar va nizolarni hal qilish",
+        "content": "- Ushbu shartnoma O'zbekiston Respublikasi qonunlariga muvofiq tuzilgan va talqin etiladi.\n- Barcha nizolar muzokaralar yo'li bilan hal qilinadi, agar kelishuvga erishilmasa, ular O'zbekiston Respublikasi sudlarida ko'rib chiqiladi."
+      },
+      "7": {
+        "title": "7. O'zgarishlar va yangilanishlar",
+        "content": "- \"Visa Doctors\" ushbu shartnomaga istalgan vaqtda o'zgartirish kiritish huquqiga ega.\n- O'zgarishlar sayt orqali e'lon qilingan kundan boshlab kuchga kiradi.\n- Foydalanuvchi xizmatdan foydalanishda davom etish orqali yangi shartlarni qabul qiladi."
+      }
+    },
+    "copyright": "© \"Visa Doctors\". Barcha huquqlar himoyalangan."
+  },
+  "form": {
+    "terms_agreement": "Saytdan foydalanish orqali siz bizning"
+  }
 }

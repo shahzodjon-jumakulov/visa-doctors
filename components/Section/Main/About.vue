@@ -24,7 +24,7 @@ const features = about.value.highlights || [];
               {{ about.experience_years?.years || 1 }}
             </p>
             <p class="text-sm text-black-500">
-              {{ $t("experience_years") }}
+              {{ about.experience_years.title }}
             </p>
           </div>
         </div>
