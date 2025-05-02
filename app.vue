@@ -1,5 +1,5 @@
 <script setup>
-const { t } = useI18n();
+const {t} = useI18n();
 const colorMode = useColorMode();
 
 onMounted(() => {
@@ -7,9 +7,9 @@ onMounted(() => {
 });
 
 useHead({
-  link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" }],
-  htmlAttrs: { lang: "uz" },
-  meta: [{ name: "darkreader-lock" }],
+  link: [{rel: "icon", type: "image/x-icon", href: "/favicon.ico"}],
+  htmlAttrs: {lang: "uz"},
+  meta: [{name: "darkreader-lock"}],
   script: [
     {
       children: `!function(f,b,e,v,n,t,s){
@@ -52,18 +52,24 @@ useSeoMeta({
 <template>
   <div>
     <NuxtLayout>
-      <NuxtPage />
+      <NuxtPage/>
     </NuxtLayout>
 
-    <UNotifications />
+    <UNotifications/>
   </div>
 </template>
 
 <style>
 @keyframes shake {
-  0%, 100% { transform: translateX(0); }
-  25% { transform: translateX(-4px); }
-  75% { transform: translateX(4px); }
+  0%, 100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-4px);
+  }
+  75% {
+    transform: translateX(4px);
+  }
 }
 
 .animate-shake {
