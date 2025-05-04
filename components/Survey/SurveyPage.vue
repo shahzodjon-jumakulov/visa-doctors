@@ -240,7 +240,7 @@ watch(isModalOpen, (val) => {
               />
               <UInput
                 v-else
-                :placeholder="currentQuestion.title"
+                :placeholder="currentQuestion.placeholder || currentQuestion.title"
                 variant="none"
                 v-model="body[currIndex].text_answer"
                 :class="{
