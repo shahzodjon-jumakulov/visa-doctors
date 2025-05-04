@@ -197,6 +197,9 @@ watch(isModalOpen, (val) => {
           v-show="currIndex === 0"
         >
           <h1 class="section-heading" v-html="$t('survey_for_study_in_korea')"></h1>
+          <p class="text-lg font-medium text-black-500 hidden md:block">
+            {{ $t("survey_description") }}
+          </p>
         </div>
 
         <div
@@ -304,10 +307,16 @@ watch(isModalOpen, (val) => {
 
 <style scoped>
 .section-heading {
-  font-size: 2.0rem;
+  font-size: 2.5rem;
   font-weight: 700;
   line-height: 1.2;
   color: #1A1A1A;
+}
+
+@media (max-width: 768px) {
+  .section-heading {
+    font-size: 1.75rem;
+  }
 }
 
 .section-heading :deep(span) {
