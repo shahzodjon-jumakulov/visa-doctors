@@ -197,7 +197,7 @@ watch(isModalOpen, (val) => {
           v-show="currIndex === 0"
         >
           <h1 class="section-heading" v-html="$t('survey_for_study_in_korea')"></h1>
-          <p class="text-lg font-medium text-black-500">
+          <p class="text-lg font-medium text-black-500 hidden md:block">
             {{ $t("survey_description") }}
           </p>
         </div>
@@ -240,7 +240,7 @@ watch(isModalOpen, (val) => {
               />
               <UInput
                 v-else
-                :placeholder="currentQuestion.title"
+                :placeholder="currentQuestion.placeholder || currentQuestion.title"
                 variant="none"
                 v-model="body[currIndex].text_answer"
                 :class="{
@@ -311,6 +311,12 @@ watch(isModalOpen, (val) => {
   font-weight: 700;
   line-height: 1.2;
   color: #1A1A1A;
+}
+
+@media (max-width: 768px) {
+  .section-heading {
+    font-size: 1.75rem;
+  }
 }
 
 .section-heading :deep(span) {

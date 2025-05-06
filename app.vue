@@ -1,5 +1,5 @@
 <script setup>
-const { t } = useI18n();
+const {t} = useI18n();
 const colorMode = useColorMode();
 
 onMounted(() => {
@@ -7,9 +7,9 @@ onMounted(() => {
 });
 
 useHead({
-  link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" }],
-  htmlAttrs: { lang: "uz" },
-  meta: [{ name: "darkreader-lock" }],
+  link: [{rel: "icon", type: "image/x-icon", href: "/favicon.ico"}],
+  htmlAttrs: {lang: "uz"},
+  meta: [{name: "darkreader-lock"}],
   script: [
     {
       children: `!function(f,b,e,v,n,t,s){
@@ -26,7 +26,6 @@ useHead({
   s=b.getElementsByTagName(e)[0];
   s.parentNode.insertBefore(t,s)
 }(window, document,'script','https://connect.facebook.net/en_US/fbevents.js');
-
 fbq('init', '9550349828389145');
 fbq('track', 'PageView');`,
       type: "text/javascript",
@@ -53,17 +52,16 @@ useSeoMeta({
 <template>
   <div>
     <NuxtLayout>
-      <NuxtPage />
+      <NuxtPage/>
     </NuxtLayout>
 
-    <UNotifications />
+    <UNotifications/>
   </div>
 </template>
 
 <style>
 @keyframes shake {
-  0%,
-  100% {
+  0%, 100% {
     transform: translateX(0);
   }
   25% {
