@@ -39,6 +39,8 @@
   "visa_status": {
     "title": "Viza holatini tekshirish",
     "description": "Viza arizangizning holatini tekshiring",
+    "check_status": "Viza holati",
+    "check_status_desc": "Viza arizangizning holatini tekshiring",
     "passport_number": "Pasport raqami",
     "english_name": "Ism-familiya (ingliz tilida)",
     "birth_date": "Tug'ilgan sana",

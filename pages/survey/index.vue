@@ -194,7 +194,16 @@ watch(isModalOpen, (val) => {
 </script>
 
 <template>
-  <SurveyPage />
+  <Suspense>
+    <template #default>
+      <SurveyPage />
+    </template>
+    <template #fallback>
+      <div class="bg-black-100 grow flex items-center justify-center py-10">
+        <div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-red-main"></div>
+      </div>
+    </template>
+  </Suspense>
 </template>
 
 <style scoped>

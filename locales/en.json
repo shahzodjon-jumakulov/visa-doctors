@@ -39,6 +39,8 @@
   "visa_status": {
     "title": "Check Visa Status",
     "description": "Check the status of your visa application",
+    "check_status": "Visa Status",
+    "check_status_desc": "Check your visa application status",
     "passport_number": "Passport Number",
     "english_name": "Full Name (in English)",
     "birth_date": "Date of Birth",
