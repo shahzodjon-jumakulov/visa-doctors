@@ -2,6 +2,7 @@
 import Team from "@/assets/icons/team.svg";
 import Results from "@/assets/icons/results.svg";
 import Visa from "@/assets/icons/visa.svg";
+import VisaStatus from "@/assets/icons/visa-status.svg";
 
 const { t } = useI18n();
 
@@ -31,7 +32,7 @@ const nav = computed(() => [
     id: 4,
     title: t("visa_status.check_status"),
     description: t("visa_status.check_status_desc"),
-    icon: Visa,
+    icon: VisaStatus,
     link: "/visa-status",
   },
 ]);
