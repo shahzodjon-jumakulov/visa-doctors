@@ -1,6 +1,5 @@
 {
   "hello": "Hello, World!",
-  "main_page": "Main page",
   "error_occured": "An error occurred",
   "error_message": "This page was not found. Refresh the page or go to the main page",
   "about_us": "About us",
@@ -28,6 +27,9 @@
   "got_it": "Understood",
   "survey_sent": "Survey sent",
   "contact_back_soon": "We will contact you soon",
+  "our_telegram": "Our Telegram",
+  "our_instagram": "Our Instagram",
+  "main_page": "Main page",
   "survey_for_study_in_korea": "Survey for <span>studying in Korea</span>",
   "rights_reserved": "All rights reserved",
   "questions_regarding_visa": "Visa questions",
