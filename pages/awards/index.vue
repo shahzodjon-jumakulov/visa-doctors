@@ -1,5 +1,10 @@
 <script setup>
-const { data } = await useMyFetch("/results/detail/");
+const {data} = await useMyFetch("/results/detail/");
+
+const imageLoaded = ref({});
+const handleImageLoad = (idx) => {
+  imageLoaded.value[idx] = true;
+};
 </script>
 
 <template>
@@ -16,22 +21,28 @@ const { data } = await useMyFetch("/results/detail/");
         </div>
 
         <div
-          class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 md:gap-5 lg:gap-10"
+            class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 md:gap-5 lg:gap-10"
         >
           <div
-            class="relative aspect-square"
-            v-for="(image, idx) in data.results"
-            :key="idx"
+              class="relative aspect-square"
+              v-for="(image, idx) in data.results"
+              :key="idx"
           >
-            <img
-              :src="image.image"
-              :alt="`Award ${idx + 1}`"
-              class="size-full object-cover rounded-2xl"
-            />
+            <div class="relative w-full h-full">
+              <div v-if="!imageLoaded[idx]" class="absolute inset-0 bg-black-100 rounded-2xl animate-pulse"></div>
+              <img
+                  :src="image.image"
+                  :alt="`Award ${idx + 1}`"
+                  class="size-full object-cover rounded-2xl"
+                  loading="lazy"
+                  @load="handleImageLoad(idx)"
+                  :class="{'opacity-0': !imageLoaded[idx]}"
+              />
+            </div>
           </div>
         </div>
       </div>
     </UContainer>
-    <SectionSurvey />
+    <SectionSurvey/>
   </section>
 </template>

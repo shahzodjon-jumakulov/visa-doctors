@@ -7,8 +7,8 @@ export default defineI18nConfig(() => ({
   messages: {
     uz: {
       ...uz,
-      become_student: "Talaba bo'ling",
-      at_universities: "quyidagi universitetlarda",
+      become_student: "talaba bo'ling",
+      at_universities: "Quyidagi universitetlarda",
       invalid_phone: "Iltimos, to'liq telefon raqamini kiriting"
     },
     en: {

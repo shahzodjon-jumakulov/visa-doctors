@@ -72,8 +72,8 @@ onBeforeUnmount(() => {
     <div class="flex flex-col gap-10">
       <div class="flex flex-col gap-3">
         <h2 class="section-heading">
-          <span class="text-red-main">{{ $t('become_student') }}</span>
           {{ $t('at_universities') }}
+          <span class="text-red-main">{{ $t('become_student') }}</span>
         </h2>
         <p class="text-sm font-medium text-black-500 text-center">
           {{ $t("docs_requirements_desc") }}

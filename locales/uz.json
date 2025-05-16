@@ -1,6 +1,5 @@
 {
   "hello": "Salom, Dunyo!",
-  "main_page": "Bosh sahifa",
   "error_occured": "Xatolik yuz berdi",
   "error_message": "Ushbu sahifa topilmadi. Sahifani yangilang yoki bosh sahifaga o'ting",
   "about_us": "Biz haqimizda",
@@ -28,6 +27,9 @@
   "got_it": "Tushunarli",
   "survey_sent": "So'rovnomangiz yuborildi",
   "contact_back_soon": "Tez orada siz bilan bog'lanamiz",
+  "our_telegram": "Bizning Telegram",
+  "our_instagram": "Bizning Instagram",
+  "main_page": "Bosh sahifa",
   "survey_for_study_in_korea": "<span>Koreyada ta'lim olish</span> uchun so'rovnoma",
   "rights_reserved": "Barcha huquqlar himoyalangan",
   "questions_regarding_visa": "Viza bo'yicha savollar",
@@ -39,6 +41,8 @@
   "visa_status": {
     "title": "Viza holatini tekshirish",
     "description": "Viza arizangizning holatini tekshiring",
+    "check_status": "Viza holati",
+    "check_status_desc": "Viza arizangizning holatini tekshiring",
     "passport_number": "Pasport raqami",
     "english_name": "Ism-familiya (ingliz tilida)",
     "birth_date": "Tug'ilgan sana",
@@ -57,7 +61,7 @@
   "terms": {
     "title": "Foydalanuvchi Shartnomasi",
     "menu_title": "Shartlar",
-    "last_updated": "So'nggi yangilanish: 2024 yil 15 mart",
+    "last_updated": "So'nggi yangilanish: 2025 yil 15 mart",
     "sections": {
       "1": {
         "title": "1. Umumiy qoidalar",

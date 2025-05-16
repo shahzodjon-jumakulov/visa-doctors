@@ -157,7 +157,7 @@ const openDatePicker = () => {
       @blur="handleBlur"
       type="text"
       :placeholder="isFocused ? 'YYYY-MM-DD' : placeholder"
-      class="block w-full rounded-lg border-0 px-4 py-3 text-black-main shadow-sm ring-1 ring-inset ring-black-200 placeholder:text-black-300 focus:ring-2 focus:ring-inset focus:ring-red-main sm:text-sm sm:leading-6 pr-10"
+      class="block w-full rounded-lg border-0 text-base p-4 text-black-main shadow-sm ring-1 ring-inset ring-black-200 placeholder:text-black-400 focus:ring-2 focus:ring-inset focus:ring-red-main pr-10"
       :class="{
         '!ring-2 !ring-red-main !bg-red-50':
           error || (inputValue && !validateDate(inputValue)),

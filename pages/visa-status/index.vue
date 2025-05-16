@@ -1,7 +1,7 @@
 <script setup>
-import { useReCaptcha } from "vue-recaptcha-v3";
+import {useReCaptcha} from "vue-recaptcha-v3";
 
-const { t } = useI18n();
+const {t} = useI18n();
 const toast = useToast();
 const localePath = useLocalePath();
 
@@ -89,10 +89,10 @@ const checkStatus = async () => {
       captchaToken.value = await getToken();
     }
 
-    const { data, error: apiError } = await useMyFetch("/visas/check-status/", {
+    const {data, error: apiError} = await useMyFetch("/visas/check-status/", {
       method: "POST",
       body: form.value,
-      headers: { "X-Recaptcha-Token": captchaToken.value },
+      headers: {"X-Recaptcha-Token": captchaToken.value},
     });
 
     if (apiError.value) {
@@ -128,17 +128,18 @@ const checkStatus = async () => {
           </p>
         </div>
 
-        <div class="bg-white border-t-4 border-red-main rounded-xl px-4 py-5 md:p-8 flex flex-col gap-5 max-w-[50rem] w-full">
+        <div
+            class="bg-white border-t-4 border-red-main rounded-xl px-4 py-5 md:p-8 flex flex-col gap-5 max-w-[50rem] w-full">
           <form @submit.prevent="checkStatus" class="flex flex-col gap-5">
             <div class="flex flex-col gap-2">
               <label class="text-base font-medium text-black-main">
                 {{ $t("visa_status.passport_number") }}
               </label>
               <UInput
-                v-model="form.passport_number"
-                :placeholder="$t('visa_status.passport_number')"
-                variant="none"
-                class="!bg-black-100"
+                  v-model="form.passport_number"
+                  :placeholder="$t('visa_status.passport_number')"
+                  variant="none"
+                  class="!bg-black-100"
               />
             </div>
 
@@ -147,10 +148,10 @@ const checkStatus = async () => {
                 {{ $t("visa_status.english_name") }}
               </label>
               <UInput
-                v-model="form.english_name"
-                :placeholder="$t('visa_status.english_name')"
-                variant="none"
-                class="!bg-black-100"
+                  v-model="form.english_name"
+                  :placeholder="$t('visa_status.english_name')"
+                  variant="none"
+                  class="!bg-black-100"
               />
             </div>
 
@@ -159,15 +160,18 @@ const checkStatus = async () => {
                 {{ $t("visa_status.birth_date") }}
               </label>
               <BaseDateInput
-                v-model="form.birth_date"
-                :placeholder="$t('visa_status.birth_date')"
-                :error="error && !form.birth_date"
+                  v-model="form.birth_date"
+                  :placeholder="$t('visa_status.birth_date')"
+                  :error="error && !form.birth_date"
+                  class="!bg-black-100"
               />
             </div>
 
             <div v-if="error" class="flex items-center gap-2 text-red-main text-sm">
               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
-                <path d="M10 6V10M10 14H10.01M19 10C19 14.9706 14.9706 19 10 19C5.02944 19 1 14.9706 1 10C1 5.02944 5.02944 1 10 1C14.9706 1 19 5.02944 19 10Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path
+                    d="M10 6V10M10 14H10.01M19 10C19 14.9706 14.9706 19 10 19C5.02944 19 1 14.9706 1 10C1 5.02944 5.02944 1 10 1C14.9706 1 19 5.02944 19 10Z"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
               {{ error }}
             </div>
@@ -175,13 +179,18 @@ const checkStatus = async () => {
             <div v-if="result" class="flex flex-col gap-2 p-4 bg-green-50 rounded-lg">
               <div class="flex items-center gap-2 text-green-700">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
-                  <path d="M10 18.3333C14.6024 18.3333 18.3334 14.6024 18.3334 10C18.3334 5.39763 14.6024 1.66667 10 1.66667C5.39765 1.66667 1.66669 5.39763 1.66669 10C1.66669 14.6024 5.39765 18.3333 10 18.3333Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                  <path d="M6.66669 10L8.33335 11.6667L13.3334 6.66667" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path
+                      d="M10 18.3333C14.6024 18.3333 18.3334 14.6024 18.3334 10C18.3334 5.39763 14.6024 1.66667 10 1.66667C5.39765 1.66667 1.66669 5.39763 1.66669 10C1.66669 14.6024 5.39765 18.3333 10 18.3333Z"
+                      stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M6.66669 10L8.33335 11.6667L13.3334 6.66667" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
                 <span class="text-base font-medium">
-                  {{ result.visa_data.progress_status === "허가" 
-                    ? $t("visa_status.status_approved", { date: result.visa_data.review_date })
-                    : $t("visa_status.status_received") }}
+                  {{
+                    result.visa_data.progress_status === "허가"
+                        ? $t("visa_status.status_approved", {date: result.visa_data.review_date})
+                        : $t("visa_status.status_received")
+                  }}
                 </span>
               </div>
               <div class="text-sm text-green-600">
@@ -191,17 +200,17 @@ const checkStatus = async () => {
 
             <div v-if="result && result.visa_data.status_en === 'Approved'" class="mt-6">
               <BaseDownloadVisaButton
-                :pdf-url="result.visa_data.pdf_url"
-                :pdf-params="result.visa_data.pdf_params"
+                  :pdf-url="result.visa_data.pdf_url"
+                  :pdf-params="result.visa_data.pdf_params"
               />
             </div>
 
             <BaseButton
-              :loading="loading"
-              :label="$t('visa_status.check_button')"
-              @click="checkStatus"
-              class="w-fit"
-              type="submit"
+                :loading="loading"
+                :label="$t('visa_status.check_button')"
+                @click="checkStatus"
+                class="w-fit"
+                type="submit"
             />
           </form>
         </div>
@@ -215,10 +224,10 @@ const checkStatus = async () => {
   font-size: 2.5rem;
   font-weight: 700;
   line-height: 1.2;
-  color: #1A1A1A;
+  color: #E20935;
 }
 
 .section-heading :deep(span) {
-  color: #E20935;
+  color: #1A1A1A;
 }
 </style> 

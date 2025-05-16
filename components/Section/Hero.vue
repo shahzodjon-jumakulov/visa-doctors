@@ -2,6 +2,7 @@
 import Team from "@/assets/icons/team.svg";
 import Results from "@/assets/icons/results.svg";
 import Visa from "@/assets/icons/visa.svg";
+import VisaStatus from "@/assets/icons/visa-status.svg";
 
 const { t } = useI18n();
 
@@ -27,6 +28,13 @@ const nav = computed(() => [
     icon: Visa,
     link: "/categories",
   },
+  {
+    id: 4,
+    title: t("visa_status.check_status"),
+    description: t("visa_status.check_status_desc"),
+    icon: VisaStatus,
+    link: "/visa-status",
+  },
 ]);
 </script>
 
@@ -50,7 +58,7 @@ const nav = computed(() => [
           <BaseButton :label="$t('fill_survey')" :to="$localePath('/survey')" />
         </div>
         <div
-          class="bg-black-400 backdrop-blur-[10px] rounded-xl overflow-hidden grid max-lg:grid-rows-3 lg:grid-cols-3 max-lg:max-w-3xl w-full"
+          class="bg-black-400 backdrop-blur-[10px] rounded-xl overflow-hidden grid max-lg:grid-rows-4 lg:grid-cols-4 max-lg:max-w-3xl w-full"
         >
           <NuxtLinkLocale
             v-for="(item, index) in nav"

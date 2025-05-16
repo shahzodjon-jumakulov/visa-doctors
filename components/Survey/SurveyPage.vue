@@ -1,10 +1,15 @@
 <script setup>
 import { useReCaptcha } from "vue-recaptcha-v3";
+import {
+  IconSocialTelegram,
+  IconSocialInstagram
+} from "#components";
 
 const { t } = useI18n();
 const isModalOpen = ref(false);
 const toast = useToast();
 const localePath = useLocalePath();
+const contacts = useContacts();
 
 const { data } = await useMyFetch("/questions/");
 
@@ -182,6 +187,35 @@ const next = async () => {
   }
 };
 
+// u041fu043eu043bu0443u0447u0430u0435u043c u0438u0441u0442u043eu0447u043du0438u043a u0442u0440u0430u0444u0438u043au0430
+const surveyStore = useState('survey');
+const trafficSource = computed(() => surveyStore.value?.source || 'website');
+
+// u0424u043bu0430u0433u0438 u0438u0441u0442u043eu0447u043du0438u043au043eu0432
+const isFromTelegram = computed(() => trafficSource.value === 'telegram');
+const isFromInstagram = computed(() => trafficSource.value === 'instagram');
+const isFromWebsite = computed(() => !isFromTelegram.value && !isFromInstagram.value);
+
+// u0421u0441u044bu043bu043au0438 u043du0430 u0441u043eu0446u0438u0430u043bu044cu043du044bu0435 u0441u0435u0442u0438
+const telegramLink = computed(() => contacts.value?.telegram || '#');
+const instagramLink = computed(() => contacts.value?.instagram || '#');
+
+// u041eu0431u0440u0430u0431u043eu0442u0447u0438u043au0438 u043au043bu0438u043au043eu0432 u043du0430 u0441u043eu0446u0438u0430u043bu044cu043du044bu0435 u0441u0435u0442u0438
+const goToTelegram = () => {
+  // u041eu0442u043au0440u044bu0432u0430u0435u043c u0441u0441u044bu043bu043au0443 u0432 u043du043eu0432u043eu043c u043eu043au043du0435, u043du043e u043du0435 u0437u0430u043au0440u044bu0432u0430u0435u043c u043cu043eu0434u0430u043bu044cu043du043eu0435 u043eu043au043du043e
+  window.open(telegramLink.value, '_blank');
+};
+
+const goToInstagram = () => {
+  // u041eu0442u043au0440u044bu0432u0430u0435u043c u0441u0441u044bu043bu043au0443 u0432 u043du043eu0432u043eu043c u043eu043au043du0435, u043du043e u043du0435 u0437u0430u043au0440u044bu0432u0430u0435u043c u043cu043eu0434u0430u043bu044cu043du043eu0435 u043eu043au043du043e
+  window.open(instagramLink.value, '_blank');
+};
+
+const closeModal = () => {
+  isModalOpen.value = false;
+  navigateTo(localePath("/"));
+};
+
 watch(isModalOpen, (val) => {
   if (val) return;
   navigateTo(localePath("/"));
@@ -276,23 +310,53 @@ watch(isModalOpen, (val) => {
       </div>
     </UContainer>
 
-    <UModal v-model="isModalOpen">
-      <div class="py-5 px-6 rounded-3xl flex flex-col gap-5 items-center">
-        <div class="">
-          <img src="~/assets/icons/check-circle.svg" alt="done" />
+    <UModal v-model="isModalOpen" transition="fade">
+      <div class="py-5 px-6 md:py-6 md:px-8 rounded-3xl flex flex-col gap-4 items-center animate-fade-in">
+        <div class="mb-1">
+          <img src="~/assets/icons/check-circle.svg" alt="done" class="w-16 h-16" />
         </div>
         <div class="flex flex-col gap-2 text-center">
-          <h2 class="text-black-main text-lg font-bold leading-normal">
+          <h2 class="text-black-main text-xl font-bold leading-normal">
             {{ $t("survey_sent") }}
           </h2>
-          <p class="text-sm text-black-500">{{ $t("contact_back_soon") }}</p>
+          <p class="text-sm text-black-400">{{ $t("contact_back_soon") }}</p>
         </div>
-        <BaseButton
-          :label="$t('got_it')"
-          block
-          class="w-full"
-          @click="isModalOpen = false"
-        />
+        <!-- u041au043du043eu043fu043au0430 u0422u0435u043bu0435u0433u0440u0430u043c - u043fu043eu043au0430u0437u044bu0432u0430u0435u0442u0441u044f, u0435u0441u043bu0438 u043fu043eu043bu044cu0437u043eu0432u0430u0442u0435u043bu044c u043fu0440u0438u0448u0435u043b u0438u0437 Instagram u0438u043bu0438 u0441 u0432u0435u0431u0441u0430u0439u0442u0430 -->
+        <button
+          v-if="isFromInstagram || isFromWebsite"
+          @click="goToTelegram"
+          class="flex items-center justify-center gap-3 w-full py-4 rounded-lg text-white bg-red-main hover:bg-red-hover active:bg-red-pressed transition-all transform hover:scale-[1.01] font-semibold"
+          style="text-decoration: none;"
+        >
+          <div class="flex items-center justify-center">
+            <IconSocialTelegram class="size-5" />
+          </div>
+          <span>{{ $t('our_telegram') }}</span>
+        </button>
+        
+        <!-- u041au043du043eu043fu043au0430 Instagram - u043fu043eu043au0430u0437u044bu0432u0430u0435u0442u0441u044f, u0435u0441u043bu0438 u043fu043eu043bu044cu0437u043eu0432u0430u0442u0435u043bu044c u043fu0440u0438u0448u0435u043b u0438u0437 u0422u0435u043bu0435u0433u0440u0430u043c u0438u043bu0438 u0441 u0432u0435u0431u0441u0430u0439u0442u0430 -->
+        <button
+          v-if="isFromTelegram || isFromWebsite"
+          @click="goToInstagram"
+          class="flex items-center justify-center gap-3 w-full py-4 rounded-lg text-white bg-red-main hover:bg-red-hover active:bg-red-pressed transition-all transform hover:scale-[1.01] font-semibold"
+          style="margin-top: 0.5px; text-decoration: none;"
+          :class="{ 'mt-0': !isFromInstagram && !isFromWebsite }"
+        >
+          <div class="flex items-center justify-center">
+            <IconSocialInstagram class="size-5" />
+          </div>
+          <span>{{ $t('our_instagram') }}</span>
+        </button>
+        
+        <!-- u041au043du043eu043fu043au0430 "u041du0430 u0433u043bu0430u0432u043du0443u044e" - u043fu043eu043au0430u0437u044bu0432u0430u0435u0442u0441u044f u0442u043eu043bu044cu043au043e u0435u0441u043bu0438 u0435u0441u0442u044c u0445u043eu0442u044f u0431u044b u043eu0434u043du0430 u0438u0437 u043au043du043eu043fu043eu043a u0441u043eu0446u0441u0435u0442u0435u0439 -->
+        <div v-if="isFromWebsite" class="w-full flex justify-center mt-3">
+          <button
+            @click="closeModal"
+            class="px-4 py-2 border border-black-200 rounded-lg text-black-600 hover:bg-black-100 transition-colors text-sm"
+          >
+            {{ $t('main_page') }}
+          </button>
+        </div>
 
         <button
           class="size-6 flex-center absolute top-5 right-5"
