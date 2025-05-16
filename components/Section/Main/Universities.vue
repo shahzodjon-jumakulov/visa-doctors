@@ -34,7 +34,7 @@ onMounted(() => {
   });
 
   const sliderElement = slider.value;
-  
+
   const pauseSlider = () => {
     if (keenSlider) {
       keenSlider.animator.stop();
@@ -71,10 +71,7 @@ onBeforeUnmount(() => {
   <section class="py-[4.5rem] overflow-hidden">
     <div class="flex flex-col gap-10">
       <div class="flex flex-col gap-3">
-        <h2 class="section-heading">
-          {{ $t('at_universities') }}
-          <span class="text-red-main">{{ $t('become_student') }}</span>
-        </h2>
+        <h2 class="section-heading" v-html="$t('become_at_universities')"></h2>
         <p class="text-sm font-medium text-black-500 text-center">
           {{ $t("docs_requirements_desc") }}
         </p>
