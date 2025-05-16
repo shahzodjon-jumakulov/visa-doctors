@@ -13,8 +13,8 @@ export default defineI18nConfig(() => ({
     },
     en: {
       ...en,
-      become_student: "Become a student",
-      at_universities: "at the following universities",
+      become_student: "become a student",
+      at_universities: "At the following universities",
       invalid_phone: "Please enter a complete phone number"
     }
   },
