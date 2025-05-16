@@ -142,7 +142,6 @@ const handleNativeDateChange = (event) => {
 
 const openDatePicker = () => {
   if (nativeDateInput.value) {
-
     // Show the picker
     nativeDateInput.value.showPicker();
   }
@@ -172,29 +171,10 @@ const openDatePicker = () => {
           type="date"
           :value="inputValue"
           @input="handleNativeDateChange"
-          class="absolute inset-0 invisible"
+          class="absolute inset-0 opacity-0 z-[1]"
         />
-        <button
-          ref="calendarButton"
-          type="button"
-          @click="openDatePicker"
-          class="text-black-400 hover:text-black-main transition-colors"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="20"
-            height="20"
-            viewBox="0 0 20 20"
-            fill="none"
-          >
-            <path
-              d="M6.66667 1.66667V4.16667M13.3333 1.66667V4.16667M2.5 8.33333H17.5M4.16667 3.33333H15.8333C16.2754 3.33333 16.6993 3.50893 17.0118 3.82149C17.3244 4.13405 17.5 4.55797 17.5 5V15.8333C17.5 16.2754 17.3244 16.6993 17.0118 17.0118C16.6993 17.3244 16.2754 17.5 15.8333 17.5H4.16667C3.72464 17.5 3.30072 17.3244 2.98816 17.0118C2.67559 16.6993 2.5 16.2754 2.5 15.8333V5C2.5 4.55797 2.67559 4.13405 2.98816 3.82149C3.30072 3.50893 3.72464 3.33333 4.16667 3.33333Z"
-              stroke="currentColor"
-              stroke-width="1.5"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            />
-          </svg>
+        <button ref="calendarButton" type="button" class="pointer-events-none">
+          <img src="~/assets/icons/calendar.svg" alt="" role="presentation" />
         </button>
       </div>
     </div>
