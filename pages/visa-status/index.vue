@@ -272,7 +272,7 @@ const getStatusMessage = (visaData) => {
             </div>
 
             <div v-if="result && result.visa_data.pdf_url && ((result.visa_data.status_en && ['Approved', 'Used'].includes(result.visa_data.status_en)) || (!result.visa_data.status_en && ['허가', '사용완료'].includes(result.visa_data.progress_status)))" class="mt-6">
-              <BaseDownloadVisaButton
+                <BaseDownloadVisaButton
                   :pdf-url="result.visa_data.pdf_url"
                   :pdf-params="result.visa_data.pdf_params"
               />
