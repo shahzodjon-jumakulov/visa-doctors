@@ -1,3 +1,4 @@
+# visadoctors.uz robots.txt
 User-agent: *
 Allow: /
 Disallow: /ru/
@@ -6,5 +7,11 @@ Disallow: /*?*
 Disallow: /*?
 Disallow: /api/
 Disallow: /admin/
+Disallow: /error
+Disallow: /404
 
-Sitemap: https://visadoctors.uz/sitemap.xml 
+# Specify to index only the domain visadoctors.uz
+Host: https://visadoctors.uz
+
+# Specify the path to the Sitemap
+Sitemap: https://visadoctors.uz/sitemap.xml

@@ -32,7 +32,7 @@ export default defineNuxtConfig({
   // Performance optimizations
   experimental: {
     payloadExtraction: true,
-    inlineSSRStyles: false,
+    // inlineSSRStyles было удалено в новых версиях Nuxt
     viewTransition: true,
     componentIslands: true,
   },

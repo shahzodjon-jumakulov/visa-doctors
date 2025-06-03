@@ -1,4 +1,6 @@
 <script setup>
+import SeoJsonLd from "~/components/SeoJsonLd.vue";
+
 const {t} = useI18n();
 const colorMode = useColorMode();
 
@@ -40,12 +42,15 @@ useSeoMeta({
   ogDescription: t("og_description"),
   twitterTitle: t("og_title"),
   twitterDescription: t("og_description"),
-  twitterCard: "summary",
+  twitterCard: "summary_large_image",
   ogImage: "/og-image.png",
   twitterImage: "/og-image.png",
-  ogImageWidth: "250",
-  ogImageHeight: "250",
+  ogImageWidth: "1200", // Increased image dimensions for better sharing
+  ogImageHeight: "630",
   ogUrl: "https://visadoctors.uz",
+  // Add additional meta tags for better SEO with Uzbek keywords
+  keywords: "Korea education, study in Korea, Korean university, Korean visa, student visa Korea, Korean language courses, Seoul university, Busan university, Korean education visa, Korean visa application, Koreyada o'qish, Koreya universitetlari, Koreya vizasi, Koreyaga o'qishga kirish, Seul universiteti, Busan universiteti, Koreya talabalik vizasi, viza olish",
+  robots: "index, follow",
 });
 </script>
 
@@ -56,6 +61,7 @@ useSeoMeta({
     </NuxtLayout>
 
     <UNotifications/>
+    <SeoJsonLd />
   </div>
 </template>
 
@@ -72,7 +78,4 @@ useSeoMeta({
   }
 }
 
-.animate-shake {
-  animation: shake 0.5s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
-}
 </style>
