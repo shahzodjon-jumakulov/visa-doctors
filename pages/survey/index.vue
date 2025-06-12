@@ -12,14 +12,20 @@ const { data: surveys } = await useMyFetch('/surveys/', {
   lazy: false
 });
 
-// Once data is available, perform the redirect.
-if (surveys.value && surveys.value.length > 0 && surveys.value[0].slug) {
-  await navigateTo(`/survey/${surveys.value[0].slug}`, { replace: true });
+if (surveys.value && surveys.value.length > 0) {
+  // Try to find the default survey with slug 'survey'.
+  const defaultSurvey = surveys.value.find(s => s.slug === 'survey');
+
+  // Determine the slug to redirect to. Use the default survey if found, otherwise fallback to the first one.
+  const targetSlug = defaultSurvey ? defaultSurvey.slug : surveys.value[0].slug;
+
+  // Perform the redirect.
+  await navigateTo(`/survey/${targetSlug}`, { replace: true });
 } else {
   // If no surveys are found, throw a 404 error.
   throw createError({
     statusCode: 404,
-    statusMessage: t('default_survey_not_found'), // Re-using existing translation key
+    statusMessage: t('default_survey_not_found'),
     fatal: true
   });
 }
@@ -28,6 +34,6 @@ if (surveys.value && surveys.value.length > 0 && surveys.value[0].slug) {
 <template>
   <!-- This template shows a loader while the redirect is happening. -->
   <div class="fixed inset-0 flex items-center justify-center bg-white">
-    <UISpinner />
+    <USpinner />
   </div>
 </template>

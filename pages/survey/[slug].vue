@@ -52,12 +52,19 @@ const survey = computed(() => {
     return null;
   }
 
-  // FOR UI PREVIEW: Override backend data with correct i18n text.
-  // This block should be removed when the backend is updated to send the correct HTML.
+  const hasFrontContent =
+    originalSurvey.front_content &&
+    Object.keys(originalSurvey.front_content).length > 0 &&
+    originalSurvey.front_content.front_title;
+
   return {
     ...originalSurvey,
-    name: t('survey_for_study_in_korea'),
-    description: t('survey_description'),
+    name: hasFrontContent
+      ? originalSurvey.front_content.front_title
+      : '',
+    description: hasFrontContent
+      ? originalSurvey.front_content.front_subtitle
+      : '',
   };
 });
 
@@ -73,6 +80,13 @@ watchEffect(() => {
 // Await the survey logic only if a surveyId is present
 const surveyLogic = surveyId.value ? await useSurvey(surveyId.value, finalSource) : null;
 
+// Handle case where survey has no questions by showing a 404 page
+watchEffect(() => {
+  if (surveyLogic && !surveyLogic.questionsPending.value && surveyLogic.questions.value?.length === 0) {
+    throw createError({ statusCode: 404, statusMessage: t('survey_not_found'), fatal: true });
+  }
+});
+
 provide('survey', surveyLogic);
 
 </script>
@@ -80,10 +94,15 @@ provide('survey', surveyLogic);
 <template>
   <div class="grow flex flex-col">
     <div v-if="surveyPending || (surveyLogic && surveyLogic.questionsPending.value)" class="fixed inset-0 flex items-center justify-center bg-white">
-      <UISpinner />
+      <USpinner />
     </div>
     <div v-else-if="surveyError || (surveyLogic && surveyLogic.questionsError.value)">
-       <Error :error="surveyError || surveyLogic.questionsError.value" />
+       <UAlert
+        color="red"
+        variant="soft"
+        :title="t('survey_error_title')"
+        :description="(surveyError || surveyLogic.questionsError.value).statusMessage || (surveyError || surveyLogic.questionsError.value).message"
+      />
     </div>
     <div v-else-if="surveyLogic && surveyLogic.questions.value.length > 0" class="grow flex flex-col">
       <SurveyPage
@@ -92,10 +111,7 @@ provide('survey', surveyLogic);
         :description="survey.description"
       />
     </div>
-    <!-- Optional: Show a message if survey exists but has no questions -->
-    <div v-else-if="!surveyPending && surveyLogic && surveyLogic.questions.value.length === 0" class="text-center py-10">
-      <p>{{ t('survey_no_questions') }}</p>
-    </div>
+
   </div>
 </template>
 

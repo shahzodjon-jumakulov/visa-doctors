@@ -8,10 +8,13 @@ const fullPath = slugParts.join('/');
 
 // --- Redirect Logic ---
 
-// 1. Handle /[source]-survey -> /survey/survey/[source]
+// Define the list of valid source prefixes for the redirect.
+const validSources = ['fb', 'ig', 'wa', 'vk', 'yt', 'li', 'x', 'tt', 'tg'];
+
+// 1. Handle /[source]-survey -> /survey/survey/[source] for specific sources
 if (slugParts.length === 1 && fullPath.endsWith('-survey')) {
   const source = fullPath.replace('-survey', '');
-  if (source) {
+  if (validSources.includes(source)) {
     // Permanent redirect for SEO
     await navigateTo(`/survey/survey/${source}`, { replace: true, redirectCode: 301 });
   }
@@ -32,6 +35,6 @@ throw createError({ statusCode: 404, statusMessage: t('not_found_description'), 
 <template>
   <!-- This template shows a loader while the redirect is happening. -->
   <div class="fixed inset-0 flex items-center justify-center bg-white">
-    <UISpinner />
+    <USpinner />
   </div>
 </template>

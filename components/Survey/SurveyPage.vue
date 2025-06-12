@@ -66,10 +66,12 @@ const closeModal = () => {
           class="flex flex-col gap-3 text-center"
           v-show="currIndex === 0"
         >
-          <h1 class="section-heading" v-html="title"></h1>
-          <p class="text-lg font-medium text-black-500 hidden md:block">
-            {{ description }}
-          </p>
+          <h1 v-if="title" class="section-heading" v-html="title"></h1>
+          <p
+            v-if="description"
+            class="text-lg font-medium text-black-500 hidden md:block"
+            v-html="description"
+          ></p>
         </div>
 
         <div
