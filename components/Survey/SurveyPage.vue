@@ -1,225 +1,61 @@
 <script setup>
-import { useReCaptcha } from "vue-recaptcha-v3";
+import { inject, computed, defineProps } from 'vue';
+import { useI18n } from '#imports';
 import {
   IconSocialTelegram,
   IconSocialInstagram
 } from "#components";
 
+defineProps({
+  title: {
+    type: String,
+    required: true,
+  },
+  description: {
+    type: String,
+    required: true,
+  }
+});
+
+// Inject all the reactive state and methods from the parent component
+const {
+  steps,
+  currIndex,
+  currProgress,
+  currentQuestion,
+  stepTo,
+  isDisabled,
+  next,
+  body,
+  loading,
+  isModalOpen,
+  errorMsg,
+  isShaking,
+  handleKeydown,
+  validateInput,
+  isFromTelegram,
+  isFromInstagram,
+  isFromWebsite,
+} = inject('survey');
+
 const { t } = useI18n();
-const isModalOpen = ref(false);
-const toast = useToast();
-const localePath = useLocalePath();
 const contacts = useContacts();
 
-const { data } = await useMyFetch("/questions/");
-
-const body = ref([]);
-if (data.value) {
-  data.value.forEach((item) => {
-    const res = { question: item.id };
-    if (item.input_type === "text") res.text_answer = "";
-    else res.selected_options = [];
-    body.value.push(res);
-  });
-}
-
-const questions = ref(data.value || []);
-const steps = ref(questions.value.length);
-
-const loading = ref(false);
-const currIndex = ref(0);
-const currProgress = ref(0);
-const currentQuestion = computed(() => questions.value[currIndex.value]);
-
-const stepTo = (step) => {
-  if (step > steps.value) return;
-  currIndex.value = step;
-};
-
-const isDisabled = computed(() => {
-  if (!currentQuestion.value.is_required) return false;
-
-  if (currentQuestion.value.input_type === "text") {
-    return !body.value[currIndex.value]?.text_answer?.trim();
-  } else {
-    return !body.value[currIndex.value].selected_options.length;
-  }
-});
-
-const captchaToken = ref("");
-const isReady = ref(false);
-const executeRecaptcha = ref(null);
-
-if (import.meta.client) {
-  const recaptcha = useReCaptcha();
-
-  if (recaptcha) {
-    executeRecaptcha.value = recaptcha.executeRecaptcha;
-    isReady.value = true;
-  }
-}
-
-const getToken = async () => {
-  if (!isReady.value || !executeRecaptcha.value) {
-    toast.add({
-      title: t("error_recaptcha"),
-      timeout: 5000,
-    });
-    return "";
-  }
-  return await executeRecaptcha.value();
-};
-
-function isEmpty(obj) {
-  for (const prop in obj) {
-    if (Object.hasOwn(obj, prop)) {
-      return false;
-    }
-  }
-  return true;
-}
-
-const errorMsg = ref("");
-const isShaking = ref(false);
-
-const validateInput = () => {
-  if (
-    currentQuestion.value.input_type === "text" &&
-    currentQuestion.value.field_type
-  ) {
-    const value = body.value[currIndex.value].text_answer.trim();
-    
-    if (!value) {
-      errorMsg.value = "";
-      return false;
-    }
-
-    if (currentQuestion.value.field_type.field_key.toLowerCase() === 'phone number') {
-      const digitsOnly = value.replace(/\D/g, '').slice(0,9);
-      body.value[currIndex.value].text_answer = digitsOnly;
-      if (digitsOnly.length !== 9) {
-        errorMsg.value = t('invalid_phone');
-        isShaking.value = true;
-        setTimeout(() => {
-          isShaking.value = false;
-        }, 500);
-        return false;
-      }
-      errorMsg.value = "";
-      return true;
-    }
-
-    const regex = new RegExp(currentQuestion.value.field_type.regex_pattern);
-    if (!regex.test(value)) {
-      errorMsg.value = currentQuestion.value.field_type.error_message;
-      isShaking.value = true;
-      setTimeout(() => {
-        isShaking.value = false;
-      }, 500);
-      return false;
-    }
-    errorMsg.value = "";
-    return true;
-  }
-  return true;
-};
-
-const handleKeydown = (e) => {
-  if (e.key === 'Enter') {
-    e.preventDefault();
-    if (validateInput()) {
-      next();
-    }
-  }
-};
-
-watch(() => body.value[currIndex.value]?.text_answer, () => {
-  if (errorMsg.value) {
-    validateInput();
-  }
-});
-
-const next = async () => {
-  if (isDisabled.value) return;
-
-  if (!validateInput()) {
-    return;
-  }
-
-  if (currIndex.value < steps.value - 1) {
-    currIndex.value++;
-    if (currIndex.value > currProgress.value)
-      currProgress.value = currIndex.value;
-
-    if (currIndex.value === steps.value - 2) {
-      captchaToken.value = await getToken();
-    }
-  } else {
-    loading.value = true;
-    if (!captchaToken.value) captchaToken.value = await getToken();
-    
-    const surveyStore = useState('survey');
-    const source = surveyStore.value?.source || 'website';
-
-    const { data, error } = await useMyFetch("/submit/", {
-      method: "POST",
-      body: { 
-        responses: body.value,
-        source 
-      },
-      headers: { "X-Recaptcha-Token": captchaToken.value },
-      onResponseError({ request, response, options }) {
-        const res = response._data?.responses || [];
-        res.forEach((el, index) => {
-          if (isEmpty(el)) return;
-          toast.add({
-            title: t("error_on_question", { id: index + 1 }),
-            timeout: 5000,
-          });
-          errorMsg.value = res[index].error;
-          currIndex.value = index;
-        });
-      },
-    });
-    if (data.value) isModalOpen.value = true;
-    captchaToken.value = "";
-    loading.value = false;
-  }
-};
-
-// u041fu043eu043bu0443u0447u0430u0435u043c u0438u0441u0442u043eu0447u043du0438u043a u0442u0440u0430u0444u0438u043au0430
-const surveyStore = useState('survey');
-const trafficSource = computed(() => surveyStore.value?.source || 'website');
-
-// u0424u043bu0430u0433u0438 u0438u0441u0442u043eu0447u043du0438u043au043eu0432
-const isFromTelegram = computed(() => trafficSource.value === 'telegram');
-const isFromInstagram = computed(() => trafficSource.value === 'instagram');
-const isFromWebsite = computed(() => !isFromTelegram.value && !isFromInstagram.value);
-
-// u0421u0441u044bu043bu043au0438 u043du0430 u0441u043eu0446u0438u0430u043bu044cu043du044bu0435 u0441u0435u0442u0438
+// Social media links logic
 const telegramLink = computed(() => contacts.value?.telegram || '#');
 const instagramLink = computed(() => contacts.value?.instagram || '#');
 
-// u041eu0431u0440u0430u0431u043eu0442u0447u0438u043au0438 u043au043bu0438u043au043eu0432 u043du0430 u0441u043eu0446u0438u0430u043bu044cu043du044bu0435 u0441u0435u0442u0438
 const goToTelegram = () => {
-  // u041eu0442u043au0440u044bu0432u0430u0435u043c u0441u0441u044bu043bu043au0443 u0432 u043du043eu0432u043eu043c u043eu043au043du0435, u043du043e u043du0435 u0437u0430u043au0440u044bu0432u0430u0435u043c u043cu043eu0434u0430u043bu044cu043du043eu0435 u043eu043au043du043e
   window.open(telegramLink.value, '_blank');
 };
 
 const goToInstagram = () => {
-  // u041eu0442u043au0440u044bu0432u0430u0435u043c u0441u0441u044bu043bu043au0443 u0432 u043du043eu0432u043eu043c u043eu043au043du0435, u043du043e u043du0435 u0437u0430u043au0440u044bu0432u0430u0435u043c u043cu043eu0434u0430u043bu044cu043du043eu0435 u043eu043au043du043e
   window.open(instagramLink.value, '_blank');
 };
 
 const closeModal = () => {
-  isModalOpen.value = false;
-  navigateTo(localePath("/"));
+  isModalOpen.value = false; // The watcher in useSurvey will handle navigation
 };
-
-watch(isModalOpen, (val) => {
-  if (val) return;
-  navigateTo(localePath("/"));
-});
 </script>
 
 <template>
@@ -230,9 +66,9 @@ watch(isModalOpen, (val) => {
           class="flex flex-col gap-3 text-center"
           v-show="currIndex === 0"
         >
-          <h1 class="section-heading" v-html="$t('survey_for_study_in_korea')"></h1>
+          <h1 class="section-heading" v-html="title"></h1>
           <p class="text-lg font-medium text-black-500 hidden md:block">
-            {{ $t("survey_description") }}
+            {{ description }}
           </p>
         </div>
 
@@ -287,14 +123,14 @@ watch(isModalOpen, (val) => {
                 autofocus
               />
               <div
-                v-if="errorMsg"
+                v-if="errorMsg && currentQuestion.field_type?.field_key?.toLowerCase() !== 'phone number'"
                 :class="{'animate-shake': isShaking}"
-                class="flex items-center gap-2 text-red-main text-sm"
+                class="flex items-center gap-2 text-red-main text-sm -mt-1"
               >
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
                   <path d="M10 6V10M10 14H10.01M19 10C19 14.9706 14.9706 19 10 19C5.02944 19 1 14.9706 1 10C1 5.02944 5.02944 1 10 1C14.9706 1 19 5.02944 19 10Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
-                {{ currentQuestion.field_type.error_message }}
+                <span>{{ errorMsg }}</span>
               </div>
             </div>
             <BaseButton

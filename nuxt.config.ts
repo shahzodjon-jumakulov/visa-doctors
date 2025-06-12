@@ -12,7 +12,7 @@ export default defineNuxtConfig({
   css: ["~/assets/css/main.scss"],
   runtimeConfig: {
     public: {
-      baseURL: process.env.BASE_URL || "https://api.visadoctors.uz",
+      baseURL: "http://localhost:8000",
     },
   },
   colorMode: { preference: "light" },
@@ -56,7 +56,7 @@ export default defineNuxtConfig({
         lang: 'uz'
       },
       link: [
-        { rel: 'preconnect', href: process.env.BASE_URL || "https://api.visadoctors.uz" }
+        { rel: 'preconnect', href: "http://localhost:8000" }
       ]
     }
   }

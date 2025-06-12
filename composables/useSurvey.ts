@@ -23,7 +23,7 @@ interface ResponseBody {
 }
 
 interface SubmitErrorDetail {
-  error: string;
+  [key: string]: string[];
 }
 
 interface SubmitErrorResponse {
@@ -31,7 +31,7 @@ interface SubmitErrorResponse {
 }
 
 // --- COMPOSABLE --- //
-export const useSurvey = async (surveyId: number | string, source: string = 'website') => {
+export const useSurvey = async (surveyId: number | string, source: string) => {
   const { t } = useI18n();
   const isModalOpen = ref(false);
   const toast = useToast();
@@ -42,7 +42,7 @@ export const useSurvey = async (surveyId: number | string, source: string = 'web
     data: questionsData, 
     pending: questionsPending, 
     error: questionsError 
-  } = await useMyFetch('/questions/', { params: { survey: surveyId } });
+  } = await useMyFetch('/questions/', { params: { survey_id: surveyId } });
 
   const questions = ref<Question[]>([]);
   const body = ref<ResponseBody[]>([]);
@@ -169,10 +169,20 @@ export const useSurvey = async (surveyId: number | string, source: string = 'web
         onResponseError({ response }: { response: { _data?: SubmitErrorResponse } }) {
           const res = response._data?.responses || [];
           res.forEach((el, index) => {
-            if (isEmpty(el) || !('error' in el)) return;
-            toast.add({ title: t("error_on_question", { id: questions.value[index]?.id || index + 1 }), timeout: 5000 });
-            errorMsg.value = el.error;
-            currIndex.value = index;
+            if (isEmpty(el)) return;
+
+            // Find the key that contains the error array (e.g., 'selected_options', 'text_answer')
+            const errorKey = Object.keys(el)[0];
+            if (!errorKey) return;
+
+            const errorValue = (el as SubmitErrorDetail)[errorKey];
+            // Check if the value is an array with at least one string error message
+            if (Array.isArray(errorValue) && errorValue.length > 0 && typeof errorValue[0] === 'string') {
+              const errorMessage = errorValue[0];
+
+              errorMsg.value = errorMessage;
+              currIndex.value = index;
+            }
           });
         },
       });
@@ -185,6 +195,11 @@ export const useSurvey = async (surveyId: number | string, source: string = 'web
   watch(isModalOpen, (val) => {
     if (!val) navigateTo(localePath("/"));
   });
+
+  // --- TRAFFIC SOURCE LOGIC ---
+  const isFromTelegram = computed(() => source === 'telegram');
+  const isFromInstagram = computed(() => source === 'instagram');
+  const isFromWebsite = computed(() => !isFromTelegram.value && !isFromInstagram.value);
 
   return {
     questionsPending,
@@ -203,6 +218,9 @@ export const useSurvey = async (surveyId: number | string, source: string = 'web
     errorMsg,
     isShaking,
     handleKeydown,
-    validateInput
+    validateInput,
+    isFromTelegram,
+    isFromInstagram,
+    isFromWebsite,
   };
 };

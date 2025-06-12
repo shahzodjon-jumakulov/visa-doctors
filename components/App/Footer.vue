@@ -148,12 +148,12 @@ const footerNav = computed(() => [
                 v-for="link in item.links"
                 :key="link.id"
                 :to="link.link"
-                class="text-sm text-white-400 hover:text-white-600 transition-colors flex items-center gap-2"
+                class="text-sm text-white-400 hover:text-white-600 transition-colors flex items-center gap-2 self-start"
               >
                 <div v-if="link.icon" class="size-5 flex-center">
                   <img :src="link.icon" :alt="link.title" />
                 </div>
-                <span class="line-clamp-1 max-w-[10rem]">
+                <span>
                   {{ link.title }}
                 </span>
               </NuxtLinkLocale>

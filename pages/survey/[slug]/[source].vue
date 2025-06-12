@@ -1,15 +1,12 @@
 <script setup async>
-import { ref, computed, provide, watchEffect } from 'vue';
+import { computed, provide, watchEffect } from 'vue';
 import { useRoute, createError, useI18n } from '#imports';
 import { useSurvey } from '~/composables/useSurvey';
 
 const route = useRoute();
 const { t } = useI18n();
 
-definePageMeta({
-  layout: "survey",
-});
-
+// This source map is used by both the validation logic and the script body.
 const sourceMap = {
   fb: 'facebook',
   ig: 'instagram',
@@ -22,29 +19,40 @@ const sourceMap = {
   tg: 'telegram',
 };
 
+definePageMeta({
+  layout: "survey",
+  // This is the correct, built-in way to validate route params in Nuxt.
+  // It runs before the component is even created.
+  validate: (route) => {
+    const slug = route.params.slug;
+    const sourceParam = route.params.source;
+
+    // 1. Check if slug is a string and doesn't look like a file path.
+    if (typeof slug !== 'string' || slug.includes('.')) {
+      return false; // Causes a 404 error.
+    }
+
+    // 2. Check if source is a valid key in our map.
+    // If not, this returns false, causing a 404 error.
+    return sourceMap.hasOwnProperty(sourceParam);
+  }
+});
+
+// Since validate() has already passed, we can safely assume params are valid.
 const slug = route.params.slug;
 const sourceParam = route.params.source;
-
-// Use the source from the param if it's a valid key, otherwise default to 'website'
-const finalSource = (sourceParam && sourceMap.hasOwnProperty(sourceParam))
-  ? sourceMap[sourceParam]
-  : 'website';
-
-
-// Prevent requests for source maps or other files
-if (slug.includes('.')) {
-  throw createError({ statusCode: 404, statusMessage: 'Page not found', fatal: true });
-}
+const finalSource = sourceMap[sourceParam];
 
 // Fetch survey metadata by slug
 const { data: surveys, pending: surveyPending, error: surveyError } = await useMyFetch(
   `/surveys/`,
   {
     params: { slug },
-    key: `survey-slug-${slug}`
+    key: `survey-slug-source-${slug}-${finalSource}`
   }
 );
 
+// Re-using the temporary UI preview logic from the main [slug].vue page
 const survey = computed(() => {
   const originalSurvey = surveys.value?.find((s) => s.slug === slug) || null;
 
@@ -52,8 +60,7 @@ const survey = computed(() => {
     return null;
   }
 
-  // FOR UI PREVIEW: Override backend data with correct i18n text.
-  // This block should be removed when the backend is updated to send the correct HTML.
+  // FOR UI PREVIEW: This block should be removed when the backend sends the correct HTML.
   return {
     ...originalSurvey,
     name: t('survey_for_study_in_korea'),
@@ -63,14 +70,14 @@ const survey = computed(() => {
 
 const surveyId = computed(() => survey.value?.id);
 
-// Handle case where survey is not found
+// Handle case where survey is not found after fetch
 watchEffect(() => {
   if (!surveyPending.value && !survey.value) {
     throw createError({ statusCode: 404, statusMessage: t('survey_not_found'), fatal: true });
   }
 });
 
-// Await the survey logic only if a surveyId is present
+// Await the survey logic, passing both the surveyId and the mapped source
 const surveyLogic = surveyId.value ? await useSurvey(surveyId.value, finalSource) : null;
 
 provide('survey', surveyLogic);
@@ -92,7 +99,6 @@ provide('survey', surveyLogic);
         :description="survey.description"
       />
     </div>
-    <!-- Optional: Show a message if survey exists but has no questions -->
     <div v-else-if="!surveyPending && surveyLogic && surveyLogic.questions.value.length === 0" class="text-center py-10">
       <p>{{ t('survey_no_questions') }}</p>
     </div>
@@ -109,9 +115,5 @@ provide('survey', surveyLogic);
 
 .section-heading :deep(span) {
   color: #E20935;
-}
-
-.text-red-main::placeholder {
-  color: rgb(226, 9, 53, 0.5);
 }
 </style>
