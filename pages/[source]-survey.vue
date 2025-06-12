@@ -60,14 +60,14 @@ provide('survey', surveyLogic);
 </script>
 
 <template>
-  <div>
+  <div class="grow flex flex-col">
     <div v-if="surveyPending || (surveyLogic && surveyLogic.questionsPending.value)" class="fixed inset-0 flex items-center justify-center bg-white">
       <UISpinner />
     </div>
     <div v-else-if="surveyError || (surveyLogic && surveyLogic.questionsError.value)">
        <Error :error="surveyError || surveyLogic.questionsError.value" />
     </div>
-    <div v-else-if="surveyLogic && surveyLogic.questions.value.length > 0">
+    <div v-else-if="surveyLogic && surveyLogic.questions.value.length > 0" class="grow flex flex-col">
        <SurveyPage />
     </div>
     <div v-else-if="!surveyPending && surveyLogic && surveyLogic.questions.value.length === 0" class="text-center py-10">
