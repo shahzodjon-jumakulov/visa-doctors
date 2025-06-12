@@ -1,7 +1,8 @@
 <script setup>
-import { navigateTo, useMyFetch, createError, useI18n } from '#imports';
+import { navigateTo, useMyFetch, createError, useI18n, useLocalePath } from '#imports';
 
 const { t } = useI18n();
+const localePath = useLocalePath();
 
 definePageMeta({
   layout: "survey",
@@ -19,13 +20,13 @@ if (surveys.value && surveys.value.length > 0) {
   // Determine the slug to redirect to. Use the default survey if found, otherwise fallback to the first one.
   const targetSlug = defaultSurvey ? defaultSurvey.slug : surveys.value[0].slug;
 
-  // Perform the redirect.
-  await navigateTo(`/survey/${targetSlug}`, { replace: true });
+  // Perform the redirect, preserving the locale.
+  await navigateTo(localePath(`/survey/${targetSlug}`), { replace: true });
 } else {
   // If no surveys are found, throw a 404 error.
   throw createError({
     statusCode: 404,
-    statusMessage: t('default_survey_not_found'),
+    statusMessage: t('survey_not_found'),
     fatal: true
   });
 }
