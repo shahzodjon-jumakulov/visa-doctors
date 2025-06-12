@@ -42,7 +42,7 @@ export default defineNuxtConfig({
     routeRules: {
       '/**': {
         headers: {
-          'Content-Security-Policy': "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: http://localhost:8000 https://www.google.com; connect-src 'self' ws: http://localhost:8000; font-src 'self' data:; object-src 'none'; frame-src 'none'"
+          'Content-Security-Policy': "default-src 'self'; script-src 'self' 'unsafe-inline' https://www.google.com/recaptcha/ https://www.gstatic.com/ https://connect.facebook.net; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://api.visadoctors.uz http://localhost:8000 https://www.google.com https://www.facebook.com; connect-src 'self' ws: wss: https://api.visadoctors.uz http://localhost:8000 https://www.facebook.com; font-src 'self' data:; object-src 'none'; frame-src 'self' https://www.google.com/recaptcha/ https://recaptcha.google.com/recaptcha/; frame-ancestors 'self' https://www.google.com/recaptcha/ https://recaptcha.google.com/recaptcha/;"
         }
       }
     }
@@ -63,7 +63,7 @@ export default defineNuxtConfig({
         lang: 'uz'
       },
       link: [
-        { rel: 'preconnect', href: "http://localhost:8000" }
+        { rel: 'preconnect', href: process.env.BASE_URL || "https://api.visadoctors.uz" }
       ]
     }
   }

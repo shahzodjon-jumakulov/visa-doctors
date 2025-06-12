@@ -148,7 +148,7 @@ const closeModal = () => {
       </div>
     </UContainer>
 
-    <UModal v-model="isModalOpen" transition="fade">
+    <UModal v-model="isModalOpen" :transition="true">
       <div class="py-5 px-6 md:py-6 md:px-8 rounded-3xl flex flex-col gap-4 items-center animate-fade-in">
         <div class="mb-1">
           <img src="~/assets/icons/check-circle.svg" alt="done" class="w-16 h-16" />
