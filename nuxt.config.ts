@@ -42,7 +42,7 @@ export default defineNuxtConfig({
     routeRules: {
       '/**': {
         headers: {
-          'Content-Security-Policy': "default-src 'self'; script-src 'self' 'unsafe-inline' https://www.google.com/recaptcha/ https://www.gstatic.com/ https://connect.facebook.net; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://api.visadoctors.uz http://localhost:8000 https://www.google.com https://www.facebook.com; connect-src 'self' ws: wss: https://api.visadoctors.uz http://localhost:8000 https://www.facebook.com; font-src 'self' data:; object-src 'none'; frame-src 'self' https://www.google.com/recaptcha/ https://recaptcha.google.com/recaptcha/; frame-ancestors 'self' https://www.google.com/recaptcha/ https://recaptcha.google.com/recaptcha/;"
+          'Content-Security-Policy': "default-src 'self'; script-src 'self' 'unsafe-inline' https://www.google.com/recaptcha/ https://www.gstatic.com/ https://connect.facebook.net; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://api.visadoctors.uz http://localhost:8000 https://www.google.com https://www.facebook.com; connect-src 'self' ws: wss: https://api.visadoctors.uz http://localhost:8000 https://www.facebook.com https://www.google.com https://www.recaptcha.net; font-src 'self' data:; object-src 'none'; frame-src 'self' https://www.google.com/recaptcha/ https://recaptcha.google.com/recaptcha/; frame-ancestors 'self' https://www.google.com/recaptcha/ https://recaptcha.google.com/recaptcha/;"
         }
       }
     }
