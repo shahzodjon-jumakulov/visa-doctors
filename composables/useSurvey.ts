@@ -31,7 +31,7 @@ interface SubmitErrorResponse {
 }
 
 // --- COMPOSABLE --- //
-export const useSurvey = async (surveyId: number | string, source: string) => {
+export const useSurvey = async (surveyId: number | string, source: string, recaptchaInstance: ReturnType<typeof useReCaptcha> | null) => {
   const { t } = useI18n();
   const isModalOpen = ref(false);
   const toast = useToast();
@@ -82,10 +82,6 @@ export const useSurvey = async (surveyId: number | string, source: string) => {
   });
 
   const captchaToken = ref("");
-  let recaptchaInstance: ReturnType<typeof useReCaptcha> | null = null;
-  if (import.meta.client) {
-    recaptchaInstance = useReCaptcha();
-  }
 
   const getToken = async (): Promise<string> => {
     if (!recaptchaInstance) {

@@ -2,6 +2,7 @@
 import { computed, provide, watchEffect } from 'vue';
 import { useRoute, createError, useI18n } from '#imports';
 import { useSurvey } from '~/composables/useSurvey';
+import { useReCaptcha } from 'vue-recaptcha-v3';
 
 const route = useRoute();
 const { t } = useI18n();
@@ -86,7 +87,13 @@ watchEffect(() => {
 });
 
 // Await the survey logic, passing both the surveyId and the mapped source
-const surveyLogic = surveyId.value ? await useSurvey(surveyId.value, finalSource) : null;
+// Initialize reCAPTCHA
+let recaptchaInstance = null;
+if (import.meta.client) {
+  recaptchaInstance = useReCaptcha();
+}
+
+const surveyLogic = surveyId.value ? await useSurvey(surveyId.value, finalSource, recaptchaInstance) : null;
 
 // Handle case where survey has no questions by showing a 404 page
 watchEffect(() => {
