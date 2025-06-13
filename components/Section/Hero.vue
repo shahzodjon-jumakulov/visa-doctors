@@ -125,11 +125,12 @@ const nav = computed(() => [
       </div>
     </UContainer>
     <div class="pointer-events-none absolute inset-0 z-[-2]">
-      <NuxtImg
-        src="/images/hero-bg.png"
-        alt="hero"
-        class="size-full object-cover"
-        format="webp"
+      <img 
+        src="/images/hero-bg-desktop.webp" 
+        srcset="/images/hero-bg-mobile.webp 640w, /images/hero-bg-tablet.webp 1280w, /images/hero-bg-desktop.webp 1920w"
+        sizes="(max-width: 640px) 640px, (max-width: 1280px) 1280px, 1920px"
+        alt="Hero background" 
+        class="size-full object-cover" 
         loading="lazy"
       />
       <div
