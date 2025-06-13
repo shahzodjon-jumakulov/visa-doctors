@@ -4,7 +4,7 @@ const { baseURL } = useRuntimeConfig().public;
 const { data } = await useMyFetch("/results/preview/");
 const images = ref([]);
 data.value?.preview_results?.forEach((item) => {
-  images.value.push(baseURL + item.image);
+  images.value.push(item.thumbnail);
 });
 </script>
 
