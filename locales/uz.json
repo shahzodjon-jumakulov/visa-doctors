@@ -79,7 +79,12 @@
     "error_not_found": "Bunday ma'lumotlar topilmadi",
     "error_invalid": "Noto'g'ri ma'lumotlar kiritildi",
     "error_required": "Barcha maydonlarni to'ldiring",
-    "download_error": "Vizani yuklab olishda xatolik yuz berdi"
+    "download_error": "Vizani yuklab olishda xatolik yuz berdi",
+    "rejection_reason": "Rad etish sababi",
+    "application_date": "Ariza sanasi",
+    "review_date": "Ko'rib chiqish sanasi",
+    "expiry_date": "Amal qilish muddati",
+    "original_status": "Asl holati"
   },
   "footer": {
     "slogan": "Jarayon uchun emas natija uchun to'lang"

@@ -114,49 +114,7 @@ const checkStatus = async () => {
   }
 };
 
-// Функция для определения сообщения о статусе визы на основе данных с бэкенда
-const getStatusMessage = (visaData) => {
-  // Если есть английский статус, используем его
-  if (visaData.status_en) {
-    switch (visaData.status_en) {
-      case "Approved":
-        return t("visa_status.status_approved", { date: visaData.review_date });
-      case "Used":
-        return t("visa_status.status_used");
-      case "Rejected":
-        return t("visa_status.status_rejected");
-      case "Processing":
-        return t("visa_status.status_in_progress");
-      case "Received":
-        return t("visa_status.status_received");
-      default:
-        return t("visa_status.status_unknown");
-    }
-  }
-  
-  // Если нет английского статуса, определяем по корейскому
-  if (visaData.progress_status) {
-    // Корейские статусы
-    switch (visaData.progress_status) {
-      case "허가": // Одобрено
-        return t("visa_status.status_approved", { date: visaData.review_date });
-      case "사용완료": // Использовано
-        return t("visa_status.status_used");
-      case "무효": // Недействительно
-        return t("visa_status.status_invalid");
-      case "접수": // Получено
-        return t("visa_status.status_received");
-      case "심사중": // В процессе рассмотрения
-        return t("visa_status.status_in_progress");
-      case "불허": // Отклонено
-        return t("visa_status.status_rejected");
-      default:
-        return t("visa_status.status_unknown");
-    }
-  }
-  
-  return t("visa_status.status_unknown");
-};
+
 </script>
 
 <template>
@@ -220,58 +178,53 @@ const getStatusMessage = (visaData) => {
               {{ error }}
             </div>
 
-            <div v-if="result" 
-              class="flex flex-col gap-2 p-4 rounded-lg" 
-              :class="{
-                'bg-green-50': ['Approved', 'Used'].includes(result.visa_data.status_en) || ['허가', '사용완료'].includes(result.visa_data.progress_status),
-                'bg-yellow-50': result.visa_data.status_en === 'Received' || result.visa_data.status_en === 'Processing' || ['접수', '심사중'].includes(result.visa_data.progress_status),
-                'bg-red-50': result.visa_data.status_en === 'Rejected' || result.visa_data.progress_status === '불허' || result.visa_data.progress_status === '무효',
-                'bg-gray-50': !result.visa_data.status_en && !result.visa_data.progress_status
-              }">
-              <div class="flex items-center gap-2"
-                :class="{
-                  'text-green-700': ['Approved', 'Used'].includes(result.visa_data.status_en) || ['허가', '사용완료'].includes(result.visa_data.progress_status),
-                  'text-yellow-700': result.visa_data.status_en === 'Received' || result.visa_data.status_en === 'Processing' || ['접수', '심사중'].includes(result.visa_data.progress_status),
-                  'text-red-700': result.visa_data.status_en === 'Rejected' || result.visa_data.progress_status === '불허' || result.visa_data.progress_status === '무효',
-                  'text-gray-700': !result.visa_data.status_en && !result.visa_data.progress_status
-                }">
-                <svg v-if="['Approved', 'Used'].includes(result.visa_data.status_en) || ['허가', '사용완료'].includes(result.visa_data.progress_status)" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
-                  <path
-                      d="M10 18.3333C14.6024 18.3333 18.3334 14.6024 18.3334 10C18.3334 5.39763 14.6024 1.66667 10 1.66667C5.39765 1.66667 1.66669 5.39763 1.66669 10C1.66669 14.6024 5.39765 18.3333 10 18.3333Z"
-                      stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                  <path d="M6.66669 10L8.33335 11.6667L13.3334 6.66667" stroke="currentColor" stroke-width="2"
-                        stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-                <svg v-else-if="result.visa_data.status_en === 'Rejected' || result.visa_data.progress_status === '불허' || result.visa_data.progress_status === '무효'" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
-                  <path
-                      d="M10 18.3333C14.6024 18.3333 18.3334 14.6024 18.3334 10C18.3334 5.39763 14.6024 1.66667 10 1.66667C5.39765 1.66667 1.66669 5.39763 1.66669 10C1.66669 14.6024 5.39765 18.3333 10 18.3333Z"
-                      stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                  <path d="M12.5 7.5L7.5 12.5M7.5 7.5L12.5 12.5" stroke="currentColor" stroke-width="2"
-                        stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-                <svg v-else xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
-                  <path
-                      d="M10 18.3333C14.6024 18.3333 18.3334 14.6024 18.3334 10C18.3334 5.39763 14.6024 1.66667 10 1.66667C5.39765 1.66667 1.66669 5.39763 1.66669 10C1.66669 14.6024 5.39765 18.3333 10 18.3333Z"
-                      stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                  <path d="M10 6.66667V10M10 13.3333H10.0083" stroke="currentColor" stroke-width="2"
-                        stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-                <span class="text-base font-medium">
-                  {{getStatusMessage(result.visa_data)}}
-                </span>
+            <div v-if="result && result.visa_data"
+                 class="flex flex-col gap-4 p-4 rounded-lg text-white"
+                 :style="{ backgroundColor: result.visa_data.color_background || '#F3F4F6' }">
+
+              <div class="flex items-start gap-3">
+                <!-- Dynamic Icon -->
+                <div class="flex-shrink-0 pt-1">
+                  <svg v-if="result.visa_data.icon_name === 'success'" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                  <svg v-else-if="result.visa_data.icon_name === 'error'" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                  <svg v-else xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+                </div>
+
+                <!-- Main Status -->
+                <div class="flex flex-col">
+                  <span class="font-bold text-lg">{{ result.visa_data.status }}</span>
+                  <p class="text-sm opacity-90">{{ result.visa_data.response_text }}</p>
+                </div>
               </div>
-              <div class="text-sm"
-                :class="{
-                  'text-green-600': ['Approved', 'Used'].includes(result.visa_data.status_en) || ['허가', '사용완료'].includes(result.visa_data.progress_status),
-                  'text-yellow-600': result.visa_data.status_en === 'Received' || result.visa_data.status_en === 'Processing' || ['접수', '심사중'].includes(result.visa_data.progress_status),
-                  'text-red-600': result.visa_data.status_en === 'Rejected' || result.visa_data.progress_status === '불허' || result.visa_data.progress_status === '무효',
-                  'text-gray-600': !result.visa_data.status_en && !result.visa_data.progress_status
-                }">
-                {{ result.visa_data.progress_status }}
+
+              <!-- Rejection Reason -->
+              <div v-if="result.visa_data.rejection_reason" class="border-t border-white/20 pt-3">
+                <h4 class="font-semibold">{{ $t('visa_status.rejection_reason') }}</h4>
+                <p class="text-sm">{{ result.visa_data.rejection_reason }}</p>
+              </div>
+
+              <!-- Other Details -->
+              <div class="border-t border-white/20 pt-3 grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-2 text-sm">
+                <div v-if="result.visa_data.application_date">
+                  <span class="font-semibold">{{ $t('visa_status.application_date') }}: </span>
+                  <span>{{ result.visa_data.application_date }}</span>
+                </div>
+                <div v-if="result.visa_data.review_date">
+                  <span class="font-semibold">{{ $t('visa_status.review_date') }}: </span>
+                  <span>{{ result.visa_data.review_date }}</span>
+                </div>
+                <div v-if="result.visa_data.expiry_date">
+                  <span class="font-semibold">{{ $t('visa_status.expiry_date') }}: </span>
+                  <span>{{ result.visa_data.expiry_date }}</span>
+                </div>
+                <div v-if="result.visa_data.progress_status">
+                  <span class="font-semibold">{{ $t('visa_status.original_status') }}: </span>
+                  <span>{{ result.visa_data.progress_status }}</span>
+                </div>
               </div>
             </div>
 
-            <div v-if="result && result.visa_data.pdf_url && ((result.visa_data.status_en && ['Approved', 'Used'].includes(result.visa_data.status_en)) || (!result.visa_data.status_en && ['허가', '사용완료'].includes(result.visa_data.progress_status)))" class="mt-6">
+            <div v-if="result?.visa_data?.pdf_url" class="mt-6">
                 <BaseDownloadVisaButton
                   :pdf-url="result.visa_data.pdf_url"
                   :pdf-params="result.visa_data.pdf_params"
