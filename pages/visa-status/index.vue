@@ -15,6 +15,18 @@ const form = ref({
   birth_date: ""
 });
 
+watch(() => form.value.passport_number, (newValue) => {
+  if (newValue) {
+    form.value.passport_number = newValue.toUpperCase();
+  }
+});
+
+watch(() => form.value.english_name, (newValue) => {
+  if (newValue) {
+    form.value.english_name = newValue.toUpperCase();
+  }
+});
+
 const loading = ref(false);
 const result = ref(null);
 const error = ref(null);
@@ -142,6 +154,8 @@ const checkStatus = async () => {
                   :placeholder="$t('visa_status.passport_number')"
                   variant="none"
                   class="!bg-black-100"
+                  name="passport_number"
+                  autocomplete="visa_passport_number"
               />
             </div>
 
@@ -154,6 +168,8 @@ const checkStatus = async () => {
                   :placeholder="$t('visa_status.english_name')"
                   variant="none"
                   class="!bg-black-100"
+                  name="full_name"
+                  autocomplete="visa_english_name"
               />
             </div>
 
