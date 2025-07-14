@@ -26,6 +26,7 @@
     "@nuxtjs/robots": "^5.2.10",
     "@nuxtjs/sitemap": "^7.3.1",
     "keen-slider": "^6.8.6",
+    "nuxt-gtag": "^3.0.3",
     "sharp": "^0.33.5",
     "swiper": "^11.2.6",
     "vue-recaptcha-v3": "^2.0.1"

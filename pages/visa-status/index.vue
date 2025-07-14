@@ -155,7 +155,7 @@ const checkStatus = async () => {
                   variant="none"
                   class="!bg-black-100"
                   name="passport_number"
-                  autocomplete="visa_passport_number"
+                  autocomplete="on"
               />
             </div>
 
@@ -169,7 +169,7 @@ const checkStatus = async () => {
                   variant="none"
                   class="!bg-black-100"
                   name="full_name"
-                  autocomplete="visa_english_name"
+                  autocomplete="on"
               />
             </div>
 
@@ -182,6 +182,8 @@ const checkStatus = async () => {
                   :placeholder="$t('visa_status.birth_date')"
                   :error="error && !form.birth_date"
                   class="!bg-black-100"
+                  name="birth_date"
+                  autocomplete="on"
               />
             </div>
 
