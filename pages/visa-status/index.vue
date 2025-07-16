@@ -27,6 +27,15 @@ watch(() => form.value.english_name, (newValue) => {
   }
 });
 
+const STORAGE_KEY = 'visa_status_form_data';
+
+// Watch for changes in the form and save to localStorage
+watch(form, (newFormState) => {
+  if (import.meta.client) { // Ensure localStorage is only accessed on the client
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(newFormState));
+  }
+}, { deep: true }); // Use deep watch to detect changes in object properties
+
 const loading = ref(false);
 const result = ref(null);
 const error = ref(null);
@@ -58,6 +67,22 @@ const getToken = async () => {
 // Function to refresh reCAPTCHA token every 2 minutes
 let recaptchaInterval;
 onMounted(() => {
+  // Load data from localStorage when the component mounts
+  if (import.meta.client) {
+    const savedData = localStorage.getItem(STORAGE_KEY);
+    if (savedData) {
+      try {
+        const parsedData = JSON.parse(savedData);
+        if (parsedData && typeof parsedData === 'object') {
+          form.value = { ...form.value, ...parsedData };
+        }
+      } catch (e) {
+        console.error("Failed to parse saved form data:", e);
+        localStorage.removeItem(STORAGE_KEY);
+      }
+    }
+  }
+
   recaptchaInterval = setInterval(async () => {
     if (form.value.passport_number || form.value.english_name || form.value.birth_date) {
       captchaToken.value = await getToken();
@@ -154,7 +179,7 @@ const checkStatus = async () => {
                   :placeholder="$t('visa_status.passport_number')"
                   variant="none"
                   class="!bg-black-100"
-                  name="passport_number"
+                  name="visa_passport_number"
                   autocomplete="on"
               />
             </div>
@@ -168,8 +193,8 @@ const checkStatus = async () => {
                   :placeholder="$t('visa_status.english_name')"
                   variant="none"
                   class="!bg-black-100"
-                  name="full_name"
-                  autocomplete="on"
+                  name="visa_english_name"
+                  autocomplete="name"
               />
             </div>
 
@@ -182,8 +207,8 @@ const checkStatus = async () => {
                   :placeholder="$t('visa_status.birth_date')"
                   :error="error && !form.birth_date"
                   class="!bg-black-100"
-                  name="birth_date"
-                  autocomplete="on"
+                  name="visa_birth_date"
+                  autocomplete="bday"
               />
             </div>
 
