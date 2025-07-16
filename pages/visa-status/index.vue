@@ -239,6 +239,14 @@ const checkStatus = async () => {
                   <span class="font-semibold">{{ $t('visa_status.original_status') }}: </span>
                   <span>{{ result.visa_data.progress_status }}</span>
                 </div>
+                <div v-if="result.visa_data.visa_type">
+                  <span class="font-semibold">{{ $t('visa_status.visa_type') }}: </span>
+                  <span>{{ result.visa_data.visa_type }}</span>
+                </div>
+                <div v-if="result.visa_data.visa_type === '유학.연수'" class="col-span-1 sm:col-span-2">
+                  <span class="font-semibold">{{ $t('visa_status.visa_category') }}: </span>
+                  <span class="px-2 py-1 text-xs font-medium text-green-800 bg-green-100 rounded-full">{{ $t('visa_status.student_visa') }}</span>
+                </div>
               </div>
             </div>
 

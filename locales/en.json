@@ -84,8 +84,11 @@
     "review_date": "Review Date",
     "expiry_date": "Expiry Date",
     "original_status": "Original Status",
-    "download_error": "Error downloading visa"
+    "visa_type": "Visa Type",
+    "visa_category": "Visa Category",
+    "student_visa": "Student Visa"
   },
+  "download_error": "Error downloading visa",
   "footer": {
     "slogan": "Pay for results, not for the process"
   },

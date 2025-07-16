@@ -84,7 +84,10 @@
     "application_date": "Ariza sanasi",
     "review_date": "Ko'rib chiqish sanasi",
     "expiry_date": "Amal qilish muddati",
-    "original_status": "Asl holati"
+    "original_status": "Asl holati",
+    "visa_type": "Viza turi",
+    "visa_category": "Viza kategoriyasi",
+    "student_visa": "O'quvchi vizasi"
   },
   "footer": {
     "slogan": "Jarayon uchun emas natija uchun to'lang"
