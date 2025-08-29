@@ -1,8 +1,5 @@
 <script setup>
-import {useReCaptcha} from "vue-recaptcha-v3";
-
 const {t} = useI18n();
-const toast = useToast();
 const localePath = useLocalePath();
 
 definePageMeta({
@@ -30,46 +27,6 @@ watch(() => form.value.english_name, (newValue) => {
 const loading = ref(false);
 const result = ref(null);
 const error = ref(null);
-const captchaToken = ref("");
-const isReady = ref(false);
-const executeRecaptcha = ref(null);
-
-// Initialize reCAPTCHA
-if (import.meta.client) {
-  const recaptcha = useReCaptcha();
-  if (recaptcha) {
-    executeRecaptcha.value = recaptcha.executeRecaptcha;
-    isReady.value = true;
-  }
-}
-
-// Function to get reCAPTCHA token
-const getToken = async () => {
-  if (!isReady.value || !executeRecaptcha.value) {
-    toast.add({
-      title: t("error_recaptcha"),
-      timeout: 5000,
-    });
-    return "";
-  }
-  return await executeRecaptcha.value();
-};
-
-// Function to refresh reCAPTCHA token every 2 minutes
-let recaptchaInterval;
-onMounted(() => {
-  recaptchaInterval = setInterval(async () => {
-    if (form.value.passport_number || form.value.english_name || form.value.birth_date) {
-      captchaToken.value = await getToken();
-    }
-  }, 120000); // 2 minutes
-});
-
-onUnmounted(() => {
-  if (recaptchaInterval) {
-    clearInterval(recaptchaInterval);
-  }
-});
 
 // Function to validate form
 const validateForm = () => {
@@ -97,14 +54,9 @@ const checkStatus = async () => {
   result.value = null;
 
   try {
-    if (!captchaToken.value) {
-      captchaToken.value = await getToken();
-    }
-
     const {data, error: apiError} = await useMyFetch("/visas/check-status/", {
       method: "POST",
       body: form.value,
-      headers: {"X-Recaptcha-Token": captchaToken.value},
     });
 
     if (apiError.value) {
@@ -121,8 +73,6 @@ const checkStatus = async () => {
     error.value = t("visa_status.error_invalid");
   } finally {
     loading.value = false;
-    // Обновляем токен после каждого запроса, независимо от результата
-    captchaToken.value = await getToken();
   }
 };
 

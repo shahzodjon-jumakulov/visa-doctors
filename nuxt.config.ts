@@ -7,14 +7,12 @@ export default defineNuxtConfig({
     "@formkit/auto-animate",
     "nuxt-aos",
     "@nuxtjs/i18n",
-    "nuxt-gtag",
   ],
   compatibilityDate: "2025-02-23",
   css: ["~/assets/css/main.scss"],
   runtimeConfig: {
-    public: {
-      baseURL: process.env.BASE_URL || "https://api.visadoctors.uz",
-    },
+    baseURL: process.env.BASE_URL || "https://api.visadoctors.uz",
+    public: {},
   },
   colorMode: { preference: "light" },
   build: {
