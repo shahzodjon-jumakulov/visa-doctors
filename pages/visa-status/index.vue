@@ -1,6 +1,7 @@
 <script setup>
 const {t} = useI18n();
 const localePath = useLocalePath();
+const route = useRoute();
 
 definePageMeta({
   layout: "default"
@@ -16,9 +17,17 @@ const STORAGE_KEY = 'visa_status_form_data';
 
 onMounted(() => {
   if (import.meta.client) {
-    const savedData = localStorage.getItem(STORAGE_KEY);
-    if (savedData) {
-      form.value = JSON.parse(savedData);
+    const { passport_number, name, birth_date } = route.query;
+
+    if (passport_number && name && birth_date) {
+      form.value.passport_number = Array.isArray(passport_number) ? passport_number[0] : passport_number;
+      form.value.english_name = Array.isArray(name) ? name[0] : name;
+      form.value.birth_date = Array.isArray(birth_date) ? birth_date[0] : birth_date;
+    } else {
+      const savedData = localStorage.getItem(STORAGE_KEY);
+      if (savedData) {
+        form.value = JSON.parse(savedData);
+      }
     }
   }
 });
