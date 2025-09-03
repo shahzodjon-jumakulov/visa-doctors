@@ -87,6 +87,7 @@
     "instagram_button": "View on Instagram",
     "visa_category": "Visa Category",
     "student_visa": "Student Visa",
+    "polling_message": "Checking visa status... This may take a moment, please wait.",
     "download_error": "Error downloading visa"
   },
   "footer": {

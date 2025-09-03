@@ -87,7 +87,8 @@
     "visa_type": "Viza turi",
     "instagram_button": "Instagramda ko'rish",
     "visa_category": "Viza Kategoriyasi",
-    "student_visa": "Talabalik vizasi"
+    "student_visa": "Talabalik vizasi",
+    "polling_message": "Viza holati tekshirilmoqda... Bu biroz vaqt olishi mumkin, iltimos kuting."
   },
   "footer": {
     "slogan": "Jarayon uchun emas natija uchun to'lang"

@@ -27,6 +27,7 @@ watch(() => form.value.english_name, (newValue) => {
 const loading = ref(false);
 const result = ref(null);
 const error = ref(null);
+const pollingStatus = ref('');
 
 // Function to validate form
 const validateForm = () => {
@@ -45,16 +46,60 @@ const validateForm = () => {
   return true;
 };
 
+let pollingInterval = null;
+
+const pollForResult = async (requestId) => {
+  pollingInterval = setInterval(async () => {
+    try {
+      const { data: pollData, error: pollError } = await useMyFetch(`/visas/v2/check-status/${requestId}/`);
+
+      if (pollError.value) {
+        // Stop polling on error
+        clearInterval(pollingInterval);
+        error.value = t("visa_status.error_invalid");
+        loading.value = false;
+        pollingStatus.value = '';
+        return;
+      }
+
+      if (pollData.value.status === 'COMPLETED') {
+        clearInterval(pollingInterval);
+        result.value = pollData.value.response_data;
+        loading.value = false;
+        pollingStatus.value = '';
+      } else if (pollData.value.status === 'FAILED') {
+        clearInterval(pollingInterval);
+        error.value = t("visa_status.error_invalid");
+        loading.value = false;
+        pollingStatus.value = '';
+      }
+      // If status is 'PENDING', do nothing and let the interval continue.
+
+    } catch (e) {
+      clearInterval(pollingInterval);
+      error.value = t("visa_status.error_invalid");
+      loading.value = false;
+      pollingStatus.value = '';
+    }
+  }, 3000); // Poll every 3 seconds
+};
+
 // Function to check visa status
 const checkStatus = async () => {
   if (!validateForm()) return;
 
+  // Reset state
   loading.value = true;
   error.value = null;
   result.value = null;
+  pollingStatus.value = t('visa_status.polling_message');
+  if (pollingInterval) {
+    clearInterval(pollingInterval);
+  }
 
   try {
-    const {data, error: apiError} = await useMyFetch("/visas/check-status/", {
+    // 1. Initiate the check
+    const { data, error: apiError } = await useMyFetch("/visas/v2/check-status/", {
       method: "POST",
       body: form.value,
     });
@@ -65,14 +110,22 @@ const checkStatus = async () => {
       } else {
         error.value = t("visa_status.error_invalid");
       }
+      loading.value = false;
+      pollingStatus.value = '';
       return;
     }
 
-    result.value = data.value;
+    // 2. Start polling for the result
+    if (data.value && data.value.id) {
+      await pollForResult(data.value.id);
+    } else {
+        throw new Error('Invalid response from server');
+    }
+
   } catch (e) {
     error.value = t("visa_status.error_invalid");
-  } finally {
     loading.value = false;
+    pollingStatus.value = '';
   }
 };
 
@@ -137,13 +190,13 @@ const checkStatus = async () => {
               />
             </div>
 
-            <div v-if="error" class="flex items-center gap-2 text-red-main text-sm">
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
-                <path
-                    d="M10 6V10M10 14H10.01M19 10C19 14.9706 14.9706 19 10 19C5.02944 19 1 14.9706 1 10C1 5.02944 5.02944 1 10 1C14.9706 1 19 5.02944 19 10Z"
-                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
+            <div v-if="error" class="w-full max-w-2xl mt-6 text-center p-4 bg-red-100 text-red-700 rounded-lg">
               {{ error }}
+            </div>
+
+            <div v-if="loading && pollingStatus" class="w-full max-w-2xl mt-6 text-center p-6 bg-white rounded-lg shadow-md">
+              <p class="text-lg font-medium text-gray-700">{{ pollingStatus }}</p>
+              <Icon name="svg-spinners:180-ring-with-bg" class="size-10 mx-auto mt-4 text-red-500" />
             </div>
 
             <div v-if="result && result.visa_data"
@@ -155,23 +208,14 @@ const checkStatus = async () => {
                 <div class="flex-shrink-0 pt-1">
                   <svg v-if="result.visa_data.icon_name === 'success'" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
                   <svg v-else-if="result.visa_data.icon_name === 'error'" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-                  <svg v-else xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+                  <svg v-else xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
                 </div>
-
-                <!-- Main Status -->
-                <div class="flex flex-col">
-                  <span class="font-bold text-lg">{{ result.visa_data.status }}</span>
-                  <p class="text-sm opacity-90">{{ result.visa_data.response_text }}</p>
+                <div class="flex-grow">
+                  <p class="font-semibold text-lg">{{ result.visa_data.status }}</p>
+                  <p class="text-sm">{{ result.visa_data.response_text }}</p>
                 </div>
               </div>
 
-              <!-- Rejection Reason -->
-              <div v-if="result.visa_data.rejection_reason" class="border-t border-white/20 pt-3">
-                <h4 class="font-semibold">{{ $t('visa_status.rejection_reason') }}</h4>
-                <p class="text-sm">{{ result.visa_data.rejection_reason }}</p>
-              </div>
-
-              <!-- Other Details -->
               <div class="border-t border-white/20 pt-3 grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-2 text-sm">
                 <div v-if="result.visa_data.application_date">
                   <span class="font-semibold">{{ $t('visa_status.application_date') }}: </span>
