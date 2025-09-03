@@ -12,6 +12,24 @@ const form = ref({
   birth_date: ""
 });
 
+const STORAGE_KEY = 'visa_status_form_data';
+
+onMounted(() => {
+  if (import.meta.client) {
+    const savedData = localStorage.getItem(STORAGE_KEY);
+    if (savedData) {
+      form.value = JSON.parse(savedData);
+    }
+  }
+});
+
+// Watch for changes in the form and save to localStorage
+watch(form, (newFormState) => {
+  if (import.meta.client) { // Ensure localStorage is only accessed on the client
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(newFormState));
+  }
+}, { deep: true }); // Use deep watch to detect changes in object properties
+
 watch(() => form.value.passport_number, (newValue) => {
   if (newValue) {
     form.value.passport_number = newValue.toUpperCase();
@@ -48,40 +66,63 @@ const validateForm = () => {
 
 let pollingInterval = null;
 
+// Helper function to process the poll response
+const handlePollResponse = (pollData, pollError) => {
+  if (pollError.value) {
+    clearInterval(pollingInterval);
+    pollingInterval = null;
+    error.value = pollError.value.data?.message || t("visa_status.error_invalid");
+    loading.value = false;
+    pollingStatus.value = '';
+    return true; // Polling should stop
+  }
+
+  if (pollData.value.status === 'COMPLETED') {
+    clearInterval(pollingInterval);
+    pollingInterval = null;
+    if (pollData.value.response_data && pollData.value.response_data.status === 'error') {
+      error.value = pollData.value.response_data.message || t('visa_status.error_invalid');
+    } else {
+      result.value = pollData.value.response_data;
+    }
+    loading.value = false;
+    pollingStatus.value = '';
+    return true; // Polling should stop
+  } else if (pollData.value.status === 'FAILED') {
+    clearInterval(pollingInterval);
+    pollingInterval = null;
+    error.value = pollData.value.response_data?.message || t('visa_status.error_failed_processing');
+    loading.value = false;
+    pollingStatus.value = '';
+    return true; // Polling should stop
+  }
+
+  return false; // Polling should continue
+};
+
 const pollForResult = async (requestId) => {
-  pollingInterval = setInterval(async () => {
+  // Wait for 0.6 seconds before the first check to give the server time
+  setTimeout(async () => {
     try {
-      const { data: pollData, error: pollError } = await useMyFetch(`/visas/v2/check-status/${requestId}/`);
+      // 1. First check after delay
+      const { data: initialData, error: initialError } = await useMyFetch(`/visas/v2/check-status/${requestId}/`);
+      const shouldStop = handlePollResponse(initialData, initialError);
 
-      if (pollError.value) {
-        // Stop polling on error
-        clearInterval(pollingInterval);
-        pollingInterval = null;
-        error.value = pollError.value.data?.message || t("visa_status.error_invalid");
-        loading.value = false;
-        pollingStatus.value = '';
-        return;
-      }
+      if (shouldStop) return;
 
-      if (pollData.value.status === 'COMPLETED') {
-        clearInterval(pollingInterval);
-        pollingInterval = null;
-        // Check for logical errors in the response data
-        if (pollData.value.response_data && pollData.value.response_data.status === 'error') {
-          error.value = pollData.value.response_data.message || t('visa_status.error_invalid');
-        } else {
-          result.value = pollData.value.response_data;
+      // 2. If not completed, start interval polling
+      pollingInterval = setInterval(async () => {
+        try {
+          const { data: pollData, error: pollError } = await useMyFetch(`/visas/v2/check-status/${requestId}/`);
+          handlePollResponse(pollData, pollError);
+        } catch (e) {
+          clearInterval(pollingInterval);
+          pollingInterval = null;
+          error.value = t("visa_status.error_invalid");
+          loading.value = false;
+          pollingStatus.value = '';
         }
-        loading.value = false;
-        pollingStatus.value = '';
-      } else if (pollData.value.status === 'FAILED') {
-        clearInterval(pollingInterval);
-        pollingInterval = null;
-        error.value = pollData.value.response_data?.message || t('visa_status.error_failed_processing');
-        loading.value = false;
-        pollingStatus.value = '';
-      }
-      // If status is 'PENDING', do nothing and let the interval continue.
+      }, 1500); // Poll every 1.5 seconds
 
     } catch (e) {
       clearInterval(pollingInterval);
@@ -90,7 +131,7 @@ const pollForResult = async (requestId) => {
       loading.value = false;
       pollingStatus.value = '';
     }
-  }, 3000); // Poll every 3 seconds
+  }, 600); // 0.6-second delay before the first check
 };
 
 // Function to check visa status
