@@ -56,7 +56,8 @@ const pollForResult = async (requestId) => {
       if (pollError.value) {
         // Stop polling on error
         clearInterval(pollingInterval);
-        error.value = t("visa_status.error_invalid");
+        pollingInterval = null;
+        error.value = pollError.value.data?.message || t("visa_status.error_invalid");
         loading.value = false;
         pollingStatus.value = '';
         return;
@@ -64,12 +65,19 @@ const pollForResult = async (requestId) => {
 
       if (pollData.value.status === 'COMPLETED') {
         clearInterval(pollingInterval);
-        result.value = pollData.value.response_data;
+        pollingInterval = null;
+        // Check for logical errors in the response data
+        if (pollData.value.response_data && pollData.value.response_data.status === 'error') {
+          error.value = pollData.value.response_data.message || t('visa_status.error_invalid');
+        } else {
+          result.value = pollData.value.response_data;
+        }
         loading.value = false;
         pollingStatus.value = '';
       } else if (pollData.value.status === 'FAILED') {
         clearInterval(pollingInterval);
-        error.value = t("visa_status.error_invalid");
+        pollingInterval = null;
+        error.value = pollData.value.response_data?.message || t('visa_status.error_failed_processing');
         loading.value = false;
         pollingStatus.value = '';
       }
@@ -77,6 +85,7 @@ const pollForResult = async (requestId) => {
 
     } catch (e) {
       clearInterval(pollingInterval);
+      pollingInterval = null;
       error.value = t("visa_status.error_invalid");
       loading.value = false;
       pollingStatus.value = '';
@@ -101,11 +110,15 @@ const checkStatus = async () => {
     // 1. Initiate the check
     const { data, error: apiError } = await useMyFetch("/visas/v2/check-status/", {
       method: "POST",
-      body: form.value,
+      body: { ...form.value },
     });
 
     if (apiError.value) {
-      if (apiError.value.status === 404) {
+      // Handle validation errors or other API errors
+      if (apiError.value.data && typeof apiError.value.data === 'object') {
+        // Extract messages from nested objects
+        error.value = Object.values(apiError.value.data).flat().join(' ');
+      } else if (apiError.value.status === 404) {
         error.value = t("visa_status.error_not_found");
       } else {
         error.value = t("visa_status.error_invalid");

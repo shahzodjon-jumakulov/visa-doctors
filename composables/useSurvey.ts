@@ -131,9 +131,6 @@ export const useSurvey = async (surveyId: number | string, source: string) => {
     }
   };
 
-  watch(() => body.value[currIndex.value]?.text_answer, () => {
-    if (errorMsg.value) validateInput();
-  });
 
   const next = async () => {
     if (isDisabled.value || !validateInput()) return;
@@ -146,7 +143,7 @@ export const useSurvey = async (surveyId: number | string, source: string) => {
 
       const { data, error } = await useMyFetch(`/submit/`, {
         method: "POST",
-        body: { responses: body.value, source, survey_id: surveyId },
+        body: { responses: JSON.parse(JSON.stringify(body.value)), source, survey_id: surveyId },
         onResponseError({ response }: { response: { _data?: SubmitErrorResponse } }) {
           const res = response._data?.responses || [];
           res.forEach((el, index) => {
