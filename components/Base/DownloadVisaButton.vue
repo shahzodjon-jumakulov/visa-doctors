@@ -19,18 +19,26 @@ const downloadPdf = async () => {
     isLoading.value = true;
 
     // Send request to backend
-    const { data, error } = await useMyFetch(props.pdfUrl, {
-      method: "POST",
-      body: props.pdfParams,
-      responseType: 'blob'
+    const { data, error } = await useMyFetch('/visas/download-pdf/', {
+      method: 'POST',
+      body: {
+        pdf_url: toRaw(props.pdfUrl),
+        pdf_params: props.pdfParams,
+      },
+      responseType: 'blob',
     });
+
+    if (error.value) {
+      console.error('Error response from download proxy:', error.value.data);
+      throw new Error(error.value.data?.message || 'Download failed');
+    }
 
     if (!data.value) {
       throw new Error('Download failed');
     }
 
     // Create download link
-    const blob = new Blob([response.data.value], { type: 'application/pdf' });
+    const blob = new Blob([data.value], { type: 'application/pdf' });
     const url = window.URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.href = url;
@@ -40,7 +48,7 @@ const downloadPdf = async () => {
     document.body.removeChild(link);
     window.URL.revokeObjectURL(url);
   } catch (error) {
-    console.error('Error downloading PDF:', error);
+    console.error('Error downloading PDF:', error.message);
     toast.add({
       title: t('visa_status.download_error'),
       description: error.message,
