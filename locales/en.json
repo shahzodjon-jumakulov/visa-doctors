@@ -83,6 +83,10 @@
     "review_date": "Review Date",
     "expiry_date": "Expiry Date",
     "original_status": "Original Status",
+    "visa_type": "Visa Type",
+    "instagram_button": "View on Instagram",
+    "visa_category": "Visa Category",
+    "student_visa": "Student Visa",
     "download_error": "Error downloading visa"
   },
   "footer": {

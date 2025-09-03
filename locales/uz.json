@@ -83,7 +83,11 @@
     "application_date": "Ariza sanasi",
     "review_date": "Ko'rib chiqish sanasi",
     "expiry_date": "Amal qilish muddati",
-    "original_status": "Asl holati"
+    "original_status": "Asl holati",
+    "visa_type": "Viza turi",
+    "instagram_button": "Instagramda ko'rish",
+    "visa_category": "Viza Kategoriyasi",
+    "student_visa": "Talabalik vizasi"
   },
   "footer": {
     "slogan": "Jarayon uchun emas natija uchun to'lang"
