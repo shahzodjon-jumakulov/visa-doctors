@@ -1,32 +1,30 @@
 <script setup>
-const { baseURL } = useRuntimeConfig().public;
-
-const { data } = await useMyFetch("/results/preview/");
+const { data: awards } = await useMyFetch("/awards/");
 const images = ref([]);
-data.value?.preview_results?.forEach((item) => {
+awards.value?.preview_results?.forEach((item) => {
   images.value.push(item.thumbnail);
 });
 </script>
 
 <template>
-  <div class="bg-black-main relative overflow-hidden" v-if="data">
+  <div class="bg-black-main relative overflow-hidden" v-if="awards">
     <UContainer class="py-10 md:py-[4.5rem] relative z-[1]">
       <div class="flex max-lg:flex-col md:items-center gap-10">
         <div class="flex flex-col">
           <div class="flex flex-col gap-2 mb-4">
             <h2 class="section-heading !text-white !text-left">
-              {{ data.title.split(" ")[0] }}
+              {{ awards.title.split(" ")[0] }}
               <span class="text-red-main">{{
-                data.title.split(" ").slice(1).join(" ")
+                awards.title.split(" ").slice(1).join(" ")
               }}</span>
             </h2>
             <p class="text-sm md:text-lg font-medium text-white-500">
-              {{ data.subtitle }}
+              {{ awards.subtitle }}
             </p>
           </div>
           <div
             class="text-base leading-140 text-white mb-4"
-            v-html="data.description"
+            v-html="awards.description"
           ></div>
           <BaseButton :label="$t('read_more')" :to="$localePath('/awards')" class="w-fit" />
         </div>

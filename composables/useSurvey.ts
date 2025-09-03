@@ -1,5 +1,4 @@
 import { ref, computed, watch } from 'vue';
-import { useReCaptcha } from "vue-recaptcha-v3";
 
 // --- INTERFACES --- //
 interface FieldType {
@@ -31,7 +30,7 @@ interface SubmitErrorResponse {
 }
 
 // --- COMPOSABLE --- //
-export const useSurvey = async (surveyId: number | string, source: string, recaptchaInstance: ReturnType<typeof useReCaptcha> | null) => {
+export const useSurvey = async (surveyId: number | string, source: string) => {
   const { t } = useI18n();
   const isModalOpen = ref(false);
   const toast = useToast();
@@ -81,17 +80,6 @@ export const useSurvey = async (surveyId: number | string, source: string, recap
     }
   });
 
-  const captchaToken = ref("");
-
-  const getToken = async (): Promise<string> => {
-    if (!recaptchaInstance) {
-      toast.add({ title: t("error_recaptcha"), timeout: 5000 });
-      return "";
-    }
-    await recaptchaInstance.recaptchaLoaded();
-    const token = await recaptchaInstance.executeRecaptcha('submit');
-    return token || "";
-  };
 
   function isEmpty(obj: object | null | undefined) {
     if (!obj) return true;
@@ -153,15 +141,12 @@ export const useSurvey = async (surveyId: number | string, source: string, recap
     if (currIndex.value < steps.value - 1) {
       currIndex.value++;
       if (currIndex.value > currProgress.value) currProgress.value = currIndex.value;
-      if (currIndex.value === steps.value - 2) captchaToken.value = await getToken();
     } else {
       loading.value = true;
-      if (!captchaToken.value) captchaToken.value = await getToken();
 
       const { data, error } = await useMyFetch(`/submit/`, {
         method: "POST",
         body: { responses: body.value, source, survey_id: surveyId },
-        headers: { "X-Recaptcha-Token": captchaToken.value },
         onResponseError({ response }: { response: { _data?: SubmitErrorResponse } }) {
           const res = response._data?.responses || [];
           res.forEach((el, index) => {
@@ -183,7 +168,6 @@ export const useSurvey = async (surveyId: number | string, source: string, recap
         },
       });
       if (data.value) isModalOpen.value = true;
-      captchaToken.value = "";
       loading.value = false;
     }
   };

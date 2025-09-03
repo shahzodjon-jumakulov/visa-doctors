@@ -2,7 +2,6 @@
 // import Guest from "~/components/Icon/Guest.vue";
 // import Study from "~/components/Icon/Study.vue";
 // import Family from "~/components/Icon/Family.vue";
-
 const { data } = await useMyFetch("/visas/");
 </script>
 

@@ -1,6 +1,4 @@
 <script setup>
-import { useReCaptcha } from "vue-recaptcha-v3";
-
 const props = defineProps({
   pdfUrl: {
     type: String,
@@ -16,46 +14,18 @@ const isLoading = ref(false);
 const toast = useToast();
 const { t } = useI18n();
 
-const executeRecaptcha = ref(null);
-const isReady = ref(false);
-
-// Initialize reCAPTCHA
-onMounted(() => {
-  const recaptcha = useReCaptcha();
-  if (recaptcha) {
-    executeRecaptcha.value = recaptcha.executeRecaptcha;
-    isReady.value = true;
-  }
-});
-
 const downloadPdf = async () => {
   try {
     isLoading.value = true;
 
-    // Get reCAPTCHA token
-    if (!isReady.value || !executeRecaptcha.value) {
-      toast.add({
-        title: t("error_recaptcha"),
-        timeout: 5000
-      });
-      return;
-    }
-
-    const recaptchaToken = await executeRecaptcha.value('download_visa');
-
-    const response = await useMyFetch('/visas/download-pdf/', {
-      method: 'POST',
-      body: {
-        pdf_url: props.pdfUrl,
-        pdf_params: props.pdfParams
-      },
-      headers: { 
-        "X-Recaptcha-Token": recaptchaToken 
-      },
+    // Send request to backend
+    const { data, error } = await useMyFetch(props.pdfUrl, {
+      method: "POST",
+      body: props.pdfParams,
       responseType: 'blob'
     });
 
-    if (!response.data.value) {
+    if (!data.value) {
       throw new Error('Download failed');
     }
 
