@@ -279,6 +279,12 @@ const checkStatus = async () => {
                 </div>
               </div>
 
+              <!-- Rejection Reason -->
+              <div v-if="result.visa_data.rejection_reason" class="border-t border-white/20 pt-3 mt-3">
+                <p class="font-semibold">{{ $t('visa_status.rejection_reason') }}:</p>
+                <p class="text-sm">{{ result.visa_data.rejection_reason }}</p>
+              </div>
+
               <div class="border-t border-white/20 pt-3 grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-2 text-sm">
                 <div v-if="result.visa_data.application_date">
                   <span class="font-semibold">{{ $t('visa_status.application_date') }}: </span>
