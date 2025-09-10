@@ -103,22 +103,20 @@ const nav = computed(() => [
               loading="lazy"
             />
           </div>
-          <NuxtImg
+          <img
             data-aos="fade-right"
             data-aos-delay="300"
             src="/images/hero-woman.png"
             alt="Student girl"
             class="absolute top-[11rem] left-0"
-            format="webp"
             loading="lazy"
           />
-          <NuxtImg
+          <img
             data-aos="fade-left"
             data-aos-delay="300"
             src="/images/hero-man.png"
             alt="Student boy"
             class="absolute top-20 right-0"
-            format="webp"
             loading="lazy"
           />
         </div>
@@ -131,7 +129,6 @@ const nav = computed(() => [
         sizes="(max-width: 640px) 640px, (max-width: 1280px) 1280px, 1920px"
         alt="Hero background" 
         class="size-full object-cover" 
-        loading="lazy"
       />
       <div
         class="bg-black-500 mix-blend-multiply size-full absolute inset-0"
