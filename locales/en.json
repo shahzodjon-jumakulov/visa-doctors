@@ -132,5 +132,35 @@
   },
   "form": {
     "terms_agreement": "By using the site, you agree to our"
+  },
+  "news": {
+    "title": "News",
+    "nav_title": "News",
+    "subtitle": "Stay up to date with the latest changes in visa policy and get useful tips.",
+    "back_to_news": "&larr; Back to news",
+    "recommended_posts": "Recommended Posts",
+    "categories": {
+      "all": "All",
+      "visa_policy": "Visa Policy",
+      "tips": "Tips",
+      "health": "Health"
+    },
+    "posts": {
+      "visa_policy_changes_2025": {
+        "title": "Changes in South Korea's Visa Policy in 2025",
+        "excerpt": "South Korea has announced new rules for tourist and work visas, which will come into force on January 1, 2025.",
+        "content": "The South Korean government has announced a number of important changes to its visa policy starting in 2025, aimed at developing tourism and the labor market. The new rules are designed to simplify the visa application process for various categories of applicants..."
+      },
+      "embassy_interview_tips": {
+        "title": "How to successfully pass an embassy interview: 5 tips",
+        "excerpt": "An embassy interview is one of the most exciting stages. Our experts share proven tips to help you be more confident.",
+        "content": "An embassy interview is a crucial part of the visa application process. These 5 tips will help you prepare and feel confident..."
+      },
+      "medical_visa_requirements": {
+        "title": "Medical examination for a visa: what you need to know",
+        "excerpt": "Passing a medical examination is a mandatory requirement for many types of visas. Find out what tests are required and how to prepare for them.",
+        "content": "The process of passing a medical examination for a visa to South Korea includes several standard checks. It is important to know what they include and how to prepare for the process..."
+      }
+    }
   }
 }

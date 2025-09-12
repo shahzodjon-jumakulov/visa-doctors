@@ -132,5 +132,35 @@
   },
   "form": {
     "terms_agreement": "Saytdan foydalanish orqali siz bizning"
+  },
+  "news": {
+    "title": "Yangiliklar va maqolalar",
+    "nav_title": "Yangiliklar",
+    "subtitle": "Viza siyosatidagi so'nggi o'zgarishlardan xabardor bo'ling va foydali maslahatlarga ega bo'ling.",
+    "back_to_news": "&larr; Yangiliklarga qaytish",
+    "recommended_posts": "Tavsiya etilgan maqolalar",
+    "categories": {
+      "all": "Barchasi",
+      "visa_policy": "Viza siyosati",
+      "tips": "Maslahatlar",
+      "health": "Salomatlik"
+    },
+    "posts": {
+      "visa_policy_changes_2025": {
+        "title": "2025-yilda Janubiy Koreyaning viza siyosatidagi o‘zgarishlar",
+        "excerpt": "Janubiy Koreya turistik va ishchi vizalari uchun yangi qoidalarni e'lon qildi, ular 2025-yil 1-yanvardan kuchga kiradi.",
+        "content": "Janubiy Koreya hukumati 2025-yildan boshlab turizm va mehnat bozorini rivojlantirish maqsadida viza siyosatiga bir qator muhim o‘zgartirishlar kiritilishini e'lon qildi. Yangi qoidalar turli toifadagi arizachilar uchun viza olish jarayonini soddalashtirishga qaratilgan..."
+      },
+      "embassy_interview_tips": {
+        "title": "Elchixonadagi suhbatdan qanday muvaffaqiyatli o‘tish mumkin: 5 ta maslahat",
+        "excerpt": "Elchixonadagi suhbat – bu eng hayajonli bosqichlardan biri. Bizning mutaxassislarimiz sizga ishonchliroq bo‘lishga yordam beradigan sinovdan o‘tgan maslahatlar bilan bo‘lishadi.",
+        "content": "Elchixonadagi suhbat viza olish jarayonining hal qiluvchi qismidir. Ushbu 5 ta maslahat sizga tayyorgarlik ko‘rishga va o‘zingizni ishonchli his qilishga yordam beradi..."
+      },
+      "medical_visa_requirements": {
+        "title": "Viza uchun tibbiy ko‘rik: nimani bilish kerak",
+        "excerpt": "Tibbiy ko‘rikdan o‘tish ko‘plab viza turlari uchun majburiy talab hisoblanadi. Qanday tekshiruvlar kerakligini va ularga qanday tayyorgarlik ko‘rishni bilib oling.",
+        "content": "Janubiy Koreyaga viza olish uchun tibbiy ko‘rikdan o‘tish jarayoni bir nechta standart tekshiruvlarni o‘z ichiga oladi. Bularga nimalar kirishini va jarayonga qanday tayyorgarlik ko‘rish kerakligini bilish muhim..."
+      }
+    }
   }
 }
