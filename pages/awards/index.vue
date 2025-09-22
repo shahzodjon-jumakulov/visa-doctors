@@ -81,7 +81,7 @@ onBeforeUnmount(() => {
             <div class="relative w-full h-full">
               <div v-if="!imageLoaded[idx]" class="absolute inset-0 bg-black-100 rounded-2xl animate-pulse"></div>
               <img
-                  :src="image.image"
+                  :src="image.thumbnail"
                   :alt="`Award ${idx + 1}`"
                   class="size-full object-cover rounded-2xl"
                   loading="lazy"
