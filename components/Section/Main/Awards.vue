@@ -1,5 +1,5 @@
 <script setup>
-const { data: awards } = await useMyFetch("/awards/");
+const { data: awards } = await useMyFetch("/results/detail/");
 const images = ref([]);
 awards.value?.preview_results?.forEach((item) => {
   images.value.push(item.thumbnail);

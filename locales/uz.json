@@ -58,6 +58,7 @@
   "not_found_title": "Sahifa topilmadi",
   "not_found_description": "Siz qidirayotgan sahifa mavjud emas.",
   "not_found_button_text": "Bosh sahifaga o'tish",
+  "go_to_homepage": "Bosh sahifaga o'tish",
   "not_found_link": "/",
   "visa_status": {
     "title": "Viza holatini tekshirish",

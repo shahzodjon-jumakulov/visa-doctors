@@ -34,11 +34,9 @@ export const useMyFetch = (request, opts) => {
 
   return useFetch(finalUrl, {
     ...opts,
-    onResponse({ response }) {
-      // Transform URLs only on the server side to hide them from the client source
-      if (process.server && response._data) {
-        response._data = transformUrls(response._data);
-      }
+    transform: (data) => {
+      // transformUrls is defined above in the composable
+      return transformUrls(data);
     },
   });
 };
