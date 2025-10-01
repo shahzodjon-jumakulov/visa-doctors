@@ -13,42 +13,295 @@ const form = ref({
   birth_date: ""
 });
 
+const lastName = ref('');
+const firstName = ref('');
+const middleName = ref('');
+
+const firstNameInputRef = ref(null);
+const middleNameInputRef = ref(null);
+
+const handleLastNameKeydown = (event) => {
+  if (event.key === ' ') {
+    event.preventDefault();
+    firstNameInputRef.value?.input?.focus();
+  }
+};
+
+const handleFirstNameKeydown = (event) => {
+  if (event.key === ' ') {
+    event.preventDefault();
+    middleNameInputRef.value?.input?.focus();
+  }
+};
+
 const STORAGE_KEY = 'visa_status_form_data';
 
-onMounted(() => {
-  if (import.meta.client) {
-    const { passport_number, name, birth_date } = route.query;
+const isComposingPassport = ref(false);
+const isComposingLast = ref(false);
+const isComposingFirst = ref(false);
+const isComposingMiddle = ref(false);
 
-    if (passport_number && name && birth_date) {
-      form.value.passport_number = Array.isArray(passport_number) ? passport_number[0] : passport_number;
-      form.value.english_name = Array.isArray(name) ? name[0] : name;
-      form.value.birth_date = Array.isArray(birth_date) ? birth_date[0] : birth_date;
-    } else {
-      const savedData = localStorage.getItem(STORAGE_KEY);
-      if (savedData) {
-        form.value = JSON.parse(savedData);
+const sanitizePassport = (v = '') => (v + '').replace(/[^A-Za-z0-9]/g, '');
+const sanitizeEnglishOnly = (v = '') => (v + '').replace(/[^A-Za-z]/g, '');
+const sanitizeEnglishAndSpaces = (v = '') => {
+  let cleaned = (v + '').replace(/[^A-Za-z ]/g, '');
+  cleaned = cleaned.replace(/\s+/g, ' ');
+
+  const parts = cleaned.split(' ');
+  if (parts.length > 2) {
+    cleaned = `${parts[0]} ${parts[1]}`;
+  }
+
+  if (cleaned.startsWith(' ')) {
+    cleaned = cleaned.substring(1);
+  }
+
+  return cleaned;
+};
+
+const onPassportInput = (val) => {
+  const raw = typeof val === 'string' ? val : (val?.target?.value ?? form.value.passport_number);
+  if (isComposingPassport.value) {
+    form.value.passport_number = raw;
+    return;
+  }
+  const cleaned = sanitizePassport(raw).toUpperCase();
+  if (cleaned === form.value.passport_number) return;
+
+  const native = getNativeInputByName('passport_number');
+  const { value, caret } = applyCleanWithCaret(native, raw, cleaned, /[A-Za-z0-9]/);
+  form.value.passport_number = value;
+  if (native) {
+    requestAnimationFrame(() => {
+      try {
+        native.setSelectionRange(caret, caret);
+      } catch (e) {}
+    });
+  }
+};
+
+function applyCleanWithCaret(el, rawValue, cleanValue, allowedRegex) {
+  if (!el) return { value: cleanValue, caret: cleanValue.length };
+  try {
+    const selStart = el.selectionStart ?? rawValue.length;
+    let allowedCharsBeforeCaret = 0;
+    for (let i = 0; i < selStart; i++) {
+      if (allowedRegex.test(rawValue[i])) {
+        allowedCharsBeforeCaret++;
       }
     }
+
+    let newCaretPos = 0;
+    let countedChars = 0;
+    for (let i = 0; i < cleanValue.length; i++) {
+      if (countedChars < allowedCharsBeforeCaret) {
+        newCaretPos++;
+        if (allowedRegex.test(cleanValue[i])) {
+          countedChars++;
+        }
+      }
+    }
+
+    return { value: cleanValue, caret: newCaretPos };
+  } catch (e) {
+    return { value: cleanValue, caret: cleanValue.length };
   }
+}
+
+const onLastNameInput = (val) => {
+  const raw = typeof val === 'string' ? val : (val?.target?.value ?? lastName.value);
+  if (isComposingLast.value) {
+    lastName.value = raw;
+    return;
+  }
+  const cleaned = sanitizeEnglishOnly(raw).toUpperCase();
+  if (cleaned === lastName.value) return;
+
+  const native = getNativeInputByName('last_name');
+  const { value, caret } = applyCleanWithCaret(native, raw, cleaned, /[A-Za-z]/);
+  lastName.value = value;
+  if (native) {
+    requestAnimationFrame(() => {
+      try {
+        native.setSelectionRange(caret, caret);
+      } catch (e) {}
+    });
+  }
+};
+
+const onFirstNameInput = (val) => {
+  const raw = typeof val === 'string' ? val : (val?.target?.value ?? firstName.value);
+  if (isComposingFirst.value) {
+    firstName.value = raw;
+    return;
+  }
+  const cleaned = sanitizeEnglishOnly(raw).toUpperCase();
+  if (cleaned === firstName.value) return;
+
+  const native = getNativeInputByName('first_name');
+  const { value, caret } = applyCleanWithCaret(native, raw, cleaned, /[A-Za-z]/);
+  firstName.value = value;
+  if (native) {
+    requestAnimationFrame(() => {
+      try {
+        native.setSelectionRange(caret, caret);
+      } catch (e) {}
+    });
+  }
+};
+
+const onMiddleNameInput = (val) => {
+  const raw = typeof val === 'string' ? val : (val?.target?.value ?? middleName.value);
+  if (isComposingMiddle.value) {
+    middleName.value = raw;
+    return;
+  }
+  const cleaned = sanitizeEnglishAndSpaces(raw).toUpperCase();
+  if (cleaned === middleName.value) return;
+
+  const native = getNativeInputByName('middle_name');
+  const { value, caret } = applyCleanWithCaret(native, raw, cleaned, /[A-Za-z ]/);
+  middleName.value = value;
+  if (native) {
+    requestAnimationFrame(() => {
+      try {
+        native.setSelectionRange(caret, caret);
+      } catch (e) {}
+    });
+  }
+};
+
+function getNativeInputByName(name) {
+  if (name === 'first_name' && firstNameInputRef?.value) return firstNameInputRef.value?.input ?? firstNameInputRef.value;
+  if (name === 'middle_name' && middleNameInputRef?.value) return middleNameInputRef.value?.input ?? middleNameInputRef.value;
+  try {
+    return document.querySelector(`input[name="${name}"]` );
+  } catch (e) {
+    return null;
+  }
+}
+
+onMounted(() => {
+  if (!import.meta.client) return;
+
+  const { passport_number, name, birth_date } = route.query;
+  if (passport_number && name && birth_date) {
+    form.value.passport_number = Array.isArray(passport_number) ? passport_number[0] : passport_number;
+    form.value.english_name = Array.isArray(name) ? name[0] : name;
+    form.value.birth_date = Array.isArray(birth_date) ? birth_date[0] : birth_date;
+  } else {
+    const savedData = localStorage.getItem(STORAGE_KEY);
+    if (savedData) form.value = JSON.parse(savedData);
+  }
+
+  if (form.value.english_name) {
+    const parts = form.value.english_name.split(' ');
+    lastName.value = sanitizeEnglishOnly(parts[0] || '').toUpperCase();
+    firstName.value = sanitizeEnglishOnly(parts[1] || '').toUpperCase();
+    middleName.value = sanitizeEnglishAndSpaces(parts.slice(2).join(' ') || '').toUpperCase();
+  }
+
+  function attachListenersToNative(name, composingRef, onInputFn, allowSpace = false, allowNumbers = false) {
+    const native = getNativeInputByName(name);
+    if (!native) return;
+
+    native.addEventListener('compositionstart', () => (composingRef.value = true));
+    native.addEventListener('compositionend', (ev) => {
+      composingRef.value = false;
+      onInputFn(native.value);
+    });
+
+    native.addEventListener('beforeinput', (e) => {
+      if (composingRef.value || e.isComposing) return;
+
+      const type = e.inputType;
+      if (!type || !type.startsWith('insert')) return;
+
+      const data = e.data ?? '';
+      if (!data) return;
+
+      let pattern = 'A-Za-z';
+      if (allowSpace) pattern += ' ';
+      if (allowNumbers) pattern += '0-9';
+      const allowedRe = new RegExp(`^[${pattern}]+$`);
+      if (!allowedRe.test(data)) {
+        e.preventDefault();
+        if (type === 'insertFromPaste' || type === 'insertFromDrop') {
+          let pattern = 'A-Za-z';
+          if (allowSpace) pattern += ' ';
+          if (allowNumbers) pattern += '0-9';
+          const replaceRe = new RegExp(`[^${pattern}]`, 'g');
+          const cleaned = (data.replace(replaceRe, '')).toUpperCase();
+          const start = native.selectionStart ?? native.value.length;
+          const end = native.selectionEnd ?? start;
+          const before = (native.value || '').slice(0, start);
+          const after = (native.value || '').slice(end);
+          const newVal = (before + cleaned + after).replace(/\s+/g, ' ');
+          onInputFn(newVal);
+          requestAnimationFrame(() => {
+            try {
+              const pos = (before + cleaned).length;
+              native.setSelectionRange(pos, pos);
+            } catch (e) {}
+          });
+        }
+      }
+    });
+
+    native.addEventListener('keydown', (e) => {
+      if (composingRef.value || e.isComposing) return;
+      const skipKeys = ['Backspace','Delete','ArrowLeft','ArrowRight','ArrowUp','ArrowDown','Tab','Enter','Home','End'];
+      if (skipKeys.includes(e.key)) return;
+      if (e.key && e.key.length === 1) {
+        let pattern = 'A-Za-z';
+        if (allowSpace) pattern += ' ';
+        if (allowNumbers) pattern += '0-9';
+        const allowed = new RegExp(`[${pattern}]`);
+        if (!allowed.test(e.key)) {
+          e.preventDefault();
+        }
+      }
+    }, { passive: false });
+
+    native.addEventListener('paste', (e) => {
+      e.preventDefault();
+      const text = (e.clipboardData || window.clipboardData).getData('text') || '';
+      let pattern = 'A-Za-z';
+      if (allowSpace) pattern += ' ';
+      if (allowNumbers) pattern += '0-9';
+      const replaceRe = new RegExp(`[^${pattern}]`, 'g');
+      const cleaned = text.replace(replaceRe, '').toUpperCase();
+      const start = native.selectionStart ?? native.value.length;
+      const end = native.selectionEnd ?? start;
+      const before = (native.value || '').slice(0, start);
+      const after = (native.value || '').slice(end);
+      const newVal = (before + cleaned + after).replace(/\s+/g, ' ');
+      onInputFn(newVal);
+      requestAnimationFrame(() => {
+        try {
+          const pos = (before + cleaned).length;
+          native.setSelectionRange(pos, pos);
+        } catch (err) {}
+      });
+    });
+  }
+
+  attachListenersToNative('passport_number', isComposingPassport, onPassportInput, true, true);
+  attachListenersToNative('last_name', isComposingLast, onLastNameInput, false);
+  attachListenersToNative('first_name', isComposingFirst, onFirstNameInput, false);
+  attachListenersToNative('middle_name', isComposingMiddle, onMiddleNameInput, true);
 });
 
-// Watch for changes in the form and save to localStorage
-watch(form, (newFormState) => {
-  if (import.meta.client) { // Ensure localStorage is only accessed on the client
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(newFormState));
-  }
-}, { deep: true }); // Use deep watch to detect changes in object properties
 
-watch(() => form.value.passport_number, (newValue) => {
-  if (newValue) {
-    form.value.passport_number = newValue.toUpperCase();
-  }
-});
+watch([lastName, firstName, middleName], ([newLastName, newFirstName, newMiddleName]) => {
+  const cleanedLastName = newLastName.trim();
+  const cleanedFirstName = newFirstName.trim();
+  const cleanedMiddleName = newMiddleName.trim().replace(/\s+/g, ' ');
 
-watch(() => form.value.english_name, (newValue) => {
-  if (newValue) {
-    form.value.english_name = newValue.toUpperCase();
-  }
+  const parts = [cleanedLastName, cleanedFirstName, cleanedMiddleName].filter(Boolean);
+  const fullName = parts.join(' ');
+
+  form.value.english_name = fullName.toUpperCase();
 });
 
 const loading = ref(false);
@@ -217,6 +470,7 @@ const checkStatus = async () => {
               </label>
               <UInput
                   v-model="form.passport_number"
+                  @update:modelValue="onPassportInput"
                   :placeholder="$t('visa_status.passport_number')"
                   variant="none"
                   class="!bg-black-100"
@@ -225,18 +479,65 @@ const checkStatus = async () => {
               />
             </div>
 
-            <div class="flex flex-col gap-2">
-              <label class="text-base font-medium text-black-main">
-                {{ $t("visa_status.english_name") }}
-              </label>
-              <UInput
-                  v-model="form.english_name"
-                  :placeholder="$t('visa_status.english_name')"
-                  variant="none"
-                  class="!bg-black-100"
-                  name="full_name"
-                  autocomplete="on"
-              />
+            <div class="flex flex-col md:flex-row gap-4">
+              <!-- Last Name -->
+              <div class="flex flex-col gap-2 w-full">
+                <label class="text-base font-medium text-black-main">
+                  {{ $t("visa_status.last_name") }}
+                </label>
+                <UInput
+                    v-model="lastName"
+                    @update:modelValue="onLastNameInput"
+                    placeholder="TURSUNOV"
+                    variant="none"
+                    class="!bg-black-100 w-full"
+                    name="last_name"
+                    inputmode="latin"
+                    autocapitalize="characters"
+                    autocomplete="family-name"
+                    @keydown="handleLastNameKeydown"
+                />
+              </div>
+
+              <!-- First Name -->
+              <div class="flex flex-col gap-2 w-full">
+                <label class="text-base font-medium text-black-main">
+                  {{ $t("visa_status.first_name") }}
+                </label>
+                <UInput
+                    ref="firstNameInputRef"
+                    v-model="firstName"
+                    @update:modelValue="onFirstNameInput"
+                    placeholder="JAVOKHIR"
+                    variant="none"
+                    class="!bg-black-100 w-full"
+                    name="first_name"
+                    inputmode="latin"
+                    autocapitalize="characters"
+                    autocomplete="given-name"
+                    @keydown="handleFirstNameKeydown"
+                />
+              </div>
+
+              <!-- Middle Name -->
+              <div class="flex flex-col gap-2 w-full">
+                <label class="text-base font-medium text-black-main">
+                  {{ $t("visa_status.middle_name") }}
+                </label>
+                <UInput
+                    ref="middleNameInputRef"
+                    v-model="middleName"
+                    @update:modelValue="onMiddleNameInput"
+                    placeholder="RAKHMATJON UGLI"
+                    variant="none"
+                    class="!bg-black-100 w-full"
+                    name="middle_name"
+                    inputmode="latin"
+                    autocapitalize="characters"
+                    autocomplete="additional-name"
+                    on
+                />
+              </div>
             </div>
 
             <div class="flex flex-col gap-2">
