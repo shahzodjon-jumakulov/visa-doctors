@@ -1,5 +1,6 @@
 <script setup>
 import { inject, computed, defineProps } from 'vue';
+import SurveyStepComposite from '~/components/Survey/Step/Composite.vue';
 import { useI18n } from '#imports';
 import {
   IconSocialTelegram,
@@ -90,9 +91,11 @@ const closeModal = () => {
             :key="currentQuestion.id"
             class="flex flex-col gap-5"
           >
-            <h2 class="text-lg font-bold text-black-main">
+            <h2 v-if="currentQuestion.input_type !== 'composite_text'" class="text-lg font-semibold text-black-main">
               {{ currentQuestion.title }}
             </h2>
+            
+            <!-- Question Types -->
             <SurveyStepCheckbox
               v-if="currentQuestion.input_type === 'multiple_choice'"
               :options="currentQuestion.options"
@@ -103,12 +106,25 @@ const closeModal = () => {
               :options="currentQuestion.options"
               v-model="body[currIndex]"
             />
+
+            <SurveyStepComposite
+              v-else-if="currentQuestion.input_type === 'composite_text'"
+              :composite-data="currentQuestion.composite_data"
+              :field-key="currentQuestion.field_type?.field_key"
+              v-model="body[currIndex].text_answer"
+            />
+            
+            <!-- Text/Input Types -->
             <div v-else class="flex flex-col gap-2">
               <BasePhoneInput
                 v-if="currentQuestion.field_type?.field_key?.toLowerCase() === 'phone number'"
                 v-model="body[currIndex].text_answer"
                 :error="errorMsg"
                 @keydown="handleKeydown"
+              />
+              <FormTelegramInput
+                v-else-if="currentQuestion.field_type?.field_key === 'Username'"
+                v-model="body[currIndex].text_answer"
               />
               <UInput
                 v-else
@@ -124,6 +140,8 @@ const closeModal = () => {
                 @input="validateInput"
                 autofocus
               />
+              
+              <!-- Error Message -->
               <div
                 v-if="errorMsg && currentQuestion.field_type?.field_key?.toLowerCase() !== 'phone number'"
                 :class="{'animate-shake': isShaking}"
@@ -135,6 +153,7 @@ const closeModal = () => {
                 <span>{{ errorMsg }}</span>
               </div>
             </div>
+            
             <BaseButton
               :loading="loading"
               :disabled="isDisabled"
@@ -159,7 +178,6 @@ const closeModal = () => {
           </h2>
           <p class="text-sm text-black-400">{{ $t("contact_back_soon") }}</p>
         </div>
-        <!-- u041au043du043eu043fu043au0430 u0422u0435u043bu0435u0433u0440u0430u043c - u043fu043eu043au0430u0437u044bu0432u0430u0435u0442u0441u044f, u0435u0441u043bu0438 u043fu043eu043bu044cu0437u043eu0432u0430u0442u0435u043bu044c u043fu0440u0438u0448u0435u043b u0438u0437 Instagram u0438u043bu0438 u0441 u0432u0435u0431u0441u0430u0439u0442u0430 -->
         <button
           v-if="isFromInstagram || isFromWebsite"
           @click="goToTelegram"
@@ -172,7 +190,6 @@ const closeModal = () => {
           <span>{{ $t('our_telegram') }}</span>
         </button>
         
-        <!-- u041au043du043eu043fu043au0430 Instagram - u043fu043eu043au0430u0437u044bu0432u0430u0435u0442u0441u044f, u0435u0441u043bu0438 u043fu043eu043bu044cu0437u043eu0432u0430u0442u0435u043bu044c u043fu0440u0438u0448u0435u043b u0438u0437 u0422u0435u043bu0435u0433u0440u0430u043c u0438u043bu0438 u0441 u0432u0435u0431u0441u0430u0439u0442u0430 -->
         <button
           v-if="isFromTelegram || isFromWebsite"
           @click="goToInstagram"
@@ -186,7 +203,6 @@ const closeModal = () => {
           <span>{{ $t('our_instagram') }}</span>
         </button>
         
-        <!-- u041au043du043eu043fu043au0430 "u041du0430 u0433u043bu0430u0432u043du0443u044e" - u043fu043eu043au0430u0437u044bu0432u0430u0435u0442u0441u044f u0442u043eu043bu044cu043au043e u0435u0441u043bu0438 u0435u0441u0442u044c u0445u043eu0442u044f u0431u044b u043eu0434u043du0430 u0438u0437 u043au043du043eu043fu043eu043a u0441u043eu0446u0441u0435u0442u0435u0439 -->
         <div v-if="isFromWebsite" class="w-full flex justify-center mt-3">
           <button
             @click="closeModal"
@@ -228,4 +244,4 @@ const closeModal = () => {
 .text-red-main::placeholder {
   color: rgb(226, 9, 53, 0.5);
 }
-</style> 
+</style>
